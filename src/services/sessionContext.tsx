@@ -1,0 +1,68 @@
+import React from 'react';
+import {useState, ReactNode} from 'react';
+import {
+  getSessionStorage,
+  removeSessionStorage,
+  setSessionStorage,
+} from './sessionStorage';
+import {useQueryClient} from '@tanstack/react-query';
+import {fetchBootstrapStatic} from './api';
+import {createGenericContext} from './createGenericContext';
+
+export type SessionContextProps = {
+  teamId: number;
+  loadingSession: boolean;
+  checkSessionHandler: () => Promise<void>;
+  setSessionHandler: (teamId: number) => Promise<void>;
+  removeSessionHandler: () => void;
+};
+
+export const [useSessionContext, SessionContextProvider] =
+  createGenericContext<SessionContextProps>();
+
+export const SessionProvider = ({children}: {children: ReactNode}) => {
+  const [teamId, setTeamId] = useState<number>(0);
+  const [loadingSession, setLoadingSession] = useState(true);
+
+  const queryClient = useQueryClient();
+
+  const prefetchBootstrap = async () =>
+    await queryClient.prefetchQuery(['bootstrapStatic'], fetchBootstrapStatic, {
+      cacheTime: Infinity,
+    });
+
+  const checkSessionHandler = async () => {
+    const session = await getSessionStorage(); // fetch session from async storage
+
+    if (session) {
+      setTeamId(session); // store session in the context to have it globally available
+      setLoadingSession(false);
+      await prefetchBootstrap();
+    } else {
+      setLoadingSession(false);
+    }
+  };
+
+  const setSessionHandler = async (_teamId: number) => {
+    setTeamId(_teamId); // store session to the context
+    await setSessionStorage(_teamId); // store session to async storage
+  };
+
+  const removeSessionHandler = async () => {
+    setTeamId(0); // remove session from the context
+    await removeSessionStorage(); // remove session from async storage
+  };
+
+  return (
+    <SessionContextProvider
+      value={{
+        teamId,
+        loadingSession,
+        checkSessionHandler,
+        setSessionHandler,
+        removeSessionHandler,
+      }}>
+      {children}
+    </SessionContextProvider>
+  );
+};

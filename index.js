@@ -4,12 +4,15 @@ import App from './src/App';
 import {name as appName} from './app.json';
 import 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {SessionProvider} from '@services/sessionContext';
 
 const queryClient = new QueryClient();
 
 const WrappedApp = () => (
   <QueryClientProvider client={queryClient}>
-    <App />
+    <SessionProvider>
+      <App />
+    </SessionProvider>
   </QueryClientProvider>
 );
 

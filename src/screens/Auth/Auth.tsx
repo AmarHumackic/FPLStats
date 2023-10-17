@@ -1,18 +1,18 @@
 import {Text, TextInput} from 'react-native';
 import React, {useState} from 'react';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {fetchManager, searchByTeamName} from '@services/api';
 import styles from './Auth.styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {isNumberRegex} from '@utils/regex';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
-import {setSession} from '@services/session';
 import {colors, sizes} from '@constants/';
-import Toast from 'react-native-toast-message';
 import {AxiosError} from 'axios';
 import {SearchByNameResult} from 'src/types/auth';
 import NameResultsModal from '@components/Auth/NameResultsModal';
 import Button from '@components/common/Button';
+import {showMessage} from 'react-native-flash-message';
+import {useSessionContext} from '@services/sessionContext';
 
 type Props = {};
 
@@ -22,7 +22,7 @@ const Auth = ({}: Props) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [nameResults, setNameResults] = useState<SearchByNameResult[]>([]); // search by name modal
 
-  const queryClient = useQueryClient();
+  const {setSessionHandler} = useSessionContext();
 
   const {isFetching: idFetching} = useQuery(
     ['manager', input],
@@ -30,14 +30,12 @@ const Auth = ({}: Props) => {
     {
       enabled: isTeamIdSearch && isSubmit,
       onSuccess: data => {
-        setSession(data.id);
-        queryClient.setQueryData(['teamId'], data.id); // store session in a cache to have it globally available
+        setSessionHandler(data.id);
       },
       onError: (error: AxiosError) =>
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: error?.message,
+        showMessage({
+          type: 'warning',
+          message: error?.message,
         }),
       onSettled: () => setIsSubmit(false),
     },
@@ -50,24 +48,21 @@ const Auth = ({}: Props) => {
       enabled: !isTeamIdSearch && isSubmit,
       onSuccess: data => {
         if (data.EntryBaseDatas.length === 0) {
-          Toast.show({
+          showMessage({
             type: 'info',
-            text1: 'Info',
-            text2: 'Unable to find manager',
+            message: 'Unable to find manager',
           });
         } else if (data.EntryBaseDatas.length === 1) {
           const teamId = data.EntryBaseDatas[0].EntryId;
-          setSession(teamId);
-          queryClient.setQueryData(['teamId'], teamId); // store session in a cache to have it globally available
+          setSessionHandler(teamId);
         } else {
           setNameResults(data.EntryBaseDatas);
         }
       },
       onError: (error: AxiosError) =>
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: error?.message,
+        showMessage({
+          type: 'warning',
+          message: error?.message,
         }),
       onSettled: () => setIsSubmit(false),
     },
@@ -80,10 +75,9 @@ const Auth = ({}: Props) => {
 
   const submitHandler = () => {
     if (isNullOrEmpty(input)) {
-      Toast.show({
+      showMessage({
         type: 'info',
-        text1: 'Info',
-        text2: 'Enter your Team ID or Team Name',
+        message: 'Enter your Team ID or Team Name',
       });
     } else {
       setIsSubmit(true);

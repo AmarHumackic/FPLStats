@@ -3,7 +3,7 @@ import {isNumberRegex} from '@utils/regex';
 
 const SESSION_TEAM_ID = '@SESSION_TEAM_ID';
 
-export const getSession = async () => {
+export const getSessionStorage = async () => {
   try {
     const data = await AsyncStorage.getItem(SESSION_TEAM_ID);
 
@@ -18,7 +18,7 @@ export const getSession = async () => {
   }
 };
 
-export const setSession = async (teamId: number) => {
+export const setSessionStorage = async (teamId: number) => {
   try {
     await AsyncStorage.setItem(SESSION_TEAM_ID, teamId.toString());
     return true;
@@ -27,7 +27,7 @@ export const setSession = async (teamId: number) => {
   }
 };
 
-export const removeSession = async () => {
+export const removeSessionStorage = async () => {
   try {
     await AsyncStorage.removeItem(SESSION_TEAM_ID);
     return true;
