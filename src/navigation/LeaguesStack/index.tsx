@@ -6,7 +6,10 @@ const Stack = createStackNavigator();
 
 const LeaguesStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name="Leagues" component={Leagues} />
     </Stack.Navigator>
   );

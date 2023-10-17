@@ -8,8 +8,6 @@ import {useSessionContext} from '@services/sessionContext';
 const App = () => {
   const {teamId, loadingSession, checkSessionHandler} = useSessionContext();
 
-  console.log('teamId', teamId, 'loadingSession', loadingSession);
-
   useEffect(() => {
     checkSessionHandler();
   }, [checkSessionHandler]);

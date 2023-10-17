@@ -6,12 +6,12 @@ import StatsStack from '@navigation/StatsStack';
 import LeaguesStack from '@navigation/LeaguesStack';
 import ProfileStack from '@navigation/ProfileStack';
 import {colors} from '@constants/';
-import SoccerFieldIcon from '@assets/svgs/SoccerField';
+import SoccerFieldIcon from '@assets/svgs/SoccerFieldIcon';
 import {renderNavElement} from '@navigation/utils/renderNavElement';
 import AntennaIcon from '@assets/svgs/AntennaIcon';
 import PollIcon from '@assets/svgs/PollIcon';
-import AccountGroupIcon from '@assets/svgs/AccountGroup';
-import AccountCogIcon from '@assets/svgs/AccountCog';
+import AccountGroupIcon from '@assets/svgs/AccountGroupIcon';
+import AccountCogIcon from '@assets/svgs/AccountCogIcon';
 
 const Tab = createBottomTabNavigator();
 
