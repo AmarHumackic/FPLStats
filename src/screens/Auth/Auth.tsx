@@ -29,9 +29,7 @@ const Auth = ({}: Props) => {
     () => fetchManager(parseInt(input, 10)),
     {
       enabled: isTeamIdSearch && isSubmit,
-      onSuccess: data => {
-        setSessionHandler(data.id);
-      },
+      onSuccess: data => setSessionHandler(data.id),
       onError: (error: AxiosError) =>
         showMessage({
           type: 'warning',

@@ -35,17 +35,18 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
     const session = await getSessionStorage(); // fetch session from async storage
 
     if (session) {
+      await prefetchBootstrap();
       setTeamId(session); // store session in the context to have it globally available
       setLoadingSession(false);
-      await prefetchBootstrap();
     } else {
       setLoadingSession(false);
     }
   };
 
   const setSessionHandler = async (_teamId: number) => {
-    setTeamId(_teamId); // store session to the context
+    await prefetchBootstrap();
     await setSessionStorage(_teamId); // store session to async storage
+    setTeamId(_teamId); // store session to the context
   };
 
   const removeSessionHandler = async () => {

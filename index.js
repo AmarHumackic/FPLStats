@@ -8,6 +8,12 @@ import {SessionProvider} from '@services/sessionContext';
 
 const queryClient = new QueryClient();
 
+if (__DEV__) {
+  import('react-query-native-devtools').then(({addPlugin}) =>
+    addPlugin({queryClient}),
+  );
+}
+
 const WrappedApp = () => (
   <QueryClientProvider client={queryClient}>
     <SessionProvider>
