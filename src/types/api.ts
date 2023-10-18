@@ -659,6 +659,8 @@ export type LeagueDetailDelegate = {
   admin_entry: number;
   start_event: number;
   code_privacy: string;
+  has_cup: boolean;
+  cup_league: any | null;
   rank: number | null;
 };
 
@@ -687,13 +689,10 @@ export type LeagueStandingsDelegate = {
 };
 
 export type ClassicLeagueDelegate = {
+  new_entries: NewEntriesDelegate;
+  last_updated_data: Date;
   league: LeagueDetailDelegate;
-  new_entries: NewEntryDelegate;
   standings: LeagueStandingDelegate;
-};
-
-export type ClassicLeagueResp = {
-  data: ClassicLeagueDelegate;
 };
 
 export type ClassicLeaugesDelegate = {
