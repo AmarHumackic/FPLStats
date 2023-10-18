@@ -1,6 +1,11 @@
 import axiosInstance from '@utils/axiosInstance';
 import axios from 'axios';
-import {FixturesRespDelegate, StaticDelegate} from 'src/types/api';
+import {
+  FixturesRespDelegate,
+  GWLiveDelegate,
+  PlayerSummaryDelegate,
+  StaticDelegate,
+} from 'src/types/api';
 
 export const fetchBootstrapStatic = async () =>
   (await axiosInstance.get('/bootstrap-static/')).data as StaticDelegate;
@@ -10,11 +15,12 @@ export const fetchFixtures = async () =>
 
 // elementId === playerId
 export const fetchElementSummary = async (elementId: number) =>
-  (await axiosInstance.get(`/element-summary/${elementId}/`)).data;
+  (await axiosInstance.get(`/element-summary/${elementId}/`))
+    .data as PlayerSummaryDelegate;
 
 // eventId === gameweek (1 - 38)
 export const fetchEventLive = async (eventId: number) =>
-  (await axiosInstance.get(`/event/${eventId}/live/`)).data;
+  (await axiosInstance.get(`/event/${eventId}/live/`)).data as GWLiveDelegate;
 
 export const fetchManager = async (teamId: number) =>
   (await axiosInstance.get(`/entry/${teamId}/`)).data;

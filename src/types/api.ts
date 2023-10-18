@@ -323,25 +323,56 @@ export type PlayerHistPastDelegate = {
   creativity: string;
   threat: string;
   ict_index: string;
+  starts: number;
+  expected_goals: string;
+  expected_assists: string;
+  expected_goal_involvements: string;
+  expected_goals_conceded: string;
 };
 
 export interface PlayerHistDelegate extends PlayerDelegate {
   element: number;
   fixture: number | null;
+  opponent_team: number;
+  total_points: number;
   was_home: boolean;
   kickoff_time: Date | null;
-  team_h_score: number | null;
-  team_a_score: number | null;
-  round: number | null;
-  value: number | null;
-  transfers_balance: number | null;
-  selected: number | null;
+  team_h_score: number;
+  team_a_score: number;
+  round: number;
+  minutes: number;
+  goals_scored: number;
+  assists: number;
+  clean_sheets: number;
+  goals_conceded: number;
+  own_goals: number;
+  penalties_saved: number;
+  penalties_missed: number;
+  yellow_cards: number;
+  red_cards: number;
+  saves: number;
+  bonus: number;
+  bps: number;
+  influence: string;
+  creativity: string;
+  threat: string;
+  ict_index: string;
+  starts: number;
+  expected_goals: string;
+  expected_assists: string;
+  expected_goal_involvements: string;
+  expected_goals_conceded: string;
+  value: number;
+  transfers_balance: number;
+  selected: number;
+  transfers_in: number;
+  transfers_out: number;
 }
 
 export type PlayerSummaryDelegate = {
   fixtures: PlayerFixtureDelegate[];
   history: PlayerHistDelegate[];
-  history_past: PlayerHistPastDelegate;
+  history_past: PlayerHistPastDelegate[];
 };
 
 export type SummaryRespDelegate = {
@@ -719,4 +750,48 @@ export type H2HMatchesDelegate = {
 
 export type H2HMatchesResp = {
   data: H2HMatchDelegate;
+};
+
+export type GWLiveDelegate = {
+  elements: {
+    id: number;
+    stats: {
+      minutes: number;
+      goals_scored: number;
+      assists: number;
+      clean_sheets: number;
+      goals_conceded: number;
+      own_goals: number;
+      penalties_saved: number;
+      penalties_missed: number;
+      yellow_cards: number;
+      red_cards: number;
+      saves: number;
+      bonus: number;
+      bps: number;
+      influence: string;
+      creativity: string;
+      threat: string;
+      ict_index: string;
+      starts: number;
+      expected_goals: string;
+      expected_assists: string;
+      expected_goal_involvements: string;
+      expected_goals_conceded: string;
+      total_points: number;
+      in_dreamteam: boolean;
+    };
+    explain: [
+      {
+        fixture: number;
+        stats: [
+          {
+            identifier: ElementStatName;
+            points: number;
+            value: number;
+          },
+        ];
+      },
+    ];
+  }[];
 };
