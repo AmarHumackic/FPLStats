@@ -1,9 +1,11 @@
 import axiosInstance from '@utils/axiosInstance';
 import axios from 'axios';
 import {
+  ClassicLeagueDelegate,
   FixturesRespDelegate,
   GWLiveDelegate,
   GWPicksDelegate,
+  H2HStandingDelegate,
   PlayerSummaryDelegate,
   StaticDelegate,
   TransferDelegate,
@@ -42,10 +44,12 @@ export const fetchManagerHistory = async (teamId: number) =>
     .data as UserHistoryDelegate;
 
 export const fetchLeagueStandingsC = async (leagueId: number) =>
-  (await axiosInstance.get(`/leagues-classic/${leagueId}/standings/`)).data;
+  (await axiosInstance.get(`/leagues-classic/${leagueId}/standings/`))
+    .data as ClassicLeagueDelegate;
 
 export const fetchLeagueMatchesH = async (leagueId: number) =>
-  (await axiosInstance.get(`/leagues-h2h-matches/league/${leagueId}/`)).data;
+  (await axiosInstance.get(`/leagues-h2h-matches/league/${leagueId}/`))
+    .data as H2HStandingDelegate;
 
 export const fetchPlayerImage = async (
   playerCode: number,

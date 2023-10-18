@@ -715,19 +715,30 @@ export type H2HLeagueDetailsDelegate = {
 
 export type H2HEntryDelegate = {
   id: number;
-  event_total: number;
-  player_name: string;
-  rank: number;
-  last_rank: number;
-  rank_sort: number;
-  total: number;
-  entry: number;
-  entry_name: string;
-  matches_played: number;
-  matches_won: number;
-  matches_drawn: number;
-  matches_lost: number;
-  points_for: number;
+  entry_1_entry: number;
+  entry_1_name: string;
+  entry_1_player_name: string;
+  entry_1_points: number;
+  entry_1_win: number;
+  entry_1_draw: number;
+  entry_1_loss: number;
+  entry_1_total: number;
+  entry_2_entry: number;
+  entry_2_name: string;
+  entry_2_player_name: string;
+  entry_2_points: number;
+  entry_2_win: number;
+  entry_2_draw: number;
+  entry_2_loss: number;
+  entry_2_total: number;
+  is_knockout: boolean;
+  league: number;
+  winner: any | null;
+  seed_value: any | null;
+  event: number;
+  tiebreak: any | null;
+  is_bye: boolean;
+  knockout_name: string;
 };
 
 export type H2HStandingDelegate = {
