@@ -54,7 +54,9 @@ const Team = ({}: Props) => {
         </Touchable>
       </View>
       <View style={styles.pointsContainer}>
-        <Text style={styles.pointsValue}>{epData.entry_history.points}</Text>
+        <Text style={styles.pointsValue}>
+          {epData?.entry_history?.points || 0}
+        </Text>
         <Text style={styles.pointsLabel}> points</Text>
       </View>
     </SafeAreaView>

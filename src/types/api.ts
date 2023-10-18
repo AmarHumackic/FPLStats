@@ -1,7 +1,7 @@
 import {createStrEnum} from '@utils/createStrEnum';
 
 export interface UserDelegate {
-  id: string;
+  id: number;
   joined_time: Date | null;
   started_event: number | null;
   favourite_team: number | null;
@@ -839,5 +839,29 @@ export type GWLiveDelegate = {
         ];
       },
     ];
+  }[];
+};
+
+export type GWDreamTeamDelegate = {
+  top_player: {
+    id: number;
+    points: number;
+  };
+  team: {
+    element: number;
+    points: number;
+    position: number;
+  }[];
+};
+
+export type PieceNotesDelegate = {
+  last_updated: Date;
+  teams: {
+    notes: {
+      external_link: boolean;
+      info_message: string;
+      source_link: string;
+    }[];
+    id: number;
   }[];
 };

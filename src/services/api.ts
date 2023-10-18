@@ -3,9 +3,11 @@ import axios from 'axios';
 import {
   ClassicLeagueDelegate,
   FixturesRespDelegate,
+  GWDreamTeamDelegate,
   GWLiveDelegate,
   GWPicksDelegate,
   H2HStandingDelegate,
+  PieceNotesDelegate,
   PlayerSummaryDelegate,
   StaticDelegate,
   TransferDelegate,
@@ -64,10 +66,12 @@ export const fetchPlayerImage = async (
   ).data;
 
 export const fetchEventDreamTeam = async (eventId: number) =>
-  (await axiosInstance.get(`/dream-team/${eventId}/`)).data;
+  (await axiosInstance.get(`/dream-team/${eventId}/`))
+    .data as GWDreamTeamDelegate;
 
 export const fetchPieceNotes = async () =>
-  (await axiosInstance.get('/team/set-piece-notes/')).data;
+  (await axiosInstance.get('/team/set-piece-notes/'))
+    .data as PieceNotesDelegate;
 
 export const searchByTeamName = async (teamName: string) =>
   (

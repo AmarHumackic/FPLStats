@@ -45,16 +45,16 @@ const Auth = ({}: Props) => {
     {
       enabled: !isTeamIdSearch && isSubmit,
       onSuccess: data => {
-        if (data.EntryBaseDatas.length === 0) {
+        if (data?.EntryBaseDatas?.length === 0) {
           showMessage({
             type: 'info',
             message: 'Unable to find manager',
           });
-        } else if (data.EntryBaseDatas.length === 1) {
-          const teamId = data.EntryBaseDatas[0].EntryId;
+        } else if (data?.EntryBaseDatas?.length === 1) {
+          const teamId = data?.EntryBaseDatas?.[0]?.EntryId || 0;
           setSessionHandler(teamId);
         } else {
-          setNameResults(data.EntryBaseDatas);
+          setNameResults(data?.EntryBaseDatas || []);
         }
       },
       onError: (error: AxiosError) =>
