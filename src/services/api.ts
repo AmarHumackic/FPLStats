@@ -8,6 +8,7 @@ import {
   StaticDelegate,
   TransferDelegate,
   UserDelegate,
+  UserHistoryDelegate,
 } from 'src/types/api';
 
 export const fetchBootstrapStatic = async () =>
@@ -37,7 +38,8 @@ export const fetchManagerEventPicks = async (teamId: number, eventId: number) =>
     .data as GWPicksDelegate;
 
 export const fetchManagerHistory = async (teamId: number) =>
-  (await axiosInstance.get(`/entry/${teamId}/history/`)).data;
+  (await axiosInstance.get(`/entry/${teamId}/history/`))
+    .data as UserHistoryDelegate;
 
 export const fetchLeagueStandingsC = async (leagueId: number) =>
   (await axiosInstance.get(`/leagues-classic/${leagueId}/standings/`)).data;

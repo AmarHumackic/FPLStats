@@ -57,6 +57,12 @@ export interface UserProperties {
   userId: number | null;
 }
 
+export interface UserHistoryDelegate {
+  current: GWHistoryDelegate[];
+  past: SeasonsHistoryDelegate;
+  chips: ChipsHistoryDelegate;
+}
+
 export type GWHistoryDelegate = {
   event: number;
   points: number;
