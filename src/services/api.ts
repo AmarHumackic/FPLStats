@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   FixturesRespDelegate,
   GWLiveDelegate,
+  GWPicksDelegate,
   PlayerSummaryDelegate,
   StaticDelegate,
   TransferDelegate,
@@ -32,7 +33,8 @@ export const fetchManagerTransfers = async (teamId: number) =>
     .data as TransferDelegate[];
 
 export const fetchManagerEventPicks = async (teamId: number, eventId: number) =>
-  (await axiosInstance.get(`/entry/${teamId}/event/${eventId}/picks/`)).data;
+  (await axiosInstance.get(`/entry/${teamId}/event/${eventId}/picks/`))
+    .data as GWPicksDelegate;
 
 export const fetchManagerHistory = async (teamId: number) =>
   (await axiosInstance.get(`/entry/${teamId}/history/`)).data;
