@@ -264,8 +264,8 @@ const IdentifierOpts = createStrEnum([
 export type IdentifiersDelegate = keyof typeof IdentifierOpts | null;
 
 export type AwayHomeStatType = {
-  value?: number;
-  element?: number;
+  value: number;
+  element: number;
 };
 
 export type FixStatsItemDelegate = {
@@ -275,23 +275,23 @@ export type FixStatsItemDelegate = {
 };
 
 export interface FixtureDelegate {
-  code: number | null;
-  event: number | null;
-  finished: boolean | null;
-  finished_provisional: boolean | null;
+  code: number;
+  event: number;
+  finished: boolean;
+  finished_provisional: boolean;
   id: number;
   kickoff_time: Date | null;
   minutes: number;
-  provisional_start_time: boolean | null;
-  started: boolean | null;
-  team_a: number | null;
+  provisional_start_time: boolean;
+  started: boolean;
+  team_a: number;
   team_a_score: number | null;
-  team_h: number | null;
+  team_h: number;
   team_h_score: number | null;
   stats: FixStatsItemDelegate[];
-  team_h_difficulty: number | null;
-  team_a_difficulty: number | null;
-  pulse_id: number | null;
+  team_h_difficulty: number;
+  team_a_difficulty: number;
+  pulse_id: number;
 }
 
 export interface PlayerFixtureDelegate extends FixtureDelegate {

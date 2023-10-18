@@ -17,12 +17,12 @@ const Team = ({}: Props) => {
   const [currentEventName, setCurrentEventName] = useState('');
   const {teamId} = useSessionContext();
 
-  const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
+  useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
     onSuccess: _bData => {
-      const currentEvent = bData.events.find(e => e.is_current);
-      setCurrentEventId(currentEvent.id);
-      setCurrentEventName(currentEvent.name);
+      const currentEvent = _bData.events.find(e => e.is_current);
+      setCurrentEventId(currentEvent?.id || 0);
+      setCurrentEventName(currentEvent?.name || '');
     },
   });
 

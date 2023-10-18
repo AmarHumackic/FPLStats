@@ -1,4 +1,4 @@
-import {colors} from '@constants';
+import {colors} from '@constants/';
 import React from 'react';
 import {View, Text, ActivityIndicator, ColorValue} from 'react-native';
 import styles from './LoadingView.styles';

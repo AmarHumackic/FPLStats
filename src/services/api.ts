@@ -1,11 +1,12 @@
 import axiosInstance from '@utils/axiosInstance';
 import axios from 'axios';
+import {FixturesRespDelegate, StaticDelegate} from 'src/types/api';
 
 export const fetchBootstrapStatic = async () =>
-  (await axiosInstance.get('/bootstrap-static/')).data;
+  (await axiosInstance.get('/bootstrap-static/')).data as StaticDelegate;
 
 export const fetchFixtures = async () =>
-  (await axiosInstance.get('/fixtures/')).data;
+  (await axiosInstance.get('/fixtures/')).data as FixturesRespDelegate;
 
 // elementId === playerId
 export const fetchElementSummary = async (elementId: number) =>
