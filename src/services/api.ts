@@ -5,6 +5,7 @@ import {
   GWLiveDelegate,
   PlayerSummaryDelegate,
   StaticDelegate,
+  UserDelegate,
 } from 'src/types/api';
 
 export const fetchBootstrapStatic = async () =>
@@ -23,7 +24,7 @@ export const fetchEventLive = async (eventId: number) =>
   (await axiosInstance.get(`/event/${eventId}/live/`)).data as GWLiveDelegate;
 
 export const fetchManager = async (teamId: number) =>
-  (await axiosInstance.get(`/entry/${teamId}/`)).data;
+  (await axiosInstance.get(`/entry/${teamId}/`)).data as UserDelegate;
 
 export const fetchManagerTransfers = async (teamId: number) =>
   (await axiosInstance.get(`/entry/${teamId}/transfers/`)).data;

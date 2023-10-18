@@ -2,12 +2,11 @@ import {createStrEnum} from '@utils/createStrEnum';
 
 export interface UserDelegate {
   id: string;
-  name: string;
-  current_event: number | null;
   joined_time: Date | null;
   started_event: number | null;
-  player_first_name: string | null;
-  player_last_name: string | null;
+  favourite_team: number | null;
+  player_first_name: string;
+  player_last_name: string;
   player_region_id: number | null;
   player_region_name: string | null;
   player_region_iso_code_short: string | null;
@@ -16,11 +15,42 @@ export interface UserDelegate {
   summary_overall_rank: number | null;
   summary_event_points: number | null;
   summary_event_rank: number | null;
+  current_event: number | null;
+  leagues: {
+    classic: {
+      id: number;
+      name: string;
+      short_name: string;
+      created: Date;
+      closed: boolean;
+      max_entries: number | null;
+      league_type: string;
+      scoring: string;
+      admin_entry: number;
+      start_event: number;
+      entry_can_leave: boolean;
+      entry_can_admin: boolean;
+      entry_can_invite: boolean;
+      has_cup: boolean;
+      cup_league: any | null;
+      cup_qualified: any | null;
+      entry_rank: number;
+      entry_last_rank: number;
+    };
+    h2h: H2HLeagueDetailsDelegate[];
+    cup: {
+      cup_matches: CupMatchDelegate[];
+      cup_status: CupStatusDelegate;
+      cup_league: any | null;
+    };
+    cup_matches: CupMatchesDelegate[];
+  };
+  name: string;
+  name_change_blocked: string;
   kit: string | null;
   last_deadline_bank: number | null;
   last_deadline_value: number | null;
   last_deadline_total_transfers: number | null;
-  favourite_team: number | null;
 }
 
 export interface UserProperties {
