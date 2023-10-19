@@ -5,4 +5,5 @@ export const colors = {
   accentLight: '#A2D5AB',
   text: '#46646b',
   defaultRipple: '#C4C4C4',
+  activeChip: '#e64343',
 };

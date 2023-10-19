@@ -50,6 +50,7 @@ const CTouchable = ({
           {opacity: !isAndroid() && pressed ? PRESSED_OPACITY_IOS : 1},
           style,
           marginRight ? {marginRight} : {},
+          disabled ? {opacity: PRESSED_OPACITY_IOS} : {},
         ]}
         hitSlop={hitSlop}
         onLongPress={onLongPress}
@@ -57,7 +58,12 @@ const CTouchable = ({
         {children}
       </Pressable>
     ) : (
-      <View style={[styles.touchableParent, marginRight ? {marginRight} : {}]}>
+      <View
+        style={[
+          styles.touchableParent,
+          marginRight ? {marginRight} : {},
+          disabled ? {opacity: PRESSED_OPACITY_IOS} : {},
+        ]}>
         <Pressable
           {...props}
           android_ripple={{

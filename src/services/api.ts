@@ -53,18 +53,6 @@ export const fetchLeagueMatchesH = async (leagueId: number) =>
   (await axiosInstance.get(`/leagues-h2h-matches/league/${leagueId}/`))
     .data as H2HStandingDelegate;
 
-export const fetchPlayerImage = async (
-  playerCode: number,
-  resolution: string,
-) =>
-  (
-    await axios.get(
-      `https://resources.premierleague.com/premierleague/photos/players/${
-        resolution || '110x140'
-      }/p${playerCode}.png`,
-    )
-  ).data;
-
 export const fetchEventDreamTeam = async (eventId: number) =>
   (await axiosInstance.get(`/dream-team/${eventId}/`))
     .data as GWDreamTeamDelegate;
@@ -72,6 +60,11 @@ export const fetchEventDreamTeam = async (eventId: number) =>
 export const fetchPieceNotes = async () =>
   (await axiosInstance.get('/team/set-piece-notes/'))
     .data as PieceNotesDelegate;
+
+export const playerImageUri = (playerCode: number, resolution?: string) =>
+  `https://resources.premierleague.com/premierleague/photos/players/${
+    resolution || '110x140'
+  }/p${playerCode}.png`;
 
 export const searchByTeamName = async (teamName: string) =>
   (

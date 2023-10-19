@@ -95,6 +95,8 @@ export type PickDelegate = {
   is_vice_captain: boolean;
 };
 
+export type PlayerPickDelegate = PlayerDelegate & PickDelegate;
+
 export type SubstitutionDelegate = {
   entry: number;
   element_in: number;

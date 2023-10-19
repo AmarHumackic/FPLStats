@@ -5,20 +5,22 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 interface Props {
   container: ViewStyle;
   upperContainer: ViewStyle;
+  eventSwitchContainer: ViewStyle;
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
   pointsContainer: ViewStyle;
   pointsValue: TextStyle;
   pointsLabel: TextStyle;
+  activeChipLabel: TextStyle;
 }
 
 export default StyleSheet.create<Props>({
   container: {
     flex: 1,
-    paddingHorizontal: sizes.marginHorizontal,
-    backgroundColor: colors.purePrimary,
+    backgroundColor: colors.accentLight,
   },
-  upperContainer: {
+  upperContainer: {},
+  eventSwitchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -60,5 +62,18 @@ export default StyleSheet.create<Props>({
   pointsLabel: {
     fontSize: sizes.xl,
     color: colors.purePrimary,
+  },
+  activeChipLabel: {
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    marginTop: 10,
+    alignSelf: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    borderRadius: 4,
+    overflow: 'hidden',
+    backgroundColor: colors.activeChip,
+    color: colors.purePrimary,
+    letterSpacing: 0.5,
   },
 });
