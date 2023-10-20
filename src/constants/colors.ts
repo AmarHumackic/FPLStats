@@ -6,4 +6,6 @@ export const colors = {
   text: '#46646b',
   defaultRipple: '#C4C4C4',
   activeChip: '#e64343',
+  black: '#000000',
+  gold: '#FFD700',
 };

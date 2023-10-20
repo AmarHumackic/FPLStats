@@ -14,13 +14,13 @@ export default StyleSheet.create<Props>({
   },
   soccerFieldContainer: {
     flex: 1,
-    paddingHorizontal: 8,
   },
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
     marginTop: 16,
+    paddingHorizontal: 6,
   },
   benchContainer: {
     flexDirection: 'row',

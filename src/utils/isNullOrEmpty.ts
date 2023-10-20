@@ -1,4 +1,4 @@
-export const isNullOrEmpty = (str: string) => {
+export const isNullOrEmpty = (str: string | null) => {
   if (!str) {
     return true; // no input
   }

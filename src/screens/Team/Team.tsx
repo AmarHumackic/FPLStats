@@ -2,7 +2,11 @@ import {View, Text} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import styles from './Team.styles';
 import {useQuery} from '@tanstack/react-query';
-import {fetchBootstrapStatic, fetchManagerEventPicks} from '@services/api';
+import {
+  fetchBootstrapStatic,
+  fetchEventLive,
+  fetchManagerEventPicks,
+} from '@services/api';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Touchable from '@components/common/Touchable';
 import ChevronLeftIcon from '@assets/svgs/ChevronLeft';
@@ -37,6 +41,15 @@ const Team = ({}: Props) => {
     },
   );
 
+  const {data: elData, isFetching: elFetching} = useQuery(
+    ['managerLive', viewingEventId],
+    () => fetchEventLive(viewingEventId),
+    {
+      enabled: currentEventId ? true : false,
+      staleTime: 10000,
+    },
+  );
+
   const previousEventHandler = async () =>
     setViewingEventId(prevState => prevState - 1);
 
@@ -44,11 +57,11 @@ const Team = ({}: Props) => {
     setViewingEventId(prevState => prevState + 1);
 
   const eventPicks = useMemo(
-    () => filterEventPicks(bData?.elements, epData?.picks),
-    [bData?.elements, epData?.picks],
+    () => filterEventPicks(bData?.elements, epData?.picks, elData?.elements),
+    [bData?.elements, epData?.picks, elData?.elements],
   );
 
-  if (epFetching || !currentEventId) {
+  if (epFetching || elFetching || !currentEventId) {
     return <LoadingView />;
   }
 
@@ -77,9 +90,12 @@ const Team = ({}: Props) => {
           </Text>
           <Text style={styles.pointsLabel}> points</Text>
         </View>
-        {epData?.active_chip && (
-          <Text style={styles.activeChipLabel}>{epData.active_chip}</Text>
-        )}
+
+        <View style={styles.activeChipContainer}>
+          {epData?.active_chip && (
+            <Text style={styles.activeChipLabel}>{epData.active_chip}</Text>
+          )}
+        </View>
       </View>
 
       <EventPicksView picks={eventPicks} />

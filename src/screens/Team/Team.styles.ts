@@ -11,6 +11,7 @@ interface Props {
   pointsContainer: ViewStyle;
   pointsValue: TextStyle;
   pointsLabel: TextStyle;
+  activeChipContainer: ViewStyle;
   activeChipLabel: TextStyle;
 }
 
@@ -63,10 +64,13 @@ export default StyleSheet.create<Props>({
     fontSize: sizes.xl,
     color: colors.purePrimary,
   },
+  activeChipContainer: {
+    marginTop: 10,
+    height: 24,
+  },
   activeChipLabel: {
     textTransform: 'uppercase',
     textAlign: 'center',
-    marginTop: 10,
     alignSelf: 'center',
     paddingHorizontal: 4,
     paddingVertical: 2,
