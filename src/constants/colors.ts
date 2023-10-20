@@ -8,4 +8,6 @@ export const colors = {
   activeChip: '#e64343',
   black: '#000000',
   gold: '#FFD700',
+  yellowAlert: 'rgb(255, 171, 27)',
+  redAlert: 'rgb(192, 2, 13)',
 };

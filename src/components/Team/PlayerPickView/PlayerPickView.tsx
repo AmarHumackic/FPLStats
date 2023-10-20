@@ -5,7 +5,7 @@ import {PlayerPickEventLiveDelegate} from 'src/types/api';
 import {playerImageUri} from '@services/api';
 import StarIcon from '@assets/svgs/StarIcon';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
-import AlertOctagonIcon from '@assets/svgs/AlertOctagonIcon';
+import AlertIcon from '@assets/svgs/AlertIcon';
 
 type Props = {
   player: PlayerPickEventLiveDelegate;
@@ -26,26 +26,31 @@ const PlayerPickView = ({player, hasCaptainPlayed}: Props) => {
 
   return (
     <View style={styles.container}>
-      {player.is_captain && (
-        <View style={styles.captainContainer}>
-          <Text style={styles.captain}>C</Text>
-        </View>
-      )}
-      {player.is_vice_captain && (
-        <View style={styles.captainContainer}>
-          <Text style={styles.captain}>V</Text>
-        </View>
-      )}
-      {player.stats.in_dreamteam && (
-        <View style={styles.starContainer}>
-          <StarIcon />
-        </View>
-      )}
-      {!isNullOrEmpty(player.news) && (
-        <View style={{}}>
-          <AlertOctagonIcon />
-        </View>
-      )}
+      <View style={styles.topRightContainer}>
+        {player.is_captain && (
+          <View style={styles.iconContainer}>
+            <Text style={styles.captain}>C</Text>
+          </View>
+        )}
+        {player.is_vice_captain && (
+          <View style={styles.iconContainer}>
+            <Text style={styles.captain}>V</Text>
+          </View>
+        )}
+        {!isNullOrEmpty(player.news) && (
+          <View style={styles.alertIconContainer}>
+            <AlertIcon
+              type={player.news?.includes('%') ? 'warning' : 'danger'}
+            />
+          </View>
+        )}
+        {player.stats.in_dreamteam && (
+          <View style={styles.iconContainer}>
+            <StarIcon />
+          </View>
+        )}
+      </View>
+
       <Image
         source={{uri: playerImageUri(player.code)}}
         style={styles.playerImg}
@@ -55,7 +60,7 @@ const PlayerPickView = ({player, hasCaptainPlayed}: Props) => {
           {player.web_name}
         </Text>
         <Text style={styles.eventPoints}>
-          {getEventPoints(player.event_points)}
+          {getEventPoints(player.stats.total_points)}
         </Text>
       </View>
     </View>

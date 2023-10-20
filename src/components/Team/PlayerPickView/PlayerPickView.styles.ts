@@ -1,11 +1,13 @@
 import {colors, sizes} from '@constants/';
+import {isAndroid} from '@utils/isAndroid';
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
   container: ViewStyle;
-  captainContainer: ViewStyle;
+  topRightContainer: ViewStyle;
+  iconContainer: ViewStyle;
   captain: TextStyle;
-  starContainer: ViewStyle;
+  alertIconContainer: ViewStyle;
   playerImg: ImageStyle;
   textContainer: ViewStyle;
   playerName: TextStyle;
@@ -18,16 +20,20 @@ export default StyleSheet.create<Props>({
     height: 86,
     maxWidth: 67,
   },
-  captainContainer: {
+  topRightContainer: {
     position: 'absolute',
     top: 0,
     right: 0,
+  },
+  iconContainer: {
     width: 16,
     height: 16,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
     backgroundColor: colors.black,
+    marginBottom: 4,
+    zIndex: 1,
   },
   captain: {
     fontSize: sizes.s,
@@ -35,17 +41,9 @@ export default StyleSheet.create<Props>({
     color: colors.purePrimary,
     fontWeight: 'bold',
   },
-  starContainer: {
-    position: 'absolute',
-    top: 20,
-    right: 0,
-    width: 16,
-    height: 16,
+  alertIconContainer: {
     zIndex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    backgroundColor: colors.black,
+    marginBottom: 4,
   },
   playerImg: {
     width: 38.5,
@@ -62,6 +60,7 @@ export default StyleSheet.create<Props>({
     backgroundColor: colors.text,
     borderRadius: 4,
     paddingVertical: 2,
+    zIndex: isAndroid() ? 0 : -1,
   },
   playerName: {
     flex: 1,
