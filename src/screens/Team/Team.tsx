@@ -56,7 +56,14 @@ const Team = ({}: Props) => {
   const nextEventHandler = async () =>
     setViewingEventId(prevState => prevState + 1);
 
-  const eventPicks = useMemo(
+  const {
+    goalKeepersM,
+    defendersM,
+    midfieldersM,
+    forwardersM,
+    bench,
+    eventPoints,
+  } = useMemo(
     () => filterEventPicks(bData?.elements, epData?.picks, elData?.elements),
     [bData?.elements, epData?.picks, elData?.elements],
   );
@@ -85,9 +92,7 @@ const Team = ({}: Props) => {
           </Touchable>
         </View>
         <View style={styles.pointsContainer}>
-          <Text style={styles.pointsValue}>
-            {epData?.entry_history?.points || 0}
-          </Text>
+          <Text style={styles.pointsValue}>{eventPoints}</Text>
           <Text style={styles.pointsLabel}> points</Text>
         </View>
 
@@ -98,7 +103,13 @@ const Team = ({}: Props) => {
         </View>
       </View>
 
-      <EventPicksView picks={eventPicks} />
+      <EventPicksView
+        goalKeepersM={goalKeepersM}
+        defendersM={defendersM}
+        midfieldersM={midfieldersM}
+        forwardersM={forwardersM}
+        bench={bench}
+      />
     </SafeAreaView>
   );
 };

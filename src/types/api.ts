@@ -99,6 +99,9 @@ export type PlayerPickEventLiveDelegate = PlayerDelegate &
   PickDelegate &
   GWLiveDelegate['elements'][0];
 
+export type PlayerEventLiveDelegate = PlayerDelegate &
+  GWLiveDelegate['elements'][0];
+
 export type SubstitutionDelegate = {
   entry: number;
   element_in: number;

@@ -9,62 +9,44 @@ import AlertIcon from '@assets/svgs/AlertIcon';
 
 type Props = {
   player: PlayerPickEventLiveDelegate;
-  hasCaptainPlayed: boolean;
 };
 
-const PlayerPickView = ({player, hasCaptainPlayed}: Props) => {
-  const getEventPoints = (eventPoints: number) => {
-    if (
-      (player.is_captain && hasCaptainPlayed) ||
-      (player.is_vice_captain && !hasCaptainPlayed)
-    ) {
-      return eventPoints * 2;
-    } else {
-      return eventPoints;
-    }
-  };
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.topRightContainer}>
-        {player.is_captain && (
-          <View style={styles.iconContainer}>
-            <Text style={styles.captain}>C</Text>
-          </View>
-        )}
-        {player.is_vice_captain && (
-          <View style={styles.iconContainer}>
-            <Text style={styles.captain}>V</Text>
-          </View>
-        )}
-        {!isNullOrEmpty(player.news) && (
-          <View style={styles.alertIconContainer}>
-            <AlertIcon
-              type={player.news?.includes('%') ? 'warning' : 'danger'}
-            />
-          </View>
-        )}
-        {player.stats.in_dreamteam && (
-          <View style={styles.iconContainer}>
-            <StarIcon />
-          </View>
-        )}
-      </View>
-
-      <Image
-        source={{uri: playerImageUri(player.code)}}
-        style={styles.playerImg}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.playerName} adjustsFontSizeToFit numberOfLines={1}>
-          {player.web_name}
-        </Text>
-        <Text style={styles.eventPoints}>
-          {getEventPoints(player.stats.total_points)}
-        </Text>
-      </View>
+const PlayerPickView = ({player}: Props) => (
+  <View style={styles.container}>
+    <View style={styles.topRightContainer}>
+      {player.is_captain && (
+        <View style={styles.iconContainer}>
+          <Text style={styles.captain}>C</Text>
+        </View>
+      )}
+      {player.is_vice_captain && (
+        <View style={styles.iconContainer}>
+          <Text style={styles.captain}>V</Text>
+        </View>
+      )}
+      {!isNullOrEmpty(player.news) && (
+        <View style={styles.alertIconContainer}>
+          <AlertIcon type={player.news?.includes('%') ? 'warning' : 'danger'} />
+        </View>
+      )}
+      {player.stats.in_dreamteam && (
+        <View style={styles.iconContainer}>
+          <StarIcon />
+        </View>
+      )}
     </View>
-  );
-};
+
+    <Image
+      source={{uri: playerImageUri(player.code)}}
+      style={styles.playerImg}
+    />
+    <View style={styles.textContainer}>
+      <Text style={styles.playerName} adjustsFontSizeToFit numberOfLines={1}>
+        {player.web_name}
+      </Text>
+      <Text style={styles.eventPoints}>{player.stats.total_points}</Text>
+    </View>
+  </View>
+);
 
 export default PlayerPickView;
