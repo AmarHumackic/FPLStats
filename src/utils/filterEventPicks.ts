@@ -1,15 +1,19 @@
 import {
+  FixtureDelegate,
   GWLiveDelegate,
   PickDelegate,
   PlayerDelegate,
-  PlayerEventLiveDelegate,
+  PlayerIdBonus,
   PlayerPickEventLiveDelegate,
 } from 'src/types/api';
+import {getElementsBonus} from './getElementsBonus';
 
 export const filterEventPicks = (
   elements?: PlayerDelegate[],
   picks?: PickDelegate[],
   elementsLive?: GWLiveDelegate['elements'],
+  fixtures?: FixtureDelegate[],
+  event?: number,
 ) => {
   if (
     !elements ||
@@ -29,6 +33,8 @@ export const filterEventPicks = (
     };
   }
 
+  const elementsBonus = getElementsBonus(fixtures, elementsLive, event);
+
   const captain = picks.find(p => p.is_captain);
   const hasCaptainPlayed =
     (
@@ -42,13 +48,11 @@ export const filterEventPicks = (
     const _elementLive = elementsLive?.find(
       el => el.id === p.element,
     ) as GWLiveDelegate['elements'][0];
-    _elementLive.stats.total_points = getEventPoints(
+    _elementLive.stats.total_points_live = getEventPoints(
       p,
       _elementLive,
-      // _element.team_code,
-      // elements,
-      // elementsLive,
       hasCaptainPlayed,
+      elementsBonus,
     );
     return {
       ..._element,
@@ -88,84 +92,22 @@ export const filterEventPicks = (
 const getEventPoints = (
   elementPick: PickDelegate,
   elementLive: GWLiveDelegate['elements'][0],
-  // elementTeamCode: number,
-  // elements: PlayerDelegate[],
-  // elementsLive: GWLiveDelegate['elements'],
   hasCaptainPlayed: boolean,
+  elementsBonus: PlayerIdBonus[],
 ) => {
-  // const bonus = getBonusLive(
-  //   elementLive,
-  //   elementTeamCode,
-  //   elements,
-  //   elementsLive,
-  // );
+  let totalPoints = elementLive.stats.total_points;
+  const bonus = elementsBonus.find(eb => eb.id === elementLive.id)?.bonus || 0;
+
+  if (!elementLive.stats.bonus && elementLive.stats.bps) {
+    totalPoints += bonus;
+  }
+
   if (
     (elementPick.is_captain && hasCaptainPlayed) ||
     (elementPick.is_vice_captain && !hasCaptainPlayed)
   ) {
-    return elementLive.stats.total_points * 2;
+    return totalPoints * 2;
   } else {
-    return elementLive.stats.total_points;
+    return totalPoints;
   }
-};
-
-const getBonusLive = (
-  elementLive: GWLiveDelegate['elements'][0],
-  elementTeamCode: number,
-  elements: PlayerDelegate[],
-  elementsLive: GWLiveDelegate['elements'],
-) => {
-  if (!elementLive.stats.bonus && elementLive.stats.bps) {
-    const teamPlayers = elements
-      .filter(el => el.team_code === elementTeamCode)
-      .map(
-        e =>
-          ({
-            ...e,
-            ...elementsLive.find(el => el.id === e.id),
-          } as PlayerEventLiveDelegate),
-      );
-
-    // add condition for if team is winning
-
-    const [num3, num2, num1] = findTop3Bps(teamPlayers);
-
-    let highestBpsPlayers: PlayerEventLiveDelegate[] = [],
-      secondBpsPlayers: PlayerEventLiveDelegate[] = [],
-      thirdBpsPlayers: PlayerEventLiveDelegate[] = [];
-    highestBpsPlayers = teamPlayers.filter(tp => tp.stats.bps === num1);
-    if (highestBpsPlayers.length === 2) {
-      highestBpsPlayers = [highestBpsPlayers.shift()];
-      secondBpsPlayers = highestBpsPlayers[1];
-      thirdBpsPlayers = teamPlayers.filter();
-    } else {
-    }
-  } else {
-    return 0;
-  }
-};
-
-const findTop3Bps = (teamPlayers: PlayerEventLiveDelegate[]) => {
-  const bpsArray = teamPlayers.map(tp => tp.stats.bps);
-  let num1 = Number.NEGATIVE_INFINITY;
-  let num2 = Number.NEGATIVE_INFINITY;
-  let num3 = Number.NEGATIVE_INFINITY;
-
-  for (let i = 0; i < bpsArray.length; i++) {
-    if (bpsArray[i] > num1) {
-      let temp1 = num1;
-      let temp2 = num2;
-      num1 = bpsArray[i];
-      num2 = temp1;
-      num3 = temp2;
-    } else if (bpsArray[i] > num2) {
-      let temp2 = num2;
-      num2 = bpsArray[i];
-      num3 = temp2;
-    } else if (bpsArray[i] > num3) {
-      num3 = bpsArray[i];
-    }
-  }
-
-  return [num3, num2, num1];
 };

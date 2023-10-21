@@ -832,6 +832,7 @@ export type GWLiveDelegate = {
       expected_goal_involvements: string;
       expected_goals_conceded: string;
       total_points: number;
+      total_points_live?: number; // non API field, used for live calculations of bonuses
       in_dreamteam: boolean;
     };
     explain: [
@@ -872,3 +873,13 @@ export type PieceNotesDelegate = {
     id: number;
   }[];
 };
+
+export interface PlayerIdBps {
+  id: number;
+  bps: number;
+}
+
+export interface PlayerIdBonus {
+  id: number;
+  bonus: number;
+}

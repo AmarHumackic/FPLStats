@@ -5,6 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 import {
   fetchBootstrapStatic,
   fetchEventLive,
+  fetchFixtures,
   fetchManagerEventPicks,
 } from '@services/api';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -50,6 +51,12 @@ const Team = ({}: Props) => {
     },
   );
 
+  const {data: fixturesData, isFetching: fixturesFetching} = useQuery(
+    ['fixtures'],
+    fetchFixtures,
+    {staleTime: 10000},
+  );
+
   const previousEventHandler = async () =>
     setViewingEventId(prevState => prevState - 1);
 
@@ -64,11 +71,24 @@ const Team = ({}: Props) => {
     bench,
     eventPoints,
   } = useMemo(
-    () => filterEventPicks(bData?.elements, epData?.picks, elData?.elements),
-    [bData?.elements, epData?.picks, elData?.elements],
+    () =>
+      filterEventPicks(
+        bData?.elements,
+        epData?.picks,
+        elData?.elements,
+        fixturesData,
+        viewingEventId,
+      ),
+    [
+      bData?.elements,
+      epData?.picks,
+      elData?.elements,
+      fixturesData,
+      viewingEventId,
+    ],
   );
 
-  if (epFetching || elFetching || !currentEventId) {
+  if (epFetching || elFetching || fixturesFetching || !currentEventId) {
     return <LoadingView />;
   }
 

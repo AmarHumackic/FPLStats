@@ -2,7 +2,7 @@ import axiosInstance from '@utils/axiosInstance';
 import axios from 'axios';
 import {
   ClassicLeagueDelegate,
-  FixturesRespDelegate,
+  FixtureDelegate,
   GWDreamTeamDelegate,
   GWLiveDelegate,
   GWPicksDelegate,
@@ -19,7 +19,7 @@ export const fetchBootstrapStatic = async () =>
   (await axiosInstance.get('/bootstrap-static/')).data as StaticDelegate;
 
 export const fetchFixtures = async () =>
-  (await axiosInstance.get('/fixtures/')).data as FixturesRespDelegate;
+  (await axiosInstance.get('/fixtures/')).data as FixtureDelegate[];
 
 // elementId === playerId
 export const fetchElementSummary = async (elementId: number) =>
