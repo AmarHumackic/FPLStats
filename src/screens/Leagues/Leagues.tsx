@@ -10,10 +10,12 @@ import TabsView from '@components/Leagues/TabsView';
 import LeagueTypeView from '@components/Leagues/LeagueTypeView';
 import {RefreshControl, ScrollView} from 'react-native';
 import {colors} from '@constants/colors';
+import {StackScreenProps} from '@react-navigation/stack';
+import {LeaguesStackProps} from 'src/types/navigation';
 
-type Props = {};
+type Props = StackScreenProps<LeaguesStackProps, 'Leagues'>;
 
-const Leagues = ({}: Props) => {
+const Leagues = ({navigation}: Props) => {
   const {teamId} = useSessionContext();
   const [activeTab, setActiveTab] = useState<1 | 2>(1);
 
@@ -25,6 +27,12 @@ const Leagues = ({}: Props) => {
   } = useQuery(['managerInfo', teamId], () => fetchManager(teamId), {
     cacheTime: Infinity,
   });
+
+  const onLeagueDetails = (
+    leagueId: number,
+    leagueName: string,
+    type: 'classic' | 'h2h',
+  ) => navigation.navigate('LeagueDetails', {leagueId, leagueName, type});
 
   const {
     invClassicL,
@@ -55,12 +63,48 @@ const Leagues = ({}: Props) => {
             tintColor={colors.text}
           />
         }>
-        <LeagueTypeView title="Invitational Classic" data={invClassicL} />
-        <LeagueTypeView title="Invitational Head-to-Head" data={invHeadL} />
-        <LeagueTypeView title="Public Classic" data={publicClassicL} />
-        <LeagueTypeView title="Public Head-to-Head" data={publicHeadL} />
-        <LeagueTypeView title="General" data={generalL} />
-        <LeagueTypeView title="Broadcaster" data={broadcasterL} />
+        <LeagueTypeView
+          title="Invitational Classic"
+          data={invClassicL}
+          onPress={(leagueId, leagueName) =>
+            onLeagueDetails(leagueId, leagueName, 'classic')
+          }
+        />
+        <LeagueTypeView
+          title="Invitational Head-to-Head"
+          data={invHeadL}
+          onPress={(leagueId, leagueName) =>
+            onLeagueDetails(leagueId, leagueName, 'h2h')
+          }
+        />
+        <LeagueTypeView
+          title="Public Classic"
+          data={publicClassicL}
+          onPress={(leagueId, leagueName) =>
+            onLeagueDetails(leagueId, leagueName, 'classic')
+          }
+        />
+        <LeagueTypeView
+          title="Public Head-to-Head"
+          data={publicHeadL}
+          onPress={(leagueId, leagueName) =>
+            onLeagueDetails(leagueId, leagueName, 'h2h')
+          }
+        />
+        <LeagueTypeView
+          title="General"
+          data={generalL}
+          onPress={(leagueId, leagueName) =>
+            onLeagueDetails(leagueId, leagueName, 'classic')
+          }
+        />
+        <LeagueTypeView
+          title="Broadcaster"
+          data={broadcasterL}
+          onPress={(leagueId, leagueName) =>
+            onLeagueDetails(leagueId, leagueName, 'classic')
+          }
+        />
       </ScrollView>
     </SafeAreaView>
   );

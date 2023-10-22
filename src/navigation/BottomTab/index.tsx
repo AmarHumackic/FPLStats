@@ -12,8 +12,9 @@ import AntennaIcon from '@assets/svgs/AntennaIcon';
 import PollIcon from '@assets/svgs/PollIcon';
 import AccountGroupIcon from '@assets/svgs/AccountGroupIcon';
 import AccountCogIcon from '@assets/svgs/AccountCogIcon';
+import {BottomTabProps} from 'src/types/navigation';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabProps>();
 
 const BottomTab = () => {
   return (

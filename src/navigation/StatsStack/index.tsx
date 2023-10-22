@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Stats from '@screens/Stats';
+import {StatsStackProps} from 'src/types/navigation';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<StatsStackProps>();
 
 const StatsStack = () => {
   return (

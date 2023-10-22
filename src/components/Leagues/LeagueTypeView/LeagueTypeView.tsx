@@ -9,9 +9,10 @@ import ChevronCircleIcon from '@assets/svgs/ChevronCircleIcon';
 type Props = {
   title: string;
   data: UserDelegate['leagues']['classic'] | H2HLeagueDetailsDelegate[];
+  onPress: (leagueId: number, leagueName: string) => void;
 };
 
-const LeagueTypeView = ({title, data}: Props) => {
+const LeagueTypeView = ({title, data, onPress}: Props) => {
   const isNotLast = (index: number) => !(data.length - 1 === index);
 
   const renderRankIcon = (
@@ -70,7 +71,7 @@ const LeagueTypeView = ({title, data}: Props) => {
             styles.itemContainer,
             isNotLast(index) && styles.itemContainerSeparator,
           ]}
-          onPress={() => {}}>
+          onPress={() => onPress(league.id, league.name)}>
           <Text style={styles.name}>{league.name}</Text>
           <View style={styles.rankContainer}>
             {renderRankIcon(league.entry_rank, league.entry_last_rank)}

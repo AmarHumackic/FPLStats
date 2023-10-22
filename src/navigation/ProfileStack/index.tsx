@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Profile from '@screens/Profile';
+import {ProfileStackProps} from 'src/types/navigation';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<ProfileStackProps>();
 
 const ProfileStack = () => {
   return (

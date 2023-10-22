@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Team from '@screens/Team';
+import {TeamStackProps} from 'src/types/navigation';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<TeamStackProps>();
 
 const TeamStack = () => {
   return (
