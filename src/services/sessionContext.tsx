@@ -6,7 +6,7 @@ import {
   setSessionStorage,
 } from './sessionStorage';
 import {useQueryClient} from '@tanstack/react-query';
-import {fetchBootstrapStatic} from './api';
+import {fetchBootstrapStatic, fetchManager} from './api';
 import {createGenericContext} from './createGenericContext';
 
 export type SessionContextProps = {
@@ -31,11 +31,21 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
       cacheTime: Infinity,
     });
 
+  const prefetchManager = async (_teamId: number) =>
+    await queryClient.prefetchQuery(
+      ['managerInfo', _teamId],
+      () => fetchManager(_teamId),
+      {
+        cacheTime: Infinity,
+      },
+    );
+
   const checkSessionHandler = async () => {
     const session = await getSessionStorage(); // fetch session from async storage
 
     if (session) {
       await prefetchBootstrap();
+      await prefetchManager(session);
       setTeamId(session); // store session in the context to have it globally available
       setLoadingSession(false);
     } else {
@@ -45,6 +55,7 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
 
   const setSessionHandler = async (_teamId: number) => {
     await prefetchBootstrap();
+    await prefetchManager(_teamId);
     await setSessionStorage(_teamId); // store session to async storage
     setTeamId(_teamId); // store session to the context
   };

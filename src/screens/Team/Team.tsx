@@ -6,6 +6,7 @@ import {
   fetchBootstrapStatic,
   fetchEventLive,
   fetchFixtures,
+  fetchManager,
   fetchManagerEventPicks,
 } from '@services/api';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -32,6 +33,12 @@ const Team = ({}: Props) => {
       setViewingEventId(currentEvent?.id || 0);
     },
   });
+
+  const {data: manager, isFetching: managerFetching} = useQuery(
+    ['managerInfo', teamId],
+    () => fetchManager(teamId),
+    {cacheTime: Infinity},
+  );
 
   const {data: epData, isFetching: epFetching} = useQuery(
     ['managerEventPicks', teamId, viewingEventId],
@@ -88,13 +95,26 @@ const Team = ({}: Props) => {
     ],
   );
 
-  if (epFetching || elFetching || fixturesFetching || !currentEventId) {
+  if (
+    managerFetching ||
+    epFetching ||
+    elFetching ||
+    fixturesFetching ||
+    !currentEventId
+  ) {
     return <LoadingView />;
   }
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <View style={styles.upperContainer}>
+        <Text style={styles.teamNameLabel}>
+          {manager?.name}
+          <Text
+            style={
+              styles.playerNameLabel
+            }>{` (${manager?.player_first_name} ${manager?.player_last_name})`}</Text>
+        </Text>
         <View style={styles.eventSwitchContainer}>
           <Touchable
             disabled={viewingEventId <= 1}

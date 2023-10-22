@@ -5,6 +5,8 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 interface Props {
   container: ViewStyle;
   upperContainer: ViewStyle;
+  teamNameLabel: TextStyle;
+  playerNameLabel: TextStyle;
   eventSwitchContainer: ViewStyle;
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
@@ -21,11 +23,23 @@ export default StyleSheet.create<Props>({
     backgroundColor: colors.accentLight,
   },
   upperContainer: {},
+  teamNameLabel: {
+    fontSize: sizes.xl,
+    color: colors.text,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 5,
+  },
+  playerNameLabel: {
+    fontSize: sizes.xl,
+    color: colors.text,
+    fontWeight: 'normal',
+    textAlign: 'center',
+  },
   eventSwitchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 16,
   },
   chevronContainer: {
     marginHorizontal: 16,
@@ -38,8 +52,7 @@ export default StyleSheet.create<Props>({
   },
   eventNameLabel: {
     fontSize: sizes.xl,
-    color: colors.text,
-    fontWeight: 'bold',
+    color: colors.black,
   },
   pointsContainer: {
     flexDirection: 'row',

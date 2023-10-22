@@ -74,8 +74,14 @@ export const filterEventPicks = (
     p => p.element_type === 4 && p.multiplier,
   );
   const bench = eventPicks.filter(p => !p.multiplier);
-  const eventPoints = eventPicks.reduce(
-    (sum, item) => sum + item.stats.total_points,
+  const eventPoints = [
+    ...goalKeepersM,
+    ...defendersM,
+    ...midfieldersM,
+    ...forwardersM,
+  ].reduce(
+    (sum, item) =>
+      sum + (item.stats.total_points_live || item.stats.total_points),
     0,
   );
 
