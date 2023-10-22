@@ -24,9 +24,9 @@ export interface UserDelegate {
       created: Date;
       closed: boolean;
       max_entries: number | null;
-      league_type: string;
+      league_type: LeagueTypes;
       scoring: string;
-      admin_entry: number;
+      admin_entry: number | null;
       start_event: number;
       entry_can_leave: boolean;
       entry_can_admin: boolean;
@@ -36,7 +36,7 @@ export interface UserDelegate {
       cup_qualified: any | null;
       entry_rank: number;
       entry_last_rank: number;
-    };
+    }[];
     h2h: H2HLeagueDetailsDelegate[];
     cup: {
       cup_matches: CupMatchDelegate[];
@@ -52,6 +52,8 @@ export interface UserDelegate {
   last_deadline_value: number | null;
   last_deadline_total_transfers: number | null;
 }
+
+export type LeagueTypes = 's' | 'x' | 'c'; // 'x' = invitational, 'c' = public, 's' = general & broadcaster
 
 export interface UserProperties {
   userId: number | null;
@@ -663,7 +665,7 @@ export type LeagueDetailDelegate = {
   created: Date;
   closed: boolean;
   max_entries: number | null;
-  league_type: string;
+  league_type: LeagueTypes;
   scoring: string;
   admin_entry: number;
   start_event: number;
@@ -711,15 +713,22 @@ export type ClassicLeaugesDelegate = {
 export type H2HLeagueDetailsDelegate = {
   id: number;
   name: string;
+  short_name: string | null;
   created: Date;
   closed: boolean;
   max_entries: number | null;
-  league_type: string;
+  league_type: LeagueTypes;
   scoring: string;
-  admin_entry: number;
+  admin_entry: number | null;
   start_event: number;
-  code_privacy: string;
-  ko_rounds: number | null;
+  entry_can_leave: boolean;
+  entry_can_admin: boolean;
+  entry_can_invite: boolean;
+  has_cup: boolean;
+  cup_league: any | null;
+  cup_qualified: any | null;
+  entry_rank: number | null;
+  entry_last_rank: number | null;
 };
 
 export type H2HEntryDelegate = {

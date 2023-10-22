@@ -4,6 +4,8 @@ import BottomTab from '@navigation/BottomTab';
 import Auth from '@screens/Auth';
 import FlashMessage from 'react-native-flash-message';
 import {useSessionContext} from '@services/sessionContext';
+import FocusAwareStatusBar from '@components/common/FocusAwareStatusBar';
+import {colors} from './constants';
 
 const App = () => {
   const {teamId, loadingSession, checkSessionHandler} = useSessionContext();
@@ -18,6 +20,10 @@ const App = () => {
 
   return (
     <NavigationContainer>
+      <FocusAwareStatusBar
+        barStyle={'dark-content'}
+        backgroundColor={colors.primary}
+      />
       {teamId ? <BottomTab /> : <Auth />}
       <FlashMessage position="top" />
     </NavigationContainer>

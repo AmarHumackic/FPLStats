@@ -11,8 +11,8 @@ import {
 } from '@services/api';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Touchable from '@components/common/Touchable';
-import ChevronLeftIcon from '@assets/svgs/ChevronLeft';
-import ChevronRightIcon from '@assets/svgs/ChevronRight';
+import ChevronLeftIcon from '@assets/svgs/ChevronLeftIcon';
+import ChevronRightIcon from '@assets/svgs/ChevronRightIcon';
 import {useSessionContext} from '@services/sessionContext';
 import LoadingView from '@components/common/LoadingView';
 import {filterEventPicks} from '@utils/filterEventPicks';
