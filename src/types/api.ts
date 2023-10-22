@@ -593,7 +593,9 @@ type ElementStatDelegate = {
   name: ElementStatName;
 };
 
-const PosName = createStrEnum(['GKP', 'DEF', 'MID', 'FWD']);
+export const PosNameArr = ['GKP', 'DEF', 'MID', 'FWD'];
+
+const PosName = createStrEnum(PosNameArr);
 
 type PositionName = keyof typeof PosName | null;
 

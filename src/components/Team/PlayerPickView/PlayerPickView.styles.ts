@@ -4,6 +4,8 @@ import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
   container: ViewStyle;
+  containerPosHeight: ViewStyle;
+  elementType: TextStyle;
   topRightContainer: ViewStyle;
   iconContainer: ViewStyle;
   captain: TextStyle;
@@ -14,11 +16,22 @@ interface Props {
   eventPoints: TextStyle;
 }
 
+const ELEMENT_TYPE_HEIGHT = 18;
+
 export default StyleSheet.create<Props>({
   container: {
     flex: 1,
     height: 86,
     maxWidth: 67,
+  },
+  containerPosHeight: {
+    height: 86 + ELEMENT_TYPE_HEIGHT,
+  },
+  elementType: {
+    textAlign: 'center',
+    color: colors.textDark1,
+    fontSize: sizes.s,
+    height: ELEMENT_TYPE_HEIGHT,
   },
   topRightContainer: {
     position: 'absolute',

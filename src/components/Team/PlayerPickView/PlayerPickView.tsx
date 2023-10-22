@@ -1,7 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import styles from './PlayerPickView.styles';
-import {PlayerPickEventLiveDelegate} from 'src/types/api';
+import {PlayerPickEventLiveDelegate, PosNameArr} from 'src/types/api';
 import {playerImageUri} from '@services/api';
 import StarIcon from '@assets/svgs/StarIcon';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
@@ -9,10 +9,16 @@ import AlertIcon from '@assets/svgs/AlertIcon';
 
 type Props = {
   player: PlayerPickEventLiveDelegate;
+  showPosition?: boolean;
 };
 
-const PlayerPickView = ({player}: Props) => (
-  <View style={styles.container}>
+const PlayerPickView = ({player, showPosition}: Props) => (
+  <View style={[styles.container, showPosition && styles.containerPosHeight]}>
+    {showPosition && (
+      <Text style={styles.elementType}>
+        {PosNameArr[player.element_type - 1]}
+      </Text>
+    )}
     <View style={styles.topRightContainer}>
       {player.is_captain && (
         <View style={styles.iconContainer}>
@@ -45,7 +51,7 @@ const PlayerPickView = ({player}: Props) => (
         {player.web_name}
       </Text>
       <Text style={styles.eventPoints}>
-        {player.stats.starts ? player.stats.total_points_live : '-'}
+        {player.stats.starts ? player.stats.total_points_live : '~'}
       </Text>
     </View>
   </View>

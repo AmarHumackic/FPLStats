@@ -4,6 +4,7 @@ export const colors = {
   accentDark: '#39AEA9',
   accentLight: '#A2D5AB',
   text: '#46646b',
+  textDark1: '#32484d',
   defaultRipple: '#C4C4C4',
   activeChip: '#e64343',
   black: '#000000',
