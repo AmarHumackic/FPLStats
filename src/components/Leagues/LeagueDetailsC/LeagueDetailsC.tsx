@@ -7,6 +7,7 @@ import {getRankIcon} from '@utils/getRankIcon';
 import {InfiniteData} from '@tanstack/react-query';
 import LoadingView from '@components/common/LoadingView';
 import {colors} from '@constants/colors';
+import {useSessionContext} from '@services/sessionContext';
 
 type Props = {
   data: InfiniteData<ClassicLeagueDelegate>;
@@ -21,6 +22,8 @@ const LeagueDetailsC = ({
   onPress,
   onNextPage,
 }: Props) => {
+  const {teamId} = useSessionContext();
+
   const _renderHeader = () => (
     <View style={[styles.itemContainer, styles.headerContainer]}>
       <View style={styles.rankContainer}>
@@ -39,7 +42,10 @@ const LeagueDetailsC = ({
   const _renderItem = ({item}: {item: LeagueEntryDelegate}) => (
     <Touchable
       key={item.id}
-      style={styles.itemContainer}
+      style={[
+        styles.itemContainer,
+        item.entry === teamId && styles.itemContainerSession,
+      ]}
       onPress={() => onPress(item.entry)}>
       <View style={styles.rankContainer}>
         <Text style={styles.rank} adjustsFontSizeToFit numberOfLines={1}>

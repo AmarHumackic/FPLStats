@@ -5,6 +5,7 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 interface Props {
   container: ViewStyle;
   itemContainer: ViewStyle;
+  itemContainerSession: ViewStyle;
   rankContainer: ViewStyle;
   rank: TextStyle;
   teamContainer: ViewStyle;
@@ -25,6 +26,9 @@ export default StyleSheet.create<Props>({
     alignItems: 'center',
     paddingHorizontal: sizes.marginHorizontal - 6,
     paddingVertical: 6,
+  },
+  itemContainerSession: {
+    backgroundColor: colors.accentDark1,
   },
   rankContainer: {
     flexDirection: 'row',
