@@ -17,13 +17,16 @@ import {useSessionContext} from '@services/sessionContext';
 import LoadingView from '@components/common/LoadingView';
 import {filterEventPicks} from '@utils/filterEventPicks';
 import EventPicksView from '@components/Team/EventPicksView';
+import {StackScreenProps} from '@react-navigation/stack';
+import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
 
-type Props = {};
+type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
-const Team = ({}: Props) => {
+const Team = ({route}: Props) => {
   const [currentEventId, setCurrentEventId] = useState(0);
   const [viewingEventId, setViewingEventId] = useState(0);
-  const {teamId} = useSessionContext();
+  const {teamId: sessionTeamId} = useSessionContext();
+  const teamId = route.params?.teamId || sessionTeamId;
 
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
@@ -50,7 +53,7 @@ const Team = ({}: Props) => {
   );
 
   const {data: elData, isFetching: elFetching} = useQuery(
-    ['managerLive', viewingEventId],
+    ['eventLive', viewingEventId],
     () => fetchEventLive(viewingEventId),
     {
       enabled: currentEventId ? true : false,

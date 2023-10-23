@@ -1,6 +1,5 @@
-import {Text, FlatList} from 'react-native';
-import React, {useLayoutEffect, useState} from 'react';
-import styles from './LeagueDetails.styles';
+import {Text} from 'react-native';
+import React, {useLayoutEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps} from 'src/types/navigation';
 import {fetchLeagueStandingsC, fetchLeagueStandingsH} from '@services/api';
@@ -12,8 +11,6 @@ type Props = StackScreenProps<LeaguesStackProps, 'LeagueDetails'>;
 
 const LeagueDetails = ({navigation, route}: Props) => {
   const {leagueId, leagueName, type} = route.params;
-
-  console.log('route.params', route.params);
 
   const {
     data: cData,
@@ -50,7 +47,8 @@ const LeagueDetails = ({navigation, route}: Props) => {
     }),
   );
 
-  const onTeamDetails = (teamId: number) => {};
+  const onTeamDetails = (teamId: number) =>
+    navigation.navigate('Team', {teamId});
 
   if (type === 'classic') {
     return cFetching && !cFetchingNextPage ? (

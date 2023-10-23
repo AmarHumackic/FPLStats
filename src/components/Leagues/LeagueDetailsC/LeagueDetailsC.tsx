@@ -40,7 +40,7 @@ const LeagueDetailsC = ({
     <Touchable
       key={item.id}
       style={styles.itemContainer}
-      onPress={() => onPress(item.id)}>
+      onPress={() => onPress(item.entry)}>
       <View style={styles.rankContainer}>
         <Text style={styles.rank} adjustsFontSizeToFit numberOfLines={1}>
           {item.rank}

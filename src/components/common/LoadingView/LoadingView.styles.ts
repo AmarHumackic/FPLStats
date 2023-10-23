@@ -12,7 +12,7 @@ interface Style {
 
 export default StyleSheet.create<Style>({
   containerAbsolute: {
-    backgroundColor: colors.loadingBackground,
+    backgroundColor: colors.accentLight,
     width: '100%',
     height: '100%',
     position: 'absolute',

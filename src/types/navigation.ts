@@ -25,6 +25,9 @@ export type LeaguesStackProps = {
     leagueName: string;
     type: 'classic' | 'h2h';
   };
+  Team: {
+    teamId?: number;
+  };
 };
 
 export type ProfileStackProps = {
