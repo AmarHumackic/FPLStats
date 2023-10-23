@@ -1,6 +1,12 @@
 import {colors} from '@constants/';
 import React from 'react';
-import {View, Text, ActivityIndicator, ColorValue} from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  ColorValue,
+  DimensionValue,
+} from 'react-native';
 import styles from './LoadingView.styles';
 
 interface Props {
@@ -10,6 +16,8 @@ interface Props {
   withoutTitle?: boolean;
   absoluteBackground?: string;
   indicatorColor?: ColorValue | undefined;
+  size?: 'small' | 'large';
+  paddingBottom?: DimensionValue;
 }
 
 const LoadingView = ({
@@ -19,6 +27,8 @@ const LoadingView = ({
   withoutTitle = false,
   absoluteBackground,
   indicatorColor,
+  size,
+  paddingBottom = 0,
 }: Props) => (
   <View
     style={
@@ -26,12 +36,13 @@ const LoadingView = ({
         ? [
             styles.containerAbsolute,
             absoluteBackground ? {backgroundColor: absoluteBackground} : {},
+            {paddingBottom},
           ]
-        : styles.containerRelative
+        : [styles.containerRelative, {paddingBottom}]
     }>
     {withoutTitle ? (
       <ActivityIndicator
-        size={'large'}
+        size={size || 'large'}
         color={indicatorColor || colors.primary}
       />
     ) : (
@@ -39,7 +50,7 @@ const LoadingView = ({
         <Text style={styles.title}>{title}</Text>
         <View style={styles.loadingDescriptionContainer}>
           <ActivityIndicator
-            size={'large'}
+            size={size || 'large'}
             color={indicatorColor || colors.accentDark}
           />
           {description && <Text style={styles.description}>{description}</Text>}

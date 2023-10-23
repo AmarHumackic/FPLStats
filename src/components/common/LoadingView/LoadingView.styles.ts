@@ -1,4 +1,4 @@
-import {colors, fonts, sizes} from '@constants';
+import {colors, sizes} from '@constants/';
 import {TextStyle, StyleSheet, ViewStyle} from 'react-native';
 
 interface Style {
@@ -35,10 +35,9 @@ export default StyleSheet.create<Style>({
     borderRadius: 10,
   },
   title: {
-    fontFamily: fonts.LatoBold,
     fontSize: sizes.xxl,
     paddingBottom: 16,
-    color: colors.text1,
+    color: colors.textDark2,
   },
   loadingDescriptionContainer: {
     flexDirection: 'row',
@@ -46,9 +45,8 @@ export default StyleSheet.create<Style>({
     alignSelf: 'center',
   },
   description: {
-    fontFamily: fonts.LatoRegular,
     fontSize: sizes.m,
     paddingLeft: 10,
-    color: colors.text2,
+    color: colors.text,
   },
 });

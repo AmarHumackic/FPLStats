@@ -3,8 +3,7 @@ import React from 'react';
 import styles from './LeagueTypeView.styles';
 import {H2HLeagueDetailsDelegate, UserDelegate} from 'src/types/api';
 import Touchable from '@components/common/Touchable';
-import {colors} from '@constants/colors';
-import ChevronCircleIcon from '@assets/svgs/ChevronCircleIcon';
+import {getRankIcon} from '@utils/getRankIcon';
 
 type Props = {
   title: string;
@@ -14,47 +13,6 @@ type Props = {
 
 const LeagueTypeView = ({title, data, onPress}: Props) => {
   const isNotLast = (index: number) => !(data.length - 1 === index);
-
-  const renderRankIcon = (
-    entryRank: number | null,
-    entryLastRank: number | null,
-  ) => {
-    if (!entryRank || !entryLastRank) {
-      return (
-        <ChevronCircleIcon
-          rotation="up"
-          color={colors.accentLight}
-          arrowColor={colors.accentLight}
-        />
-      );
-    } else {
-      if (entryRank === entryLastRank) {
-        return (
-          <ChevronCircleIcon
-            rotation="up"
-            color={colors.text}
-            arrowColor={colors.text}
-          />
-        );
-      } else if (entryRank < entryLastRank) {
-        return (
-          <ChevronCircleIcon
-            rotation="up"
-            color={colors.greenAlert}
-            arrowColor={colors.textDark2}
-          />
-        );
-      } else if (entryRank > entryLastRank) {
-        return (
-          <ChevronCircleIcon
-            rotation="down"
-            color={colors.redAlert}
-            arrowColor={colors.purePrimary}
-          />
-        );
-      }
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -74,7 +32,7 @@ const LeagueTypeView = ({title, data, onPress}: Props) => {
           onPress={() => onPress(league.id, league.name)}>
           <Text style={styles.name}>{league.name}</Text>
           <View style={styles.rankContainer}>
-            {renderRankIcon(league.entry_rank, league.entry_last_rank)}
+            {getRankIcon(league?.entry_rank, league?.entry_last_rank)}
             <Text style={styles.rank}>{league?.entry_rank || '-'}</Text>
           </View>
         </Touchable>

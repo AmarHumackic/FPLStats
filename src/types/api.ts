@@ -721,14 +721,12 @@ export type H2HLeagueDetailsDelegate = {
   scoring: string;
   admin_entry: number | null;
   start_event: number;
-  entry_can_leave: boolean;
-  entry_can_admin: boolean;
-  entry_can_invite: boolean;
+  code_privacy: string;
   has_cup: boolean;
   cup_league: any | null;
-  cup_qualified: any | null;
-  entry_rank: number | null;
-  entry_last_rank: number | null;
+  ko_rounds: number | null;
+  entry_rank?: number;
+  entry_last_rank?: number;
 };
 
 export type H2HEntryDelegate = {
@@ -771,6 +769,7 @@ export type H2HStandingsDelegate = {
 
 export type H2HLeagueDelegate = {
   league: H2HLeagueDetailsDelegate;
+  last_updated_data: Date | null;
   new_entries: NewEntryDelegate;
   standings: H2HStandingDelegate;
 };

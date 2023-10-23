@@ -53,6 +53,7 @@ const Leagues = ({navigation}: Props) => {
 
       <ScrollView
         contentContainerStyle={styles.scrollContentContainer}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={isRefetching}

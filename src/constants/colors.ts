@@ -14,4 +14,5 @@ export const colors = {
   yellowAlert: 'rgb(255, 171, 27)',
   redAlert: 'rgb(192, 2, 13)',
   transparent: 'transparent',
+  loadingBackground: 'rgba(0, 0, 0, 0.4)',
 };

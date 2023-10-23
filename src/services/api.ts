@@ -6,6 +6,7 @@ import {
   GWDreamTeamDelegate,
   GWLiveDelegate,
   GWPicksDelegate,
+  H2HLeagueDelegate,
   H2HStandingDelegate,
   PieceNotesDelegate,
   PlayerSummaryDelegate,
@@ -45,12 +46,24 @@ export const fetchManagerHistory = async (teamId: number) =>
   (await axiosInstance.get(`/entry/${teamId}/history/`))
     .data as UserHistoryDelegate;
 
-export const fetchLeagueStandingsC = async (leagueId: number) =>
-  (await axiosInstance.get(`/leagues-classic/${leagueId}/standings/`))
-    .data as ClassicLeagueDelegate;
+export const fetchLeagueStandingsC = async (
+  leagueId: number,
+  pageNewEntries = 1,
+  pageStandings = 1,
+  phase: number = 1,
+) =>
+  (
+    await axiosInstance.get(
+      `/leagues-classic/${leagueId}/standings?page_new_entries=${pageNewEntries}&page_standings=${pageStandings}&phase=${phase}`,
+    )
+  ).data as ClassicLeagueDelegate;
+
+export const fetchLeagueStandingsH = async (leagueId: number) =>
+  (await axiosInstance.get(`/leagues-h2h/${leagueId}/standings`))
+    .data as H2HLeagueDelegate;
 
 export const fetchLeagueMatchesH = async (leagueId: number) =>
-  (await axiosInstance.get(`/leagues-h2h-matches/league/${leagueId}/`))
+  (await axiosInstance.get(`/leagues-h2h-matches/league/${leagueId}`))
     .data as H2HStandingDelegate;
 
 export const fetchEventDreamTeam = async (eventId: number) =>
