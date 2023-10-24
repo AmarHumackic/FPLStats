@@ -40,7 +40,6 @@ const Team = ({route}: Props) => {
   const {data: manager, isFetching: managerFetching} = useQuery(
     ['managerInfo', teamId],
     () => fetchManager(teamId),
-    {cacheTime: Infinity},
   );
 
   const {data: epData, isFetching: epFetching} = useQuery(
@@ -57,7 +56,7 @@ const Team = ({route}: Props) => {
     () => fetchEventLive(viewingEventId),
     {
       enabled: currentEventId ? true : false,
-      staleTime: 10000,
+      cacheTime: Infinity,
     },
   );
 

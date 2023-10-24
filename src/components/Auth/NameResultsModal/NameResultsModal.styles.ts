@@ -3,7 +3,6 @@ import {sizes} from '@constants/';
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
-  container: ViewStyle;
   contentContainer: ViewStyle;
   headerLabel: TextStyle;
   itemContainer: ViewStyle;
@@ -12,13 +11,6 @@ interface Props {
 }
 
 export default StyleSheet.create<Props>({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: sizes.marginHorizontal,
-    backgroundColor: colors.accentDark,
-  },
   contentContainer: {
     backgroundColor: colors.primary,
     width: '100%',

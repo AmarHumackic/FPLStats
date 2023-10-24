@@ -1,15 +1,18 @@
 import {Text} from 'react-native';
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps} from 'src/types/navigation';
-import {fetchLeagueStandingsC, fetchLeagueStandingsH} from '@services/api';
-import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
+import {fetchLeagueStandingsC} from '@services/api';
+import {useInfiniteQuery} from '@tanstack/react-query';
 import LoadingView from '@components/common/LoadingView';
 import LeagueDetailsC from '@components/Leagues/LeagueDetailsC';
+import TeamInfoModal from '@components/Leagues/TeamInfoModal';
 
 type Props = StackScreenProps<LeaguesStackProps, 'LeagueDetails'>;
 
 const LeagueDetails = ({navigation, route}: Props) => {
+  const [teamInfoModal, setTeamInfoModal] = useState<number>(); // teamId to display modal with details
+
   const {leagueId, leagueName, type} = route.params;
 
   const {
@@ -31,15 +34,15 @@ const LeagueDetails = ({navigation, route}: Props) => {
     },
   );
 
-  const {
-    data: hData,
-    isFetching: hFetching,
-    error: hError,
-    isError: hIsError,
-  } = useQuery(['leagueH', leagueId], () => fetchLeagueStandingsH(leagueId), {
-    enabled: type === 'h2h',
-    staleTime: 10000,
-  });
+  // const {
+  //   data: hData,
+  //   isFetching: hFetching,
+  //   error: hError,
+  //   isError: hIsError,
+  // } = useQuery(['leagueH', leagueId], () => fetchLeagueStandingsH(leagueId), {
+  //   enabled: type === 'h2h',
+  //   staleTime: 10000,
+  // });
 
   useLayoutEffect(() =>
     navigation.setOptions({
@@ -50,26 +53,40 @@ const LeagueDetails = ({navigation, route}: Props) => {
   const onTeamDetails = (teamId: number) =>
     navigation.navigate('Team', {teamId});
 
+  const onInfoModal = (teamId: number) => setTeamInfoModal(teamId);
+
+  let content;
+
   if (type === 'classic') {
-    return cFetching && !cFetchingNextPage ? (
-      <LoadingView />
-    ) : cIsError ? (
-      <Text>{JSON.stringify(cError)}</Text>
-    ) : (
-      cData && (
-        <LeagueDetailsC
-          data={cData}
-          loadingNextPage={cFetchingNextPage}
-          onPress={onTeamDetails}
-          onNextPage={() =>
-            cHasNextPage && !cFetchingNextPage && cFetchNextPage()
-          }
-        />
-      )
-    );
+    cFetching && !cFetchingNextPage
+      ? (content = <LoadingView />)
+      : cIsError
+      ? (content = <Text>{JSON.stringify(cError)}</Text>)
+      : cData &&
+        (content = (
+          <LeagueDetailsC
+            data={cData}
+            loadingNextPage={cFetchingNextPage}
+            onTeam={onTeamDetails}
+            onInfo={onInfoModal}
+            onNextPage={() =>
+              cHasNextPage && !cFetchingNextPage && cFetchNextPage()
+            }
+          />
+        ));
   } else {
-    return null;
+    content = null;
   }
+
+  return (
+    <>
+      {content}
+      <TeamInfoModal
+        teamId={teamInfoModal}
+        onClose={() => setTeamInfoModal(undefined)}
+      />
+    </>
+  );
 };
 
 export default LeagueDetails;

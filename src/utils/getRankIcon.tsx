@@ -10,8 +10,8 @@ export const getRankIcon = (
     return (
       <ChevronCircleIcon
         rotation="up"
-        color={colors.accentLight}
-        arrowColor={colors.accentLight}
+        color={colors.transparent}
+        arrowColor={colors.transparent}
       />
     );
   } else {
