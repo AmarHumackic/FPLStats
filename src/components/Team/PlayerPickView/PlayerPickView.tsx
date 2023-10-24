@@ -1,60 +1,71 @@
 import {View, Text, Image} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './PlayerPickView.styles';
 import {PlayerPickEventLiveDelegate, PosNameArr} from 'src/types/api';
 import {playerImageUri} from '@services/api';
 import StarIcon from '@assets/svgs/StarIcon';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
 import AlertIcon from '@assets/svgs/AlertIcon';
+import {getTeamShirt} from '@utils/getTeamShirt';
 
 type Props = {
   player: PlayerPickEventLiveDelegate;
   showPosition?: boolean;
 };
 
-const PlayerPickView = ({player, showPosition}: Props) => (
-  <View style={[styles.container, showPosition && styles.containerPosHeight]}>
-    {showPosition && (
-      <Text style={styles.elementType}>
-        {PosNameArr[player.element_type - 1]}
-      </Text>
-    )}
-    <View style={styles.topRightContainer}>
-      {player.is_captain && (
-        <View style={styles.iconContainer}>
-          <Text style={styles.captain}>C</Text>
-        </View>
-      )}
-      {player.is_vice_captain && (
-        <View style={styles.iconContainer}>
-          <Text style={styles.captain}>V</Text>
-        </View>
-      )}
-      {!isNullOrEmpty(player.news) && (
-        <View style={styles.alertIconContainer}>
-          <AlertIcon type={player.news?.includes('%') ? 'warning' : 'danger'} />
-        </View>
-      )}
-      {player.stats.in_dreamteam && (
-        <View style={styles.iconContainer}>
-          <StarIcon />
-        </View>
-      )}
-    </View>
+const PlayerPickView = ({player, showPosition}: Props) => {
+  const [imgError, setImgError] = useState(false);
 
-    <Image
-      source={{uri: playerImageUri(player.code)}}
-      style={styles.playerImg}
-    />
-    <View style={styles.textContainer}>
-      <Text style={styles.playerName} adjustsFontSizeToFit numberOfLines={1}>
-        {player.web_name}
-      </Text>
-      <Text style={styles.eventPoints}>
-        {player.stats.starts ? player.stats.total_points_live : '~'}
-      </Text>
+  return (
+    <View style={[styles.container, showPosition && styles.containerPosHeight]}>
+      {showPosition && (
+        <Text style={styles.elementType}>
+          {PosNameArr[player.element_type - 1]}
+        </Text>
+      )}
+      <View style={styles.topRightContainer}>
+        {player.is_captain && (
+          <View style={styles.iconContainer}>
+            <Text style={styles.captain}>C</Text>
+          </View>
+        )}
+        {player.is_vice_captain && (
+          <View style={styles.iconContainer}>
+            <Text style={styles.captain}>V</Text>
+          </View>
+        )}
+        {!isNullOrEmpty(player.news) && (
+          <View style={styles.alertIconContainer}>
+            <AlertIcon
+              type={player.news?.includes('%') ? 'warning' : 'danger'}
+            />
+          </View>
+        )}
+        {player.stats.in_dreamteam && (
+          <View style={styles.iconContainer}>
+            <StarIcon />
+          </View>
+        )}
+      </View>
+      <Image
+        source={
+          imgError
+            ? getTeamShirt(player.team, player.element_type)
+            : {uri: playerImageUri(player.code)}
+        }
+        style={styles.playerImg}
+        onError={() => setImgError(true)}
+      />
+      <View style={styles.textContainer}>
+        <Text style={styles.playerName} adjustsFontSizeToFit numberOfLines={1}>
+          {player.web_name}
+        </Text>
+        <Text style={styles.eventPoints}>
+          {player.stats.starts ? player.stats.total_points_live : '~'}
+        </Text>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default PlayerPickView;
