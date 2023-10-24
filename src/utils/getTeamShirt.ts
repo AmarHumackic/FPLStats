@@ -33,6 +33,7 @@ import Shirt54 from '@assets/images/shirt_54-110.webp';
 import Shirt90p1 from '@assets/images/shirt_90_1-110.webp';
 import Shirt90 from '@assets/images/shirt_90-110.webp';
 import Shirt91p1 from '@assets/images/shirt_91_1-110.webp';
+import Shirt91 from '@assets/images/shirt_91-110.webp';
 import Shirt94p1 from '@assets/images/shirt_94_1-110.webp';
 import Shirt94 from '@assets/images/shirt_94-110.webp';
 import Shirt102p1 from '@assets/images/shirt_102_1-110.webp';
@@ -74,6 +75,7 @@ const shirtTeams = {
   '90p1': Shirt90p1,
   '90': Shirt90,
   '91p1': Shirt91p1,
+  '91': Shirt91,
   '94p1': Shirt94p1,
   '94': Shirt94,
   '102p1': Shirt102p1,
