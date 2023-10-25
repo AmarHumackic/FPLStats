@@ -36,7 +36,7 @@ export const filterEventPicks = (
   const elementsBonus = getElementsBonus(fixtures, elementsLive, event);
 
   const captain = picks.find(p => p.is_captain);
-  const hasCaptainPlayed =
+  const isCaptainActive =
     (
       elementsLive?.find(
         el => el.id === captain?.element,
@@ -51,7 +51,7 @@ export const filterEventPicks = (
     _elementLive.stats.total_points_live = getEventPoints(
       p,
       _elementLive,
-      hasCaptainPlayed,
+      isCaptainActive,
       elementsBonus,
     );
     return {
@@ -98,7 +98,7 @@ export const filterEventPicks = (
 const getEventPoints = (
   elementPick: PickDelegate,
   elementLive: GWLiveDelegate['elements'][0],
-  hasCaptainPlayed: boolean,
+  isCaptainActive: boolean,
   elementsBonus: PlayerIdBonus[],
 ) => {
   let totalPoints = elementLive.stats.total_points;
@@ -109,8 +109,8 @@ const getEventPoints = (
   }
 
   if (
-    (elementPick.is_captain && hasCaptainPlayed) ||
-    (elementPick.is_vice_captain && !hasCaptainPlayed)
+    (elementPick.is_captain && isCaptainActive) ||
+    (elementPick.is_vice_captain && !isCaptainActive)
   ) {
     return totalPoints * 2;
   } else {

@@ -1,4 +1,4 @@
-import {createStrEnum} from '@utils/createStrEnum';
+import {chipsLabel, createStrEnum} from '@utils/createStrEnum';
 
 export interface UserDelegate {
   id: number;
@@ -111,7 +111,7 @@ export type SubstitutionDelegate = {
   event: number;
 };
 
-const ChipTypes = createStrEnum(['wildcard', '3xc', 'freehit', 'bboost']);
+export const ChipTypes = chipsLabel;
 export type ChipTypesDelegate = keyof typeof ChipTypes;
 
 // https://fantasy.premierleague.com/api/entry/91928/event/10/picks/

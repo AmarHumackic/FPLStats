@@ -7,6 +7,7 @@ import StarIcon from '@assets/svgs/StarIcon';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
 import AlertIcon from '@assets/svgs/AlertIcon';
 import {getTeamShirt} from '@utils/getTeamShirt';
+import Captain from '@components/common/Captain';
 
 type Props = {
   player: PlayerPickEventLiveDelegate;
@@ -24,16 +25,8 @@ const PlayerPickView = ({player, showPosition}: Props) => {
         </Text>
       )}
       <View style={styles.topRightContainer}>
-        {player.is_captain && (
-          <View style={styles.iconContainer}>
-            <Text style={styles.captain}>C</Text>
-          </View>
-        )}
-        {player.is_vice_captain && (
-          <View style={styles.iconContainer}>
-            <Text style={styles.captain}>V</Text>
-          </View>
-        )}
+        {player.is_captain && <Captain />}
+        {player.is_vice_captain && <Captain type="V" />}
         {!isNullOrEmpty(player.news) && (
           <View style={styles.alertIconContainer}>
             <AlertIcon

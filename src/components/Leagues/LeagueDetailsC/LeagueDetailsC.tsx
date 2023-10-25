@@ -14,9 +14,11 @@ type Props = {
   data: InfiniteData<ClassicLeagueDelegate>;
   loadingNextPage: boolean;
   onTeam: (teamId: number) => void;
-  onInfo: (teamId: number) => void;
+  onInfo: (teamId: number, teamName: string, playerName: string) => void;
   onNextPage: () => void;
 };
+
+const INFO_ICON_SIZE = 20;
 
 const LeagueDetailsC = ({
   data,
@@ -39,6 +41,8 @@ const LeagueDetailsC = ({
 
       <Text style={[styles.gwPoints, styles.headerText]}>GW</Text>
       <Text style={[styles.totalPoints, styles.headerText]}>Total</Text>
+
+      <View style={{width: INFO_ICON_SIZE + 5}} />
     </View>
   );
 
@@ -65,7 +69,10 @@ const LeagueDetailsC = ({
       <Text style={styles.gwPoints}>{item.event_total}</Text>
       <Text style={styles.totalPoints}>{item.total}</Text>
 
-      <InformationIcon onPress={() => onInfo(item.entry)} />
+      <InformationIcon
+        size={INFO_ICON_SIZE}
+        onPress={() => onInfo(item.entry, item.entry_name, item.player_name)}
+      />
     </Touchable>
   );
 

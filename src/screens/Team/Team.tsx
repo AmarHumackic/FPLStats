@@ -19,6 +19,7 @@ import {filterEventPicks} from '@utils/filterEventPicks';
 import EventPicksView from '@components/Team/EventPicksView';
 import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
+import {ChipTypes} from 'src/types/api';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
@@ -60,10 +61,10 @@ const Team = ({route}: Props) => {
     },
   );
 
-  const {data: fixturesData, isFetching: fixturesFetching} = useQuery(
+  const {data: fxData, isFetching: fxFetching} = useQuery(
     ['fixtures'],
     fetchFixtures,
-    {staleTime: 10000},
+    {cacheTime: Infinity},
   );
 
   const previousEventHandler = async () =>
@@ -85,23 +86,17 @@ const Team = ({route}: Props) => {
         bData?.elements,
         epData?.picks,
         elData?.elements,
-        fixturesData,
+        fxData,
         viewingEventId,
       ),
-    [
-      bData?.elements,
-      epData?.picks,
-      elData?.elements,
-      fixturesData,
-      viewingEventId,
-    ],
+    [bData?.elements, epData?.picks, elData?.elements, fxData, viewingEventId],
   );
 
   if (
     managerFetching ||
     epFetching ||
     elFetching ||
-    fixturesFetching ||
+    fxFetching ||
     !currentEventId
   ) {
     return <LoadingView />;
@@ -140,7 +135,9 @@ const Team = ({route}: Props) => {
 
         <View style={styles.activeChipContainer}>
           {epData?.active_chip && (
-            <Text style={styles.activeChipLabel}>{epData.active_chip}</Text>
+            <Text style={styles.activeChipLabel}>
+              {ChipTypes?.[epData.active_chip] || ''}
+            </Text>
           )}
         </View>
       </View>

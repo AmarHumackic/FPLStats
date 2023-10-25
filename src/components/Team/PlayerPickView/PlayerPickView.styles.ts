@@ -8,7 +8,6 @@ interface Props {
   elementType: TextStyle;
   topRightContainer: ViewStyle;
   iconContainer: ViewStyle;
-  captain: TextStyle;
   alertIconContainer: ViewStyle;
   playerImg: ImageStyle;
   textContainer: ViewStyle;
@@ -47,12 +46,6 @@ export default StyleSheet.create<Props>({
     backgroundColor: colors.black,
     marginBottom: 4,
     zIndex: 1,
-  },
-  captain: {
-    fontSize: sizes.s,
-    lineHeight: 14,
-    color: colors.purePrimary,
-    fontWeight: 'bold',
   },
   alertIconContainer: {
     zIndex: 1,

@@ -11,7 +11,9 @@ import TeamInfoModal from '@components/Leagues/TeamInfoModal';
 type Props = StackScreenProps<LeaguesStackProps, 'LeagueDetails'>;
 
 const LeagueDetails = ({navigation, route}: Props) => {
-  const [teamInfoModal, setTeamInfoModal] = useState<number>(); // teamId to display modal with details
+  const [teamIdModal, setTeamIdModal] = useState(0); // teamId to display modal with details
+  const [teamNameModal, setTeamNameModal] = useState<string>();
+  const [playerNameModal, setPlayerNameModal] = useState<string>();
 
   const {leagueId, leagueName, type} = route.params;
 
@@ -53,7 +55,15 @@ const LeagueDetails = ({navigation, route}: Props) => {
   const onTeamDetails = (teamId: number) =>
     navigation.navigate('Team', {teamId});
 
-  const onInfoModal = (teamId: number) => setTeamInfoModal(teamId);
+  const onInfoModal = (
+    teamId: number,
+    teamName?: string,
+    playerName?: string,
+  ) => {
+    setTeamIdModal(teamId);
+    setTeamNameModal(teamName);
+    setPlayerNameModal(playerName);
+  };
 
   let content;
 
@@ -82,8 +92,10 @@ const LeagueDetails = ({navigation, route}: Props) => {
     <>
       {content}
       <TeamInfoModal
-        teamId={teamInfoModal}
-        onClose={() => setTeamInfoModal(undefined)}
+        teamId={teamIdModal}
+        teamName={teamNameModal}
+        playerName={playerNameModal}
+        onClose={() => onInfoModal(0, undefined, undefined)}
       />
     </>
   );
