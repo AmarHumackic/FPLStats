@@ -1,6 +1,6 @@
 export type BottomTabProps = {
   TeamStack: TeamStackProps;
-  LiveStack: LiveStackProps;
+  FixturesStack: FixturesStackProps;
   StatsStack: StatsStackProps;
   LeaguesStack: LeaguesStackProps;
   ProfileStack: ProfileStackProps;
@@ -10,8 +10,8 @@ export type TeamStackProps = {
   Team: undefined;
 };
 
-export type LiveStackProps = {
-  Live: undefined;
+export type FixturesStackProps = {
+  Fixtures: undefined;
 };
 
 export type StatsStackProps = {

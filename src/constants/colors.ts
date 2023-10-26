@@ -4,6 +4,7 @@ export const colors = {
   accentDark: '#39AEA9',
   accentDark1: '#71C180',
   accentLight: '#A2D5AB',
+  textLight1: 'rgba(70, 100, 107, 0.7)',
   text: '#46646b',
   textDark1: '#3c575d',
   textDark2: '#32484d',

@@ -18,7 +18,7 @@ export default StyleSheet.create<Props>({
   },
   label: {
     marginBottom: 24,
-    color: colors.text,
+    color: colors.textDark1,
     fontWeight: 'bold',
     fontSize: sizes.l,
   },
@@ -27,7 +27,7 @@ export default StyleSheet.create<Props>({
     height: 40,
     borderRadius: 8,
     backgroundColor: colors.accentLight,
-    color: colors.text,
+    color: colors.textDark1,
     paddingHorizontal: 10,
     fontSize: sizes.ml,
   },

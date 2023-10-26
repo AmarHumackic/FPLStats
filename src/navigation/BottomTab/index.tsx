@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TeamStack from '@navigation/TeamStack';
-import LiveStack from '@navigation/LiveStack';
+import FixturesStack from '@navigation/FixturesStack';
 import StatsStack from '@navigation/StatsStack';
 import LeaguesStack from '@navigation/LeaguesStack';
 import ProfileStack from '@navigation/ProfileStack';
@@ -36,10 +36,10 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="LiveStack"
-        component={LiveStack}
+        name="FixturesStack"
+        component={FixturesStack}
         options={{
-          tabBarLabel: 'Live',
+          tabBarLabel: 'Fixtures',
           tabBarIcon: ({color}) =>
             renderNavElement(<AntennaIcon color={color} />),
         }}

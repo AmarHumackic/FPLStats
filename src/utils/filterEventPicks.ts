@@ -21,7 +21,9 @@ export const filterEventPicks = (
     !picks ||
     !picks.length ||
     !elementsLive ||
-    !elementsLive.length
+    !elementsLive.length ||
+    !fixtures?.length ||
+    !event
   ) {
     return {
       goalKeepersM: [],

@@ -92,6 +92,8 @@ const Auth = ({}: Props) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.label}>Enter your Team ID or Team Name</Text>
       <TextInput
+        placeholder="Team ID/Name"
+        placeholderTextColor={colors.textLight1}
         value={input}
         onChangeText={changeInputHandler}
         style={styles.input}
