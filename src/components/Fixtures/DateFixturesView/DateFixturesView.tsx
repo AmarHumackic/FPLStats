@@ -21,13 +21,27 @@ const DateFixturesView = ({title, fixtures}: Props) => (
     {fixtures.map(f => (
       <View key={f.id} style={styles.itemContainer}>
         <View style={styles.itemLeftContainer}>
-          <Text style={styles.teamName}>{f.team_h_name}</Text>
+          <Text style={[styles.teamName, styles.textRight]}>
+            {f.team_h_name}
+          </Text>
           <Image source={getTeamLogo(f.team_h_code)} style={styles.logoImg} />
         </View>
-        <Text style={styles.time}>{dayjs(f.kickoff_time).format('HH:mm')}</Text>
+        {f.started ? (
+          <Text
+            style={[
+              styles.scores,
+              f.finished_provisional && styles.scoresFinished,
+            ]}>{`${f.team_h_score} - ${f.team_a_score}`}</Text>
+        ) : (
+          <Text style={styles.time}>
+            {dayjs(f.kickoff_time).format('HH:mm')}
+          </Text>
+        )}
         <View style={styles.itemRightContainer}>
           <Image source={getTeamLogo(f.team_a_code)} style={styles.logoImg} />
-          <Text style={styles.teamName}>{f.team_a_name}</Text>
+          <Text style={[styles.teamName, styles.textLeft]}>
+            {f.team_a_name}
+          </Text>
         </View>
       </View>
     ))}

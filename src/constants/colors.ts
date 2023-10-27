@@ -2,7 +2,7 @@ export const colors = {
   purePrimary: '#FFFFFF',
   primary: '#E5EFC1',
   accentDark: '#39AEA9',
-  accentDark1: '#71C180',
+  accentDark1: '#329a95',
   accentLight: '#A2D5AB',
   textLight2: 'rgba(70, 100, 107, 0.7)',
   textLight1: 'rgba(70, 100, 107, 0.9)',
@@ -17,4 +17,5 @@ export const colors = {
   yellowAlert: 'rgb(255, 171, 27)',
   redAlert: 'rgb(192, 2, 13)',
   transparent: 'transparent',
+  highlight: '#71C180',
 };

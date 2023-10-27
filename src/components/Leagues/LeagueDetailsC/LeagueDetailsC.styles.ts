@@ -28,7 +28,7 @@ export default StyleSheet.create<Props>({
     paddingVertical: 6,
   },
   itemContainerSession: {
-    backgroundColor: colors.accentDark1,
+    backgroundColor: colors.highlight,
   },
   rankContainer: {
     flexDirection: 'row',
@@ -66,7 +66,7 @@ export default StyleSheet.create<Props>({
     width: 45,
   },
   headerContainer: {
-    backgroundColor: colors.accentDark1,
+    backgroundColor: colors.highlight,
   },
   headerText: {
     fontWeight: 'bold',

@@ -11,6 +11,10 @@ interface Props {
   itemRightContainer: ViewStyle;
   logoImg: ImageStyle;
   teamName: TextStyle;
+  textRight: TextStyle;
+  textLeft: TextStyle;
+  scores: TextStyle;
+  scoresFinished: TextStyle;
   time: TextStyle;
 }
 
@@ -44,7 +48,7 @@ export default StyleSheet.create<Props>({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingRight: 5,
+    marginHorizontal: 5,
   },
   itemRightContainer: {
     flex: 1,
@@ -58,11 +62,33 @@ export default StyleSheet.create<Props>({
     height: 40,
   },
   teamName: {
+    flex: 1,
     color: colors.textLight1,
     fontSize: sizes.ml,
     fontWeight: 'bold',
     letterSpacing: 0.2,
     paddingHorizontal: 5,
+  },
+  textRight: {
+    textAlign: 'right',
+  },
+  textLeft: {
+    textAlign: 'left',
+  },
+  scores: {
+    borderWidth: 1,
+    borderColor: colors.accentDark,
+    borderRadius: 4,
+    overflow: 'hidden',
+    color: colors.accentDark1,
+    fontSize: sizes.ml,
+    fontWeight: 'bold',
+    paddingVertical: 4,
+    textAlign: 'center',
+    width: 52,
+  },
+  scoresFinished: {
+    backgroundColor: colors.primary,
   },
   time: {
     borderWidth: 1,
