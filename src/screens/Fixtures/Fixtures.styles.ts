@@ -4,12 +4,9 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
   container: ViewStyle;
-  eventSwitchContainer: ViewStyle;
+  headerContainer: ViewStyle;
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
-  pointsContainer: ViewStyle;
-  pointsValue: TextStyle;
-  pointsLabel: TextStyle;
 }
 
 export default StyleSheet.create<Props>({
@@ -17,7 +14,7 @@ export default StyleSheet.create<Props>({
     flex: 1,
     backgroundColor: colors.accentLight,
   },
-  eventSwitchContainer: {
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -35,28 +32,5 @@ export default StyleSheet.create<Props>({
   eventNameLabel: {
     fontSize: sizes.xl,
     color: colors.black,
-  },
-  pointsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    padding: 6,
-    marginTop: 8,
-    backgroundColor: colors.accentDark,
-    borderRadius: 8,
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.2,
-    elevation: 2,
-  },
-  pointsValue: {
-    textAlign: 'center',
-    fontSize: sizes.title,
-    textAlignVertical: 'center',
-    color: colors.purePrimary,
-  },
-  pointsLabel: {
-    fontSize: sizes.xl,
-    color: colors.purePrimary,
   },
 });

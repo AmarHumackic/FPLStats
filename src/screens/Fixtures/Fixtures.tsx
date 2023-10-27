@@ -9,6 +9,7 @@ import ChevronLeftIcon from '@assets/svgs/ChevronLeftIcon';
 import ChevronRightIcon from '@assets/svgs/ChevronRightIcon';
 import LoadingView from '@components/common/LoadingView';
 import {filterEventFixtures} from '@utils/filterEventFixtures';
+import DateFixturesView from '@components/Fixtures/DateFixturesView';
 
 type Props = {};
 
@@ -43,7 +44,7 @@ const Fixtures = ({}: Props) => {
   const nextEventHandler = async () =>
     setViewingEventId(prevState => prevState + 1);
 
-  const data = useMemo(
+  const dateFixtures = useMemo(
     () => filterEventFixtures(bData?.teams, fxData, viewingEventId),
     [bData?.teams, fxData, viewingEventId],
   );
@@ -54,7 +55,7 @@ const Fixtures = ({}: Props) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <View style={styles.eventSwitchContainer}>
+      <View style={styles.headerContainer}>
         <Touchable
           disabled={viewingEventId <= 1}
           style={styles.chevronContainer}
@@ -70,6 +71,14 @@ const Fixtures = ({}: Props) => {
           <ChevronRightIcon />
         </Touchable>
       </View>
+
+      {Object.keys(dateFixtures).map(df => (
+        <DateFixturesView
+          key={df}
+          title={df}
+          fixtures={dateFixtures?.[df] || []}
+        />
+      ))}
     </SafeAreaView>
   );
 };

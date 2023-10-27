@@ -325,7 +325,7 @@ export interface FixtureDelegate {
   finished: boolean;
   finished_provisional: boolean;
   id: number;
-  kickoff_time: Date | null;
+  kickoff_time: string | null;
   minutes: number;
   provisional_start_time: boolean;
   started: boolean;
@@ -892,4 +892,15 @@ export interface PlayerIdBps {
 export interface PlayerIdBonus {
   id: number;
   bonus: number;
+}
+
+export type DateFixture = FixtureDelegate & {
+  team_h_name: string;
+  team_h_code: number;
+  team_a_name: string;
+  team_a_code: number;
+};
+
+export interface DateFixtures {
+  [key: string]: DateFixture[];
 }

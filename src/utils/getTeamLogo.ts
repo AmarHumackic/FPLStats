@@ -42,5 +42,5 @@ const teamLogos = {
   102: Team102,
 };
 
-export const getTeamShirt = (team: number) =>
+export const getTeamLogo = (team: number) =>
   teamLogos?.[team as keyof typeof teamLogos];

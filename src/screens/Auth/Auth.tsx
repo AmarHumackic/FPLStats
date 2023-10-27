@@ -93,7 +93,7 @@ const Auth = ({}: Props) => {
       <Text style={styles.label}>Enter your Team ID or Team Name</Text>
       <TextInput
         placeholder="Team ID/Name"
-        placeholderTextColor={colors.textLight1}
+        placeholderTextColor={colors.textLight2}
         value={input}
         onChangeText={changeInputHandler}
         style={styles.input}
