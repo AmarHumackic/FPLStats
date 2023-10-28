@@ -62,10 +62,10 @@ const PlayerPickView = ({player, showPosition}: Props) => {
               styles.eventPointsNotPlayed,
           ]}>
           {player.fixture_started
-            ? player.total_points_live
-            : `${player.rival_team_short_name}${
-                player.fixture_home ? ' (H)' : ' (A)'
-              }`}
+            ? `${player.in_lineup ? 'U-' : 'D-'}${player.total_points_live}`
+            : `${player.in_lineup ? 'U-' : 'D-'}${
+                player.rival_team_short_name
+              }${player.fixture_home ? ' (H)' : ' (A)'}`}
         </Text>
       </View>
     </View>

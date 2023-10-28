@@ -8,6 +8,7 @@ import {
   TeamPlayerDelegate,
 } from 'src/types/api';
 import {getElementsBonus} from './getElementsBonus';
+import {MIN_ELEMENT_TYPES_LINEUP} from '@constants/index';
 
 export const filterEventPicks = (
   elements?: PlayerDelegate[],
@@ -84,7 +85,8 @@ export const filterEventPicks = (
       creativity: _elementLive.stats.creativity,
       influence: _elementLive.stats.influence,
       threat: _elementLive.stats.threat,
-      total_points_live: getEventPoints(
+      in_lineup: true, // set all to true temporarily
+      total_points_live: getEventPlayerPoints(
         p,
         _elementLive,
         isCaptainActive,
@@ -101,25 +103,31 @@ export const filterEventPicks = (
     };
   });
 
-  const goalKeepersM = eventPicks.filter(
+  const eventPicksLinedUp = getPlayersLinedUp(eventPicks); // this will include bench points in case some of the first 11 do not play
+
+  const goalKeepersM = eventPicksLinedUp.filter(
     p => p.element_type === 1 && p.multiplier,
   );
-  const defendersM = eventPicks.filter(
+  const defendersM = eventPicksLinedUp.filter(
     p => p.element_type === 2 && p.multiplier,
   );
-  const midfieldersM = eventPicks.filter(
+  const midfieldersM = eventPicksLinedUp.filter(
     p => p.element_type === 3 && p.multiplier,
   );
-  const forwardersM = eventPicks.filter(
+  const forwardersM = eventPicksLinedUp.filter(
     p => p.element_type === 4 && p.multiplier,
   );
-  const bench = eventPicks.filter(p => !p.multiplier);
+  const bench = eventPicksLinedUp.filter(p => !p.multiplier);
   const eventPoints = [
     ...goalKeepersM,
     ...defendersM,
     ...midfieldersM,
     ...forwardersM,
-  ].reduce((sum, item) => sum + item.total_points_live, 0);
+    ...bench,
+  ].reduce(
+    (sum, item) => sum + (item.in_lineup ? item.total_points_live : 0),
+    0,
+  );
 
   return {
     goalKeepersM,
@@ -132,7 +140,7 @@ export const filterEventPicks = (
   };
 };
 
-const getEventPoints = (
+const getEventPlayerPoints = (
   elementPick: PickDelegate,
   elementLive: GWLiveDelegate['elements'][0],
   isCaptainActive: boolean,
@@ -153,4 +161,60 @@ const getEventPoints = (
   } else {
     return totalPoints;
   }
+};
+
+export const getPlayersLinedUp = (players: TeamPlayerDelegate[]) => {
+  const multipliersP = players.filter(p => p.multiplier);
+  const initialBench: TeamPlayerDelegate[] = players.filter(p => !p.multiplier); // players that were initially on the bench
+  const benchLineups: TeamPlayerDelegate[] = []; // players that are included in the lineup because some of the first 11 do not play
+
+  // TODO: Include logic for suspended/inactive players, do not include them
+  return players.map(p => {
+    let inLineup = true;
+    if (!p.multiplier) {
+      // is not in first 11 - check if benchLineups contains the player, if yes, set lineup to true
+      inLineup = benchLineups.some(bl => bl.id === p.id);
+    } else {
+      if (p.fixture_started && !p.minutes) {
+        // match started, player is not playing - count points from bench replacement
+        for (let index = 0; index < initialBench.length; index++) {
+          const initialBenchP = initialBench[index];
+          if (initialBenchP.element_type === p.element_type) {
+            // same element type - just add initialBench player benchLineup, and remove it from the initialBench
+            inLineup = false;
+            benchLineups.push(initialBenchP);
+            initialBench.splice(index, 1);
+            break;
+          } else {
+            // not same element type - calculate minimum players of element type
+            if (
+              initialBenchP.element_type !== 1 &&
+              multipliersP.filter(mp => mp.element_type === p.element_type)
+                .length > MIN_ELEMENT_TYPES_LINEUP?.[p.element_type]
+            ) {
+              // there is more than min number of players per element type - bench replacement is possible
+              inLineup = false;
+              benchLineups.push(initialBenchP);
+              initialBench.splice(index, 1);
+              // remove current player from multipliersP
+              multipliersP.splice(
+                multipliersP.indexOf(
+                  multipliersP.find(mp => mp.id === p.id) as TeamPlayerDelegate,
+                ),
+                1,
+              );
+              break;
+            }
+          }
+        }
+      } else {
+        inLineup = true;
+      }
+    }
+
+    return {
+      ...p,
+      in_lineup: inLineup,
+    };
+  });
 };
