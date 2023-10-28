@@ -68,14 +68,22 @@ export const filterEventPicks = (
     return {
       id: _element.id,
       element_type: _element.element_type,
-      is_captain: p.is_captain,
-      is_vice_captain: p.is_vice_captain,
-      multiplier: p.multiplier,
-      news: _element.news,
-      in_dreamteam: _elementLive.stats.in_dreamteam,
       team: _element.team,
       code: _element.code,
       web_name: _element.web_name,
+      news: _element.news,
+      is_captain: p.is_captain,
+      is_vice_captain: p.is_vice_captain,
+      multiplier: p.multiplier,
+      in_dreamteam: _elementLive.stats.in_dreamteam,
+      minutes: _elementLive.stats.minutes,
+      yellow_cards: _elementLive.stats.yellow_cards,
+      red_cards: _elementLive.stats.red_cards,
+      assists: _elementLive.stats.assists,
+      goals_scored: _elementLive.stats.goals_scored,
+      creativity: _elementLive.stats.creativity,
+      influence: _elementLive.stats.influence,
+      threat: _elementLive.stats.threat,
       total_points_live: getEventPoints(
         p,
         _elementLive,
@@ -83,6 +91,10 @@ export const filterEventPicks = (
         elementsBonus,
       ),
       fixture_started: elementFixture?.started || false,
+      fixture_finished:
+        elementFixture?.finished ||
+        elementFixture?.finished_provisional ||
+        false,
       rival_team_short_name:
         teams.find(t => t.id === rivalTeamId)?.short_name || '',
       fixture_home: rivalTeamId === elementFixture?.team_a ? true : false,

@@ -41,8 +41,6 @@ export const filterTeamInfo = (
     ...forwardersM,
   ];
 
-  const eFixtures = fixtures?.filter(f => f.event === event) || [];
-
   const captainId = eventPicks?.picks.find(ep => ep.is_captain)?.element;
   const captain =
     (players?.find(p => p.id === captainId) as TeamPlayerDelegate)?.web_name ||
@@ -59,41 +57,27 @@ export const filterTeamInfo = (
     viceCaptain,
     isCaptainActive,
     activeChip: eventPicks?.active_chip && chipsLabel?.[eventPicks.active_chip],
-    inPlay: players.filter(
-      p =>
-        p.stats.minutes > 0 &&
-        eFixtures?.find(f => f.id === p.explain[0].fixture)?.finished === false,
-    ).length,
-    toStart: players.filter(
-      p =>
-        eFixtures?.find(f => f.id === p.explain[0].fixture)?.started === false,
-    ).length, // TODO: check props ('starts', 'starts_per_90') during the matches
+    inPlay: players.filter(p => p.fixture_started && !p.fixture_finished)
+      .length,
+    toStart: players.filter(p => !p.fixture_started && !p.fixture_finished)
+      .length,
     eventPointsLive: eventPoints,
     yellowCards: players.reduce(
-      (sum, item) => sum + (item?.stats?.yellow_cards || 0),
+      (sum, item) => sum + (item?.yellow_cards || 0),
       0,
     ),
-    redCards: players.reduce(
-      (sum, item) => sum + (item?.stats?.red_cards || 0),
-      0,
-    ),
-    dreamTeamPlayers: players.filter(p => p.stats.in_dreamteam).length,
-    assists: players.reduce(
-      (sum, item) => sum + (item?.stats?.assists || 0),
-      0,
-    ),
-    goals: players.reduce(
-      (sum, item) => sum + (item?.stats?.goals_scored || 0),
-      0,
-    ),
+    redCards: players.reduce((sum, item) => sum + (item?.red_cards || 0), 0),
+    dreamTeamPlayers: players.filter(p => p.in_dreamteam).length,
+    assists: players.reduce((sum, item) => sum + (item?.assists || 0), 0),
+    goals: players.reduce((sum, item) => sum + (item?.goals_scored || 0), 0),
     creativity:
-      players.reduce((sum, item) => sum + +(item?.stats?.creativity || 0), 0) /
+      players.reduce((sum, item) => sum + +(item?.creativity || 0), 0) /
       players.length,
     influence:
-      players.reduce((sum, item) => sum + +(item?.stats?.influence || 0), 0) /
+      players.reduce((sum, item) => sum + +(item?.influence || 0), 0) /
       players.length,
     threat:
-      players.reduce((sum, item) => sum + +(item?.stats?.threat || 0), 0) /
+      players.reduce((sum, item) => sum + +(item?.threat || 0), 0) /
       players.length,
   };
 };

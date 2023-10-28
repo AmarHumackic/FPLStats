@@ -57,6 +57,9 @@ const PlayerPickView = ({player, showPosition}: Props) => {
           style={[
             styles.eventPoints,
             player.fixture_started && styles.eventPointsStarted,
+            player.fixture_finished &&
+              !player.minutes &&
+              styles.eventPointsNotPlayed,
           ]}>
           {player.fixture_started
             ? player.total_points_live

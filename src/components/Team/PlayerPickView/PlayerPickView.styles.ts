@@ -14,6 +14,7 @@ interface Props {
   playerName: TextStyle;
   eventPoints: TextStyle;
   eventPointsStarted: TextStyle;
+  eventPointsNotPlayed: TextStyle;
 }
 
 const ELEMENT_TYPE_HEIGHT = 18;
@@ -85,5 +86,8 @@ export default StyleSheet.create<Props>({
   },
   eventPointsStarted: {
     fontWeight: 'bold',
+  },
+  eventPointsNotPlayed: {
+    color: colors.redAlertLight,
   },
 });

@@ -16,6 +16,7 @@ export const colors = {
   greenAlert: 'rgb(5, 250, 135)',
   yellowAlert: 'rgb(255, 171, 27)',
   redAlert: 'rgb(192, 2, 13)',
+  redAlertLight: 'rgb(253, 53, 63)',
   transparent: 'transparent',
   highlight: '#71C180',
 };

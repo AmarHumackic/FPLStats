@@ -100,16 +100,25 @@ export type PickDelegate = {
 export interface TeamPlayerDelegate {
   id: PlayerDelegate['id'];
   element_type: PlayerDelegate['element_type'];
-  is_captain: PickDelegate['is_captain'];
-  is_vice_captain: PickDelegate['is_vice_captain'];
-  multiplier: PickDelegate['multiplier'];
-  news: PlayerDelegate['news'];
-  in_dreamteam: GWElementLiveDelegate['stats']['in_dreamteam'];
   team: PlayerDelegate['team'];
   code: PlayerDelegate['team_code'];
   web_name: PlayerDelegate['web_name'];
+  news: PlayerDelegate['news'];
+  is_captain: PickDelegate['is_captain'];
+  is_vice_captain: PickDelegate['is_vice_captain'];
+  multiplier: PickDelegate['multiplier'];
+  in_dreamteam: GWElementLiveDelegate['stats']['in_dreamteam'];
+  minutes: GWElementLiveDelegate['stats']['minutes'];
+  yellow_cards: GWElementLiveDelegate['stats']['yellow_cards'];
+  red_cards: GWElementLiveDelegate['stats']['red_cards'];
+  assists: GWElementLiveDelegate['stats']['assists'];
+  goals_scored: GWElementLiveDelegate['stats']['goals_scored'];
+  creativity: GWElementLiveDelegate['stats']['creativity'];
+  influence: GWElementLiveDelegate['stats']['influence'];
+  threat: GWElementLiveDelegate['stats']['threat'];
   total_points_live: number;
   fixture_started: boolean;
+  fixture_finished: boolean;
   rival_team_short_name: string;
   fixture_home: boolean;
 }
