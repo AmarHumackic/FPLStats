@@ -97,15 +97,21 @@ export type PickDelegate = {
   is_vice_captain: boolean;
 };
 
-export interface TeamPlayerDelegate
-  extends PlayerDelegate,
-    PickDelegate,
-    GWElementLiveDelegate {
-  custom: {
-    fixture_started: boolean;
-    rival_team_short_name: string;
-    fixture_home: boolean;
-  };
+export interface TeamPlayerDelegate {
+  id: PlayerDelegate['id'];
+  element_type: PlayerDelegate['element_type'];
+  is_captain: PickDelegate['is_captain'];
+  is_vice_captain: PickDelegate['is_vice_captain'];
+  multiplier: PickDelegate['multiplier'];
+  news: PlayerDelegate['news'];
+  in_dreamteam: GWElementLiveDelegate['stats']['in_dreamteam'];
+  team: PlayerDelegate['team'];
+  code: PlayerDelegate['team_code'];
+  web_name: PlayerDelegate['web_name'];
+  total_points_live: number;
+  fixture_started: boolean;
+  rival_team_short_name: string;
+  fixture_home: boolean;
 }
 
 export type PlayerEventLiveDelegate = PlayerDelegate &
@@ -848,7 +854,6 @@ export type GWElementLiveDelegate = {
     expected_goal_involvements: string;
     expected_goals_conceded: string;
     total_points: number;
-    total_points_live?: number; // non API field, used for live calculations of bonuses
     in_dreamteam: boolean;
   };
   explain: [

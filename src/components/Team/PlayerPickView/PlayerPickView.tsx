@@ -34,7 +34,7 @@ const PlayerPickView = ({player, showPosition}: Props) => {
             />
           </View>
         )}
-        {player.stats.in_dreamteam && (
+        {player.in_dreamteam && (
           <View style={styles.iconContainer}>
             <StarIcon />
           </View>
@@ -56,12 +56,12 @@ const PlayerPickView = ({player, showPosition}: Props) => {
         <Text
           style={[
             styles.eventPoints,
-            player.custom.fixture_started && styles.eventPointsStarted,
+            player.fixture_started && styles.eventPointsStarted,
           ]}>
-          {player.custom.fixture_started
-            ? player.stats.total_points_live
-            : `${player.custom.rival_team_short_name}${
-                player.custom.fixture_home ? ' (H)' : ' (A)'
+          {player.fixture_started
+            ? player.total_points_live
+            : `${player.rival_team_short_name}${
+                player.fixture_home ? ' (H)' : ' (A)'
               }`}
         </Text>
       </View>

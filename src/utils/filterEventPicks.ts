@@ -65,23 +65,27 @@ export const filterEventPicks = (
         ? elementFixture.team_a
         : 0;
 
-    _elementLive.stats.total_points_live = getEventPoints(
-      p,
-      _elementLive,
-      isCaptainActive,
-      elementsBonus,
-    );
-
     return {
-      ..._element,
-      ...p,
-      ..._elementLive,
-      custom: {
-        fixture_started: elementFixture?.started || false,
-        rival_team_short_name:
-          teams.find(t => t.id === rivalTeamId)?.short_name || '',
-        fixture_home: rivalTeamId === elementFixture?.team_a ? true : false,
-      },
+      id: _element.id,
+      element_type: _element.element_type,
+      is_captain: p.is_captain,
+      is_vice_captain: p.is_vice_captain,
+      multiplier: p.multiplier,
+      news: _element.news,
+      in_dreamteam: _elementLive.stats.in_dreamteam,
+      team: _element.team,
+      code: _element.code,
+      web_name: _element.web_name,
+      total_points_live: getEventPoints(
+        p,
+        _elementLive,
+        isCaptainActive,
+        elementsBonus,
+      ),
+      fixture_started: elementFixture?.started || false,
+      rival_team_short_name:
+        teams.find(t => t.id === rivalTeamId)?.short_name || '',
+      fixture_home: rivalTeamId === elementFixture?.team_a ? true : false,
     };
   });
 
@@ -103,11 +107,7 @@ export const filterEventPicks = (
     ...defendersM,
     ...midfieldersM,
     ...forwardersM,
-  ].reduce(
-    (sum, item) =>
-      sum + (item.stats.total_points_live || item.stats.total_points),
-    0,
-  );
+  ].reduce((sum, item) => sum + item.total_points_live, 0);
 
   return {
     goalKeepersM,
