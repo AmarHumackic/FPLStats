@@ -4,24 +4,24 @@ import {
   PickDelegate,
   PlayerDelegate,
   PlayerIdBonus,
-  PlayerPickEventLiveDelegate,
+  TeamDelegate,
+  TeamPlayerDelegate,
 } from 'src/types/api';
 import {getElementsBonus} from './getElementsBonus';
 
 export const filterEventPicks = (
   elements?: PlayerDelegate[],
+  teams?: TeamDelegate[],
   picks?: PickDelegate[],
   elementsLive?: GWLiveDelegate['elements'],
   fixtures?: FixtureDelegate[],
   event?: number,
 ) => {
   if (
-    !elements ||
-    !elements.length ||
-    !picks ||
-    !picks.length ||
-    !elementsLive ||
-    !elementsLive.length ||
+    !elements?.length ||
+    !teams?.length ||
+    !picks?.length ||
+    !elementsLive?.length ||
     !fixtures?.length ||
     !event
   ) {
@@ -32,34 +32,56 @@ export const filterEventPicks = (
       forwardersM: [],
       bench: [],
       eventPoints: 0,
+      isCaptainActive: true,
     };
   }
 
-  const elementsBonus = getElementsBonus(fixtures, elementsLive, event);
+  const eventFixtures = fixtures.filter(f => f.event === event);
 
-  const captain = picks.find(p => p.is_captain);
+  const elementsBonus = getElementsBonus(eventFixtures, elementsLive);
+
+  const captainId = picks.find(p => p.is_captain)?.element;
+  const captainLive = elementsLive.find(el => el.id === captainId);
+  const captainFixture = eventFixtures.find(
+    ef => ef.id === captainLive?.explain[0].fixture,
+  );
   const isCaptainActive =
-    (
-      elementsLive?.find(
-        el => el.id === captain?.element,
-      ) as GWLiveDelegate['elements'][0]
-    )?.stats.minutes > 0;
+    captainFixture?.finished_provisional && !captainLive?.stats.minutes
+      ? false
+      : true;
 
-  const eventPicks: PlayerPickEventLiveDelegate[] = picks.map(p => {
+  const eventPicks: TeamPlayerDelegate[] = picks.map(p => {
     const _element = elements.find(el => el.id === p.element) as PlayerDelegate;
     const _elementLive = elementsLive?.find(
       el => el.id === p.element,
     ) as GWLiveDelegate['elements'][0];
+    const elementFixture = eventFixtures.find(
+      ef => ef.id === _elementLive.explain[0].fixture,
+    );
+    const rivalTeamId =
+      elementFixture?.team_a === _element.team
+        ? elementFixture.team_h
+        : elementFixture?.team_h === _element.team
+        ? elementFixture.team_a
+        : 0;
+
     _elementLive.stats.total_points_live = getEventPoints(
       p,
       _elementLive,
       isCaptainActive,
       elementsBonus,
     );
+
     return {
       ..._element,
       ...p,
       ..._elementLive,
+      custom: {
+        fixture_started: elementFixture?.started || false,
+        rival_team_short_name:
+          teams.find(t => t.id === rivalTeamId)?.short_name || '',
+        fixture_home: rivalTeamId === elementFixture?.team_a ? true : false,
+      },
     };
   });
 
@@ -94,6 +116,7 @@ export const filterEventPicks = (
     forwardersM,
     bench,
     eventPoints,
+    isCaptainActive,
   };
 };
 

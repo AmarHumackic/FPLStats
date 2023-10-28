@@ -1,7 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React, {useState} from 'react';
 import styles from './PlayerPickView.styles';
-import {PlayerPickEventLiveDelegate, PosNameArr} from 'src/types/api';
+import {TeamPlayerDelegate, PosNameArr} from 'src/types/api';
 import {playerImageUri} from '@services/api';
 import StarIcon from '@assets/svgs/StarIcon';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
@@ -10,7 +10,7 @@ import {getTeamShirt} from '@utils/getTeamShirt';
 import Captain from '@components/common/Captain';
 
 type Props = {
-  player: PlayerPickEventLiveDelegate;
+  player: TeamPlayerDelegate;
   showPosition?: boolean;
 };
 
@@ -53,8 +53,16 @@ const PlayerPickView = ({player, showPosition}: Props) => {
         <Text style={styles.playerName} adjustsFontSizeToFit numberOfLines={1}>
           {player.web_name}
         </Text>
-        <Text style={styles.eventPoints}>
-          {player.stats.starts ? player.stats.total_points_live : '~'}
+        <Text
+          style={[
+            styles.eventPoints,
+            player.custom.fixture_started && styles.eventPointsStarted,
+          ]}>
+          {player.custom.fixture_started
+            ? player.stats.total_points_live
+            : `${player.custom.rival_team_short_name}${
+                player.custom.fixture_home ? ' (H)' : ' (A)'
+              }`}
         </Text>
       </View>
     </View>

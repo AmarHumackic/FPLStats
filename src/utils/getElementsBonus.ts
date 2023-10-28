@@ -6,17 +6,14 @@ import {
 } from 'src/types/api';
 
 export const getElementsBonus = (
-  fixtures?: FixtureDelegate[],
+  eventFixtures?: FixtureDelegate[],
   elementsLive?: GWLiveDelegate['elements'],
-  event?: number,
 ) => {
-  if (!fixtures?.length || !elementsLive?.length || !event) {
+  if (!eventFixtures?.length || !elementsLive?.length) {
     return [];
   }
 
   const elementsBonus: PlayerIdBonus[] = [];
-
-  const eventFixtures = fixtures.filter(f => f.event === event);
 
   for (let index = 0; index < eventFixtures.length; index++) {
     const f = eventFixtures[index];

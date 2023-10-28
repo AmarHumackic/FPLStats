@@ -1,16 +1,16 @@
 import {ImageBackground, View} from 'react-native';
 import React from 'react';
 import styles from './EventPicksView.styles';
-import {PlayerPickEventLiveDelegate} from 'src/types/api';
+import {TeamPlayerDelegate} from 'src/types/api';
 import PlayerPickView from '../PlayerPickView';
 import SoccerFieldBackground from '@assets/images/SoccerFieldBackground.png';
 
 type Props = {
-  goalKeepersM: PlayerPickEventLiveDelegate[];
-  defendersM: PlayerPickEventLiveDelegate[];
-  midfieldersM: PlayerPickEventLiveDelegate[];
-  forwardersM: PlayerPickEventLiveDelegate[];
-  bench: PlayerPickEventLiveDelegate[];
+  goalKeepersM: TeamPlayerDelegate[];
+  defendersM: TeamPlayerDelegate[];
+  midfieldersM: TeamPlayerDelegate[];
+  forwardersM: TeamPlayerDelegate[];
+  bench: TeamPlayerDelegate[];
 };
 
 const EventPicksView = ({

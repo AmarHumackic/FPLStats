@@ -76,12 +76,20 @@ const TeamInfoModal = ({teamId, teamName, playerName, onClose}: Props) => {
     () =>
       filterTeamInfo(
         bData?.elements,
+        bData?.teams,
         epData,
         elData?.elements,
         fxData,
         currentEventId,
       ),
-    [bData?.elements, epData, elData?.elements, fxData, currentEventId],
+    [
+      bData?.elements,
+      bData?.teams,
+      epData,
+      elData?.elements,
+      fxData,
+      currentEventId,
+    ],
   );
 
   if (epFetching || elFetching || fxFetching || !currentEventId) {

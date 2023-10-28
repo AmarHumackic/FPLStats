@@ -84,12 +84,20 @@ const Team = ({route}: Props) => {
     () =>
       filterEventPicks(
         bData?.elements,
+        bData?.teams,
         epData?.picks,
         elData?.elements,
         fxData,
         viewingEventId,
       ),
-    [bData?.elements, epData?.picks, elData?.elements, fxData, viewingEventId],
+    [
+      bData?.elements,
+      bData?.teams,
+      epData?.picks,
+      elData?.elements,
+      fxData,
+      viewingEventId,
+    ],
   );
 
   if (

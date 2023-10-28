@@ -3,13 +3,15 @@ import {
   GWLiveDelegate,
   GWPicksDelegate,
   PlayerDelegate,
-  PlayerPickEventLiveDelegate,
+  TeamDelegate,
+  TeamPlayerDelegate,
 } from 'src/types/api';
 import {filterEventPicks} from './filterEventPicks';
 import {chipsLabel} from './createStrEnum';
 
 export const filterTeamInfo = (
   elements?: PlayerDelegate[],
+  teams?: TeamDelegate[],
   eventPicks?: GWPicksDelegate,
   elementsLive?: GWLiveDelegate['elements'],
   fixtures?: FixtureDelegate[],
@@ -22,8 +24,10 @@ export const filterTeamInfo = (
     forwardersM,
     bench,
     eventPoints,
+    isCaptainActive,
   } = filterEventPicks(
     elements,
+    teams,
     eventPicks?.picks,
     elementsLive,
     fixtures,
@@ -39,16 +43,19 @@ export const filterTeamInfo = (
 
   const eFixtures = fixtures?.filter(f => f.event === event) || [];
 
-  const captain = players?.find(
-    e => e.id === eventPicks?.picks.find(ep => ep.is_captain)?.element,
-  ) as PlayerPickEventLiveDelegate;
-  const viceCaptain = players?.find(
-    e => e.id === eventPicks?.picks.find(ep => ep.is_vice_captain)?.element,
-  )?.web_name;
-  const isCaptainActive = captain?.stats?.minutes > 0 ? true : false;
+  const captainId = eventPicks?.picks.find(ep => ep.is_captain)?.element;
+  const captain =
+    (players?.find(p => p.id === captainId) as TeamPlayerDelegate)?.web_name ||
+    '';
+  const viceCaptainId = eventPicks?.picks.find(
+    ep => ep.is_vice_captain,
+  )?.element;
+  const viceCaptain =
+    (players?.find(e => e.id === viceCaptainId) as TeamPlayerDelegate)
+      ?.web_name || '';
 
   return {
-    captain: captain?.web_name || '',
+    captain,
     viceCaptain,
     isCaptainActive,
     activeChip: eventPicks?.active_chip && chipsLabel?.[eventPicks.active_chip],

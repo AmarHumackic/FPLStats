@@ -13,6 +13,7 @@ interface Props {
   textContainer: ViewStyle;
   playerName: TextStyle;
   eventPoints: TextStyle;
+  eventPointsStarted: TextStyle;
 }
 
 const ELEMENT_TYPE_HEIGHT = 18;
@@ -81,6 +82,8 @@ export default StyleSheet.create<Props>({
     fontSize: sizes.xs11,
     color: colors.purePrimary,
     marginTop: 2,
+  },
+  eventPointsStarted: {
     fontWeight: 'bold',
   },
 });
