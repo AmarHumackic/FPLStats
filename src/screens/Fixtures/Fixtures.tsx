@@ -11,6 +11,8 @@ import LoadingView from '@components/common/LoadingView';
 import {filterEventFixtures} from '@utils/filterEventFixtures';
 import DateFixturesView from '@components/Fixtures/DateFixturesView';
 import {colors} from '@constants/';
+import FixtureInfoModal from '@components/Fixtures/FixtureInfoModal';
+import {DateFixture} from 'src/types/api';
 
 type Props = {};
 
@@ -18,6 +20,7 @@ const Fixtures = ({}: Props) => {
   const [currentEventId, setCurrentEventId] = useState(0);
   const [viewingEventId, setViewingEventId] = useState(0);
   const [lastEventId, setLastEventId] = useState(0);
+  const [fixtureModal, setFixtureModal] = useState<DateFixture>();
 
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
@@ -53,6 +56,9 @@ const Fixtures = ({}: Props) => {
 
   const nextEventHandler = async () =>
     setViewingEventId(prevState => prevState + 1);
+
+  const onInfoModal = (df: string, index: number) =>
+    setFixtureModal(dateFixtures?.[df]?.[index]);
 
   const dateFixtures = useMemo(
     () => filterEventFixtures(bData?.teams, efData),
@@ -99,9 +105,15 @@ const Fixtures = ({}: Props) => {
             key={df}
             title={df}
             fixtures={dateFixtures?.[df] || []}
+            onPress={onInfoModal}
           />
         ))}
       </ScrollView>
+
+      <FixtureInfoModal
+        fixture={fixtureModal}
+        onClose={() => setFixtureModal(undefined)}
+      />
     </SafeAreaView>
   );
 };

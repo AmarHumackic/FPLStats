@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ClassicLeagueDelegate,
   FixtureDelegate,
+  FixtureStatsDelegate,
   GWDreamTeamDelegate,
   GWLiveDelegate,
   GWPicksDelegate,
@@ -25,6 +26,10 @@ export const fetchFixtures = async () =>
 export const fetchEventFixtures = async (eventId: number) =>
   (await axiosInstance.get(`/fixtures?event=${eventId}`))
     .data as FixtureDelegate[];
+
+export const fetchFixtureStats = async (fixtureId: number) =>
+  (await axiosInstance.get(`/fixture/${fixtureId}/stats/`))
+    .data as FixtureStatsDelegate;
 
 // elementId === playerId
 export const fetchElementSummary = async (elementId: number) =>

@@ -354,15 +354,48 @@ export interface FixtureDelegate {
   kickoff_time: string | null;
   minutes: number;
   provisional_start_time: boolean;
+  pulse_id: number;
   started: boolean;
+  stats: FixStatsItemDelegate[];
   team_a: number;
+  team_a_difficulty: number;
   team_a_score: number | null;
   team_h: number;
-  team_h_score: number | null;
-  stats: FixStatsItemDelegate[];
   team_h_difficulty: number;
-  team_a_difficulty: number;
-  pulse_id: number;
+  team_h_score: number | null;
+}
+
+export type FixStatsTeamItemDelegate = {
+  assists: number;
+  bonus: number;
+  bps: number;
+  clean_sheets: number;
+  creativity: string;
+  element: number;
+  expected_goals: string;
+  expected_assists: string;
+  expected_goal_involvements: string;
+  expected_goals_conceded: string;
+  fixture: number;
+  goals_scored: number;
+  goals_conceded: number;
+  ict_index: string;
+  influence: string;
+  minutes: number;
+  own_goals: number;
+  penalties_saved: number;
+  penalties_missed: number;
+  red_cards: number;
+  saves: number;
+  starts: number;
+  threat: string;
+  total_points: number;
+  yellow_cards: number;
+};
+
+export interface FixtureStatsDelegate {
+  a: FixStatsTeamItemDelegate[];
+  h: FixStatsTeamItemDelegate[];
 }
 
 export interface PlayerFixtureDelegate extends FixtureDelegate {

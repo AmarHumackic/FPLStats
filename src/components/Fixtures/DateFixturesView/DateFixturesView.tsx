@@ -4,13 +4,15 @@ import styles from './DateFixturesView.styles';
 import {DateFixture} from 'src/types/api';
 import {getTeamLogo} from '@utils/getTeamLogo';
 import dayjs from 'dayjs';
+import Touchable from '@components/common/Touchable';
 
 type Props = {
   title: string;
   fixtures: DateFixture[];
+  onPress: (df: string, index: number) => void;
 };
 
-const DateFixturesView = ({title, fixtures}: Props) => (
+const DateFixturesView = ({title, fixtures, onPress}: Props) => (
   <View style={styles.container}>
     <View style={styles.dateContainer}>
       <Text style={styles.date}>
@@ -18,8 +20,11 @@ const DateFixturesView = ({title, fixtures}: Props) => (
       </Text>
     </View>
 
-    {fixtures.map(f => (
-      <View key={f.id} style={styles.itemContainer}>
+    {fixtures.map((f, index) => (
+      <Touchable
+        key={f.id}
+        style={styles.itemContainer}
+        onPress={() => onPress(title, index)}>
         <View style={styles.itemLeftContainer}>
           <Text style={[styles.teamName, styles.textRight]}>
             {f.team_h_name}
@@ -43,7 +48,7 @@ const DateFixturesView = ({title, fixtures}: Props) => (
             {f.team_a_name}
           </Text>
         </View>
-      </View>
+      </Touchable>
     ))}
   </View>
 );
