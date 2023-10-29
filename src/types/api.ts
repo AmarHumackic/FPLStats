@@ -118,6 +118,7 @@ export interface TeamPlayerDelegate {
   influence: GWElementLiveDelegate['stats']['influence'];
   threat: GWElementLiveDelegate['stats']['threat'];
   in_lineup: boolean; // if the player is eligible to score points (has any minutes) - default: true for the first 11; false for bench
+  total_points: number;
   total_points_live: number;
   fixture_started: boolean;
   fixture_finished: boolean;

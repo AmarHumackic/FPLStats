@@ -54,9 +54,11 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
               styles.rivalTeamName,
               lineUpIconRotation && styles.rivalTeamNameLineup,
             ]}>
-            {`${player.rival_team_short_name}${
-              player.fixture_home ? ' (H)' : ' (A)'
-            }`}
+            {!isNullOrEmpty(player.rival_team_short_name)
+              ? `${player.rival_team_short_name} ${
+                  player.fixture_home ? ' (H)' : ' (A)'
+                }`
+              : '-'}
           </Text>
         )}
       </View>

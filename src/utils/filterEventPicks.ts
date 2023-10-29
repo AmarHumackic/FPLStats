@@ -57,7 +57,7 @@ export const filterEventPicks = (
       el => el.id === p.element,
     ) as GWLiveDelegate['elements'][0];
     const elementFixture = eventFixtures.find(
-      ef => ef.id === _elementLive.explain[0].fixture,
+      ef => ef.id === _elementLive.explain?.[0]?.fixture,
     );
     const rivalTeamId =
       elementFixture?.team_a === _element.team
@@ -87,6 +87,7 @@ export const filterEventPicks = (
       influence: _elementLive.stats.influence,
       threat: _elementLive.stats.threat,
       in_lineup: true, // set all to true temporarily
+      total_points: _elementLive.stats.total_points,
       total_points_live: getEventPlayerPoints(
         p,
         _elementLive,
