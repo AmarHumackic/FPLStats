@@ -77,29 +77,27 @@ const LeagueDetailsC = ({
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={data.pages.map(page => page.standings.results).flat()}
-        keyExtractor={item => item.id.toString()}
-        initialNumToRender={50}
-        showsVerticalScrollIndicator={false}
-        renderItem={_renderItem}
-        onEndReached={onNextPage}
-        ListHeaderComponent={_renderHeader}
-        stickyHeaderIndices={[0]}
-        ListFooterComponent={
-          loadingNextPage ? (
-            <LoadingView
-              position="relative"
-              withoutTitle
-              indicatorColor={colors.textDark2}
-              size="small"
-              paddingBottom={24}
-            />
-          ) : undefined
-        }
-      />
-    </View>
+    <FlatList
+      data={data.pages.map(page => page.standings.results).flat()}
+      keyExtractor={item => item.id.toString()}
+      initialNumToRender={50}
+      showsVerticalScrollIndicator={false}
+      renderItem={_renderItem}
+      onEndReached={onNextPage}
+      ListHeaderComponent={_renderHeader}
+      stickyHeaderIndices={[0]}
+      ListFooterComponent={
+        loadingNextPage ? (
+          <LoadingView
+            position="relative"
+            withoutTitle
+            indicatorColor={colors.textDark2}
+            size="small"
+            paddingBottom={24}
+          />
+        ) : undefined
+      }
+    />
   );
 };
 

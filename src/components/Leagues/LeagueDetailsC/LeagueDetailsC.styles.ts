@@ -18,14 +18,13 @@ interface Props {
 }
 
 export default StyleSheet.create<Props>({
-  container: {
-    backgroundColor: colors.accentLight,
-  },
+  container: {},
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: sizes.marginHorizontal - 6,
     paddingVertical: 6,
+    backgroundColor: colors.accentLight,
   },
   itemContainerSession: {
     backgroundColor: colors.highlight,

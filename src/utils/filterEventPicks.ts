@@ -167,7 +167,10 @@ const getEventPlayerPoints = (
 export const getPlayersLinedUp = (players: TeamPlayerDelegate[]) => {
   const multipliersP = players.filter(p => p.multiplier);
   const initialBench: TeamPlayerDelegate[] = players.filter(
-    p => !p.multiplier && p.status !== 'i',
+    p =>
+      !p.multiplier &&
+      p.status !== 'i' &&
+      (!p.fixture_finished || (p.fixture_finished && p.minutes)),
   ); // players that were initially on the bench and that are not inactive
   const benchLineups: TeamPlayerDelegate[] = []; // players that are included in the lineup because some of the first 11 do not play
 
