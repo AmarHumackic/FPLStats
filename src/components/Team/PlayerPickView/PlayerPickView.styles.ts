@@ -12,9 +12,12 @@ interface Props {
   playerImg: ImageStyle;
   textContainer: ViewStyle;
   playerName: TextStyle;
+  eventPointsContainer: ViewStyle;
+  lineupIconContainer: ViewStyle;
   eventPoints: TextStyle;
   eventPointsStarted: TextStyle;
-  eventPointsNotPlayed: TextStyle;
+  rivalTeamName: TextStyle;
+  rivalTeamNameLineup: TextStyle;
 }
 
 const ELEMENT_TYPE_HEIGHT = 18;
@@ -77,6 +80,14 @@ export default StyleSheet.create<Props>({
     lineHeight: 14,
     color: colors.purePrimary,
   },
+  eventPointsContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  lineupIconContainer: {
+    position: 'absolute',
+    left: 0,
+  },
   eventPoints: {
     flex: 1,
     textAlign: 'center',
@@ -87,7 +98,14 @@ export default StyleSheet.create<Props>({
   eventPointsStarted: {
     fontWeight: 'bold',
   },
-  eventPointsNotPlayed: {
-    color: colors.redAlertLight,
+  rivalTeamName: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: sizes.xs,
+    color: colors.purePrimary,
+    marginTop: 2,
+  },
+  rivalTeamNameLineup: {
+    marginLeft: 8,
   },
 });

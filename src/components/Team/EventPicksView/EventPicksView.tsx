@@ -48,7 +48,7 @@ const EventPicksView = ({
 
     <View style={styles.benchContainer}>
       {bench.map(el => (
-        <PlayerPickView key={el.id} player={el} showPosition />
+        <PlayerPickView key={el.id} player={el} showPosition showLineup />
       ))}
     </View>
   </View>

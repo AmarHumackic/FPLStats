@@ -8,14 +8,60 @@ import {isNullOrEmpty} from '@utils/isNullOrEmpty';
 import AlertIcon from '@assets/svgs/AlertIcon';
 import {getTeamShirt} from '@utils/getTeamShirt';
 import Captain from '@components/common/Captain';
+import ChevronIcon from '@assets/svgs/ChevronIcon';
 
 type Props = {
   player: TeamPlayerDelegate;
   showPosition?: boolean;
+  showLineup?: boolean;
 };
 
-const PlayerPickView = ({player, showPosition}: Props) => {
+const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
   const [imgError, setImgError] = useState(false);
+
+  const renderPointsView = () => {
+    let lineUpIconRotation: 'up' | 'down' | null = null;
+    if (showLineup) {
+      // for bench players
+      if (player.in_lineup) {
+        lineUpIconRotation = 'up';
+      }
+    } else {
+      if (!player.in_lineup) {
+        // for first 11 players
+        lineUpIconRotation = 'down';
+      }
+    }
+
+    return (
+      <View style={styles.eventPointsContainer}>
+        {lineUpIconRotation && (
+          <View style={styles.lineupIconContainer}>
+            <ChevronIcon rotation={lineUpIconRotation} />
+          </View>
+        )}
+        {player.fixture_started ? (
+          <Text
+            style={[
+              styles.eventPoints,
+              player.fixture_started && styles.eventPointsStarted,
+            ]}>
+            {player.total_points_live}
+          </Text>
+        ) : (
+          <Text
+            style={[
+              styles.rivalTeamName,
+              lineUpIconRotation && styles.rivalTeamNameLineup,
+            ]}>
+            {`${player.rival_team_short_name}${
+              player.fixture_home ? ' (H)' : ' (A)'
+            }`}
+          </Text>
+        )}
+      </View>
+    );
+  };
 
   return (
     <View style={[styles.container, showPosition && styles.containerPosHeight]}>
@@ -53,20 +99,7 @@ const PlayerPickView = ({player, showPosition}: Props) => {
         <Text style={styles.playerName} adjustsFontSizeToFit numberOfLines={1}>
           {player.web_name}
         </Text>
-        <Text
-          style={[
-            styles.eventPoints,
-            player.fixture_started && styles.eventPointsStarted,
-            player.fixture_finished &&
-              !player.minutes &&
-              styles.eventPointsNotPlayed,
-          ]}>
-          {player.fixture_started
-            ? `${player.in_lineup ? 'U-' : 'D-'}${player.total_points_live}`
-            : `${player.in_lineup ? 'U-' : 'D-'}${
-                player.rival_team_short_name
-              }${player.fixture_home ? ' (H)' : ' (A)'}`}
-        </Text>
+        {renderPointsView()}
       </View>
     </View>
   );
