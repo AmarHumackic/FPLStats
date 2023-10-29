@@ -86,6 +86,7 @@ export const filterEventPicks = (
       creativity: _elementLive.stats.creativity,
       influence: _elementLive.stats.influence,
       threat: _elementLive.stats.threat,
+      bps: _elementLive.stats.bps,
       in_lineup: true, // set all to true temporarily
       total_points: _elementLive.stats.total_points,
       total_points_live: getEventPlayerPoints(

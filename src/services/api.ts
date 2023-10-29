@@ -22,6 +22,10 @@ export const fetchBootstrapStatic = async () =>
 export const fetchFixtures = async () =>
   (await axiosInstance.get('/fixtures/')).data as FixtureDelegate[];
 
+export const fetchEventFixtures = async (eventId: number) =>
+  (await axiosInstance.get(`/fixtures?event=${eventId}`))
+    .data as FixtureDelegate[];
+
 // elementId === playerId
 export const fetchElementSummary = async (elementId: number) =>
   (await axiosInstance.get(`/element-summary/${elementId}/`))

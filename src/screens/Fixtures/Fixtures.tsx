@@ -4,7 +4,7 @@ import styles from './Fixtures.styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Touchable from '@components/common/Touchable';
 import {useQuery} from '@tanstack/react-query';
-import {fetchBootstrapStatic, fetchFixtures} from '@services/api';
+import {fetchBootstrapStatic, fetchEventFixtures} from '@services/api';
 import ChevronLeftIcon from '@assets/svgs/ChevronLeftIcon';
 import ChevronRightIcon from '@assets/svgs/ChevronRightIcon';
 import LoadingView from '@components/common/LoadingView';
@@ -36,13 +36,17 @@ const Fixtures = ({}: Props) => {
   });
 
   const {
-    data: fxData,
-    isFetching: fxFetching,
+    data: efData,
+    isFetching: efFetching,
     refetch,
     isRefetching,
-  } = useQuery(['fixtures'], fetchFixtures, {
-    cacheTime: Infinity,
-  });
+  } = useQuery(
+    ['eventFixtures', viewingEventId],
+    () => fetchEventFixtures(viewingEventId),
+    {
+      cacheTime: Infinity,
+    },
+  );
 
   const previousEventHandler = async () =>
     setViewingEventId(prevState => prevState - 1);
@@ -51,11 +55,11 @@ const Fixtures = ({}: Props) => {
     setViewingEventId(prevState => prevState + 1);
 
   const dateFixtures = useMemo(
-    () => filterEventFixtures(bData?.teams, fxData, viewingEventId),
-    [bData?.teams, fxData, viewingEventId],
+    () => filterEventFixtures(bData?.teams, efData),
+    [bData?.teams, efData],
   );
 
-  if ((fxFetching || !currentEventId) && !isRefetching) {
+  if ((efFetching || !currentEventId) && !isRefetching) {
     return <LoadingView />;
   }
 

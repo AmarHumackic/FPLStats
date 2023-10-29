@@ -3,16 +3,11 @@ import dayjs from 'dayjs';
 
 export const filterEventFixtures = (
   teams?: TeamDelegate[],
-  fixtures?: FixtureDelegate[],
-  event?: number,
+  eventFixtures?: FixtureDelegate[],
 ) => {
-  if (!teams?.length || !fixtures?.length || !event) {
+  if (!teams?.length || !eventFixtures?.length) {
     return {};
   }
-
-  teams[0];
-
-  const eventFixtures = fixtures.filter(f => f.event === event);
 
   const kickOffTimes = [
     ...new Set(
