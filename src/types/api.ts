@@ -104,6 +104,7 @@ export interface TeamPlayerDelegate {
   code: PlayerDelegate['team_code'];
   web_name: PlayerDelegate['web_name'];
   news: PlayerDelegate['news'];
+  status: 'a' | 'i' | 'd';
   is_captain: PickDelegate['is_captain'];
   is_vice_captain: PickDelegate['is_vice_captain'];
   multiplier: PickDelegate['multiplier'];
@@ -247,7 +248,7 @@ export type PlayerDelegate = {
   selected_by_percent: string;
   special: false;
   squad_number: number | null;
-  status: string | null;
+  status: 'a' | 'i' | 'd';
   team: number;
   team_code: number;
   total_points: number;

@@ -73,6 +73,7 @@ export const filterEventPicks = (
       code: _element.code,
       web_name: _element.web_name,
       news: _element.news,
+      status: _element.status || 'a',
       is_captain: p.is_captain,
       is_vice_captain: p.is_vice_captain,
       multiplier: p.multiplier,
@@ -165,10 +166,11 @@ const getEventPlayerPoints = (
 
 export const getPlayersLinedUp = (players: TeamPlayerDelegate[]) => {
   const multipliersP = players.filter(p => p.multiplier);
-  const initialBench: TeamPlayerDelegate[] = players.filter(p => !p.multiplier); // players that were initially on the bench
+  const initialBench: TeamPlayerDelegate[] = players.filter(
+    p => !p.multiplier && p.status !== 'i',
+  ); // players that were initially on the bench and that are not inactive
   const benchLineups: TeamPlayerDelegate[] = []; // players that are included in the lineup because some of the first 11 do not play
 
-  // TODO: Include logic for suspended/inactive players, do not include them
   return players.map(p => {
     let inLineup = true;
     if (!p.multiplier) {
