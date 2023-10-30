@@ -14,6 +14,7 @@ interface Props {
   disabled?: boolean;
   marginRight?: number;
   rippleInBorders?: boolean;
+  preserveOpacity?: boolean;
   onPress: () => void;
   onLongPress?: () => void;
   onPressIn?: () => void;
@@ -29,6 +30,7 @@ const CTouchable = ({
   disabled,
   marginRight,
   rippleInBorders = false,
+  preserveOpacity,
   onPress,
   onLongPress,
   onPressIn,
@@ -50,7 +52,7 @@ const CTouchable = ({
           {opacity: !isAndroid() && pressed ? PRESSED_OPACITY_IOS : 1},
           style,
           marginRight ? {marginRight} : {},
-          disabled ? {opacity: PRESSED_OPACITY_IOS} : {},
+          disabled && !preserveOpacity ? {opacity: PRESSED_OPACITY_IOS} : {},
         ]}
         hitSlop={hitSlop}
         onLongPress={onLongPress}

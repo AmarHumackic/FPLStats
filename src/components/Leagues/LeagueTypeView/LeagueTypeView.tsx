@@ -4,6 +4,7 @@ import styles from './LeagueTypeView.styles';
 import {H2HLeagueDetailsDelegate, UserDelegate} from 'src/types/api';
 import Touchable from '@components/common/Touchable';
 import {getRankIcon} from '@utils/getRankIcon';
+import SectionLabel from '@components/common/SectionLabel';
 
 type Props = {
   title: string;
@@ -17,9 +18,7 @@ const LeagueTypeView = ({title, data, onPress}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
+        <SectionLabel label={title} />
         <Text style={styles.headerRank}>Rank</Text>
       </View>
       {data.map((league, index) => (

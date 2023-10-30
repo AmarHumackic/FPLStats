@@ -3,6 +3,7 @@ export const colors = {
   primary: '#E5EFC1',
   accentDark: '#39AEA9',
   accentDark1: '#329a95',
+  accentDark2: '#257470',
   accentLight: '#A2D5AB',
   textLight2: 'rgba(70, 100, 107, 0.7)',
   textLight1: 'rgba(70, 100, 107, 0.9)',

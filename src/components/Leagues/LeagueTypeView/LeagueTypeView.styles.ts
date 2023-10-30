@@ -5,8 +5,6 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 interface Props {
   container: ViewStyle;
   headerContainer: ViewStyle;
-  titleContainer: ViewStyle;
-  title: TextStyle;
   headerRank: TextStyle;
   itemContainer: ViewStyle;
   itemContainerSeparator: ViewStyle;
@@ -23,21 +21,6 @@ export default StyleSheet.create<Props>({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  titleContainer: {
-    backgroundColor: colors.purePrimary,
-    alignSelf: 'flex-start',
-    paddingVertical: 4,
-    paddingHorizontal: 6,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    marginHorizontal: sizes.marginHorizontal - 6,
-    marginBottom: 5,
-  },
-  title: {
-    fontWeight: 'bold',
-    color: colors.accentDark,
-    letterSpacing: 0.2,
   },
   headerRank: {
     marginRight: sizes.marginHorizontal,

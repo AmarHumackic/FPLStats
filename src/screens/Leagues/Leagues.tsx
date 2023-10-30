@@ -6,7 +6,7 @@ import {useSessionContext} from '@services/sessionContext';
 import LoadingView from '@components/common/LoadingView';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {filterLeagues} from '@utils/filterLeagues';
-import TabsView from '@components/Leagues/TabsView';
+import TabsView from '@components/common/TabsView';
 import LeagueTypeView from '@components/Leagues/LeagueTypeView';
 import {RefreshControl, ScrollView} from 'react-native';
 import {colors} from '@constants/colors';

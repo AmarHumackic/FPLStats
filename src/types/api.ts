@@ -954,11 +954,31 @@ export interface PlayerIdBonus {
   bonus: number;
 }
 
-export type DateFixture = FixtureDelegate & {
-  team_h_name: string;
-  team_h_code: number;
-  team_a_name: string;
+export type CustomAwayHomeStatType = {
+  element: number;
+  web_name: string;
+  value: number;
+};
+
+export type DateFixtureStat = {
+  identifier: IdentifiersDelegate;
+  h: CustomAwayHomeStatType[];
+  a: CustomAwayHomeStatType[];
+};
+
+export type DateFixture = {
+  id: FixtureDelegate['id'];
+  event: FixtureDelegate['event'];
+  finished_provisional: FixtureDelegate['finished_provisional'];
+  kickoff_time: FixtureDelegate['kickoff_time'];
+  match_details: DateFixtureStat[];
+  started: FixtureDelegate['started'];
   team_a_code: number;
+  team_a_name: string;
+  team_a_score: FixtureDelegate['team_a_score'];
+  team_h_code: number;
+  team_h_name: string;
+  team_h_score: FixtureDelegate['team_h_score'];
 };
 
 export interface DateFixtures {

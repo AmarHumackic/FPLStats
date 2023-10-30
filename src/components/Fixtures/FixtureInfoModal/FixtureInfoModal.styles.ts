@@ -2,25 +2,27 @@ import {colors} from '@constants/';
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
-  contentContainer: ViewStyle;
+  container: ViewStyle;
   headerTitle: TextStyle;
+  contentContainer: ViewStyle;
 }
 
 export default StyleSheet.create<Props>({
-  contentContainer: {
+  container: {
     backgroundColor: colors.primary,
     width: '100%',
     maxHeight: '90%',
     alignSelf: 'center',
-    paddingVertical: 16,
+    paddingTop: 10,
     paddingBottom: 6,
-    paddingHorizontal: 10,
     borderRadius: 16,
   },
   headerTitle: {
     textAlign: 'center',
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color: colors.textDark2,
+    color: colors.textLight1,
+    fontWeight: '500',
+  },
+  contentContainer: {
+    paddingHorizontal: 10,
   },
 });

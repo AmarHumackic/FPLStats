@@ -61,8 +61,8 @@ const Fixtures = ({}: Props) => {
     setFixtureModal(dateFixtures?.[df]?.[index]);
 
   const dateFixtures = useMemo(
-    () => filterEventFixtures(bData?.teams, efData),
-    [bData?.teams, efData],
+    () => filterEventFixtures(bData?.elements, bData?.teams, efData),
+    [bData?.elements, bData?.teams, efData],
   );
 
   if ((efFetching || !currentEventId) && !isRefetching) {

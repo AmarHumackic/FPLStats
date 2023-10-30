@@ -1,4 +1,5 @@
 import {colors} from '@constants/colors';
+import {sizes} from '@constants/sizes';
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
@@ -27,9 +28,12 @@ export default StyleSheet.create<Props>({
   },
   tabText: {
     color: colors.text,
+    fontSize: sizes.m,
+    letterSpacing: 0.2,
   },
   activeTabText: {
     color: colors.accentDark,
+    fontSize: sizes.ml,
     fontWeight: 'bold',
   },
 });
