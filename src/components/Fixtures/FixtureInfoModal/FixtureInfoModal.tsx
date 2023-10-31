@@ -2,17 +2,12 @@ import {View, Text, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import styles from './FixtureInfoModal.styles';
 import Modal from 'react-native-modal';
-import {
-  CustomAwayHomeStatType,
-  DateFixture,
-  DateFixtureStat,
-} from 'src/types/api';
+import {CustomAwayHomeStatType, DateFixture} from 'src/types/api';
 import FixtureView from '../DateFixturesView/FixtureView';
 import TabsView from '@components/common/TabsView';
 import {colors} from '@constants/colors';
 import {identifiersLabel} from '@utils/createStrEnum';
 import SectionLabel from '@components/common/SectionLabel';
-import {isNullOrEmpty} from '@utils/isNullOrEmpty';
 import Touchable from '@components/common/Touchable';
 
 type Props = {
@@ -25,10 +20,11 @@ const FixtureInfoModal = ({fixture, onClose}: Props) => {
 
   const renderElement = (element: CustomAwayHomeStatType) => (
     <Touchable
-      style={{flexDirection: 'row', alignItems: 'center'}}
+      key={element.element}
+      style={styles.elementContainer}
       onPress={() => {}}>
-      <Text>{element.web_name}</Text>
-      <Text>{` (${element.value})`}</Text>
+      <Text style={styles.elementName}>{element.web_name}</Text>
+      <Text style={styles.elementValue}>{` (${element.value})`}</Text>
     </Touchable>
   );
 
@@ -67,27 +63,12 @@ const FixtureInfoModal = ({fixture, onClose}: Props) => {
                       fullWidth
                       alignCenter
                     />
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        paddingBottom: 5,
-                      }}>
-                      <View
-                        style={{
-                          flex: 1,
-                          alignItems: 'flex-end',
-                        }}>
+                    <View style={styles.identifierContainer}>
+                      <View style={styles.hContainer}>
                         {md.h.map(el => renderElement(el))}
                       </View>
-                      <View
-                        style={{
-                          width: 1,
-                          backgroundColor: colors.textLight1,
-                          marginHorizontal: 5,
-                        }}
-                      />
-                      <View style={{flex: 1}}>
+                      <View style={styles.separator} />
+                      <View style={styles.aContainer}>
                         {md.a.map(el => renderElement(el))}
                       </View>
                     </View>

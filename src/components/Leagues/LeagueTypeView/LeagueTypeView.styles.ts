@@ -37,7 +37,7 @@ export default StyleSheet.create<Props>({
   },
   itemContainerSeparator: {
     borderBottomWidth: 0.5,
-    borderBottomColor: colors.text,
+    borderBottomColor: colors.textLight2,
   },
   name: {
     fontWeight: 'bold',

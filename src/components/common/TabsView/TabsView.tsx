@@ -28,6 +28,7 @@ const TabsView = ({
     isActive = activeTab === tabIndex,
   ) => (
     <Touchable
+      key={tabIndex}
       style={[
         styles.tabContainer,
         isActive && styles.activeTabContainer,
