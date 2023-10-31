@@ -36,7 +36,7 @@ export default StyleSheet.create<Props>({
     paddingVertical: 6,
   },
   itemContainerSeparator: {
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     borderBottomColor: colors.textLight2,
   },
   name: {

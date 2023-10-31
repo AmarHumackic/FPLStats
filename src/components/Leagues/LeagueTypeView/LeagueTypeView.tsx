@@ -18,7 +18,7 @@ const LeagueTypeView = ({title, data, onPress}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <SectionLabel label={title} />
+        <SectionLabel label={title} marginBottom={5} />
         <Text style={styles.headerRank}>Rank</Text>
       </View>
       {data.map((league, index) => (

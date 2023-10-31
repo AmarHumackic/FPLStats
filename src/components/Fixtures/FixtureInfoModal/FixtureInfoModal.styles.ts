@@ -30,7 +30,7 @@ export default StyleSheet.create<Props>({
   identifierContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: 5,
+    paddingVertical: 2,
   },
   hContainer: {
     flex: 1,
@@ -47,7 +47,7 @@ export default StyleSheet.create<Props>({
   elementContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 1,
+    paddingVertical: 3,
   },
   elementName: {
     color: colors.textDark2,

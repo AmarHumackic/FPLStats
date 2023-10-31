@@ -18,7 +18,6 @@ export default StyleSheet.create<Props>({
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
     marginHorizontal: sizes.marginHorizontal - 6,
-    marginBottom: 5,
   },
   fullWidthContainer: {
     width: '100%',
