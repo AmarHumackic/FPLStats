@@ -53,7 +53,9 @@ const FixtureInfoModal = ({fixture, onClose}: Props) => {
           />
 
           {activeTab === 1 && (
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.scrollContentContainer}>
               {fixture.match_details
                 .filter(md => md.identifier && (md.h.length || md.a.length))
                 .map(md => (

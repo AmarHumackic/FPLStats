@@ -4,6 +4,7 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 interface Props {
   container: ViewStyle;
   headerTitle: TextStyle;
+  scrollContentContainer: ViewStyle;
   identifierContainer: ViewStyle;
   hContainer: ViewStyle;
   separator: ViewStyle;
@@ -26,6 +27,10 @@ export default StyleSheet.create<Props>({
     textAlign: 'center',
     color: colors.textLight1,
     fontWeight: '500',
+  },
+  scrollContentContainer: {
+    paddingTop: 5,
+    paddingBottom: 10,
   },
   identifierContainer: {
     flexDirection: 'row',

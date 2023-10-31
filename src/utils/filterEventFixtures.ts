@@ -36,24 +36,23 @@ export const filterEventFixtures = (
 
           const customStats = el.stats
             .filter(s => s.identifier)
-            .map(
-              ({identifier, h, a}) =>
-                ({
-                  identifier,
-                  h: h.map(({element, value}) => ({
-                    element,
-                    web_name: elements?.find(({id}) => id === element)
-                      ?.web_name,
-                    value,
-                  })),
-                  a: a.map(({element, value}) => ({
-                    element,
-                    web_name: elements?.find(({id}) => id === element)
-                      ?.web_name,
-                    value,
-                  })),
-                } as DateFixtureStat),
-            );
+            .map(({identifier, h, a}) => {
+              const filteredH = identifier === 'bps' ? h.slice(0, 5) : h;
+              const filteredA = identifier === 'bps' ? a.slice(0, 5) : a;
+              return {
+                identifier,
+                h: filteredH.map(({element, value}) => ({
+                  element,
+                  web_name: elements?.find(({id}) => id === element)?.web_name,
+                  value,
+                })),
+                a: filteredA.map(({element, value}) => ({
+                  element,
+                  web_name: elements?.find(({id}) => id === element)?.web_name,
+                  value,
+                })),
+              } as DateFixtureStat;
+            });
 
           return {
             id: el.id,
