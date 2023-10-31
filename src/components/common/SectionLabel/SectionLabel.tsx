@@ -4,22 +4,17 @@ import styles from './SectionLabel.styles';
 
 type Props = {
   label: string;
-  fullWidth?: boolean;
+  width?: DimensionValue;
   alignCenter?: boolean;
   marginBottom?: DimensionValue;
 };
 
-const SectionLabel = ({
-  label,
-  fullWidth,
-  alignCenter,
-  marginBottom = 0,
-}: Props) => (
+const SectionLabel = ({label, width, alignCenter, marginBottom = 0}: Props) => (
   <View
     style={[
       styles.titleContainer,
-      fullWidth && styles.fullWidthContainer,
       alignCenter && styles.alignCenterContainer,
+      width ? {width} : {},
       {marginBottom},
     ]}>
     <Text style={styles.title}>{label}</Text>

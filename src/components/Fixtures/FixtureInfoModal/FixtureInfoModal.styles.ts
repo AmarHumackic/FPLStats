@@ -17,7 +17,7 @@ export default StyleSheet.create<Props>({
   container: {
     backgroundColor: colors.primary,
     width: '100%',
-    maxHeight: '90%',
+    height: '80%',
     alignSelf: 'center',
     paddingTop: 10,
     borderRadius: 16,
@@ -43,6 +43,7 @@ export default StyleSheet.create<Props>({
   },
   aContainer: {
     flex: 1,
+    alignItems: 'flex-start',
   },
   elementContainer: {
     flexDirection: 'row',

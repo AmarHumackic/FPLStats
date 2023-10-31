@@ -53,15 +53,15 @@ const FixtureInfoModal = ({fixture, onClose}: Props) => {
           />
 
           {activeTab === 1 && (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               {fixture.match_details
                 .filter(md => md.identifier && (md.h.length || md.a.length))
                 .map(md => (
                   <View key={md?.identifier}>
                     <SectionLabel
                       label={identifiersLabel[md?.identifier!] || ''}
-                      fullWidth
                       alignCenter
+                      width={'95%'}
                     />
                     <View style={styles.identifierContainer}>
                       <View style={styles.hContainer}>

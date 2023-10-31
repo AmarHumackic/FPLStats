@@ -4,7 +4,6 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
   titleContainer: ViewStyle;
-  fullWidthContainer: ViewStyle;
   alignCenterContainer: ViewStyle;
   title: TextStyle;
 }
@@ -18,9 +17,6 @@ export default StyleSheet.create<Props>({
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
     marginHorizontal: sizes.marginHorizontal - 6,
-  },
-  fullWidthContainer: {
-    width: '100%',
   },
   alignCenterContainer: {
     alignSelf: 'center',
