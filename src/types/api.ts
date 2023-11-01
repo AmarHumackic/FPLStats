@@ -647,7 +647,7 @@ const ElementStatsName = createStrEnum([
   'expected_goals_conceded',
 ]);
 
-type ElementStatName = keyof typeof ElementStatsName | null;
+export type ElementStatName = keyof typeof ElementStatsName | null;
 
 type ElementStatDelegate = {
   label: ElementStatLabel;

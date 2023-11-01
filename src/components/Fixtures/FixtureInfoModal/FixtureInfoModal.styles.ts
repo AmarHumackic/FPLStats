@@ -22,6 +22,7 @@ export default StyleSheet.create<Props>({
     alignSelf: 'center',
     paddingTop: 10,
     borderRadius: 16,
+    overflow: 'hidden',
   },
   headerTitle: {
     textAlign: 'center',

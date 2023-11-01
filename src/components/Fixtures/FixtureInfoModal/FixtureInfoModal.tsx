@@ -9,6 +9,7 @@ import {colors} from '@constants/colors';
 import {identifiersLabel} from '@utils/createStrEnum';
 import SectionLabel from '@components/common/SectionLabel';
 import Touchable from '@components/common/Touchable';
+import PlayerStatsTable from './PlayerStatsTable';
 
 type Props = {
   fixture: DateFixture | undefined;
@@ -78,6 +79,8 @@ const FixtureInfoModal = ({fixture, onClose}: Props) => {
                 ))}
             </ScrollView>
           )}
+
+          {activeTab === 2 && <PlayerStatsTable fixtureId={fixture.id} />}
         </View>
       </Modal>
     </View>
