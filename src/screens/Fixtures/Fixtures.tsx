@@ -25,16 +25,18 @@ const Fixtures = ({}: Props) => {
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
     onSuccess: _bData => {
-      let currentEvent = _bData.events.find(e => e.is_current);
-      const _lastEventId = _bData.phases?.[0]?.stop_event;
-      const fixturesEventId =
-        currentEvent?.finished && currentEvent.id < _lastEventId
-          ? (currentEvent?.id || 0) + 1
-          : currentEvent?.id || 0;
+      if (!currentEventId) {
+        let currentEvent = _bData.events.find(e => e.is_current);
+        const _lastEventId = _bData.phases?.[0]?.stop_event;
+        const fixturesEventId =
+          currentEvent?.finished && currentEvent.id < _lastEventId
+            ? (currentEvent?.id || 0) + 1
+            : currentEvent?.id || 0;
 
-      setCurrentEventId(fixturesEventId);
-      setViewingEventId(fixturesEventId);
-      setLastEventId(_lastEventId);
+        setCurrentEventId(fixturesEventId);
+        setViewingEventId(fixturesEventId);
+        setLastEventId(_lastEventId);
+      }
     },
   });
 

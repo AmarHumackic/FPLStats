@@ -2,7 +2,13 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import styles from './PlayerStatsTable.styles';
 import LoadingView from '@components/common/LoadingView';
-import {Table, Row, TableWrapper, Cell} from 'react-native-table-component';
+import {
+  Table,
+  Row,
+  TableWrapper,
+  Cell,
+  Col,
+} from 'react-native-reanimated-table';
 import {useQuery} from '@tanstack/react-query';
 import {fetchBootstrapStatic, fetchFixtureStats} from '@services/api';
 import {colors} from '@constants/colors';
@@ -104,9 +110,7 @@ const PlayerStatsTable = ({fixtureId}: Props) => {
   const {data: bData, isFetching: bFetching} = useQuery(
     ['bootstrapStatic'],
     fetchBootstrapStatic,
-    {
-      cacheTime: Infinity,
-    },
+    {cacheTime: Infinity},
   );
 
   const {data: fsData, isFetching: fsFetching} = useQuery(
@@ -161,45 +165,58 @@ const PlayerStatsTable = ({fixtureId}: Props) => {
 
     return {
       data: _data,
-      widthArr: [80, ...Array((_data?.length || 1) - 1).fill(40)],
+      widthArr: [80, ...Array(tableHeadLabels.length - 1).fill(40)],
     };
   }, [bData, fsData, playerStatsFilter]);
 
+  if (bFetching || fsFetching) {
+    return (
+      <LoadingView
+        withoutTitle
+        position="relative"
+        indicatorColor={colors.accentDark}
+      />
+    );
+  }
+
   return (
-    <ScrollView horizontal={true}>
-      {bFetching || fsFetching ? (
-        <LoadingView />
-      ) : (
-        <View>
-          <Table borderStyle={tableStyles.headerBorder}>
-            <Row
-              data={tableHeadLabels}
-              widthArr={widthArr}
-              style={tableStyles.headerContainer}
-              textStyle={tableStyles.headerText}
-            />
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      stickyHeaderIndices={[0]}
+      contentContainerStyle={tableStyles.scrollContentContainer}>
+      <View>
+        <Table borderStyle={tableStyles.headerBorder}>
+          <Row
+            data={tableHeadLabels}
+            widthArr={widthArr}
+            style={tableStyles.headerContainer}
+            textStyle={tableStyles.headerText}
+          />
+        </Table>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={tableStyles.dataWrapper}>
+          <Table borderStyle={tableStyles.rowBorder}>
+            {data.map((rowData, rowIndex) => (
+              <TableWrapper key={rowIndex} style={[tableStyles.rowContainer]}>
+                {rowData.map((cellData, cellIndex) => (
+                  <Cell
+                    key={cellIndex}
+                    data={cellData}
+                    width={widthArr[cellIndex]}
+                    textStyle={
+                      cellIndex === 0
+                        ? tableStyles.headerText
+                        : tableStyles.rowText
+                    }
+                  />
+                ))}
+              </TableWrapper>
+            ))}
           </Table>
-          <ScrollView style={tableStyles.dataWrapper}>
-            <Table borderStyle={tableStyles.rowBorder}>
-              {data.map((rowData, rowIndex) => (
-                <TableWrapper key={rowIndex} style={tableStyles.rowContainer}>
-                  {rowData.map((cellData, cellIndex) => (
-                    <Cell
-                      key={cellIndex}
-                      data={cellData}
-                      width={widthArr[cellIndex]}
-                      textStyle={[
-                        tableStyles.rowText,
-                        cellIndex === 0 && tableStyles.headerText,
-                      ]}
-                    />
-                  ))}
-                </TableWrapper>
-              ))}
-            </Table>
-          </ScrollView>
-        </View>
-      )}
+        </ScrollView>
+      </View>
     </ScrollView>
   );
 };
@@ -207,7 +224,9 @@ const PlayerStatsTable = ({fixtureId}: Props) => {
 export default PlayerStatsTable;
 
 const tableStyles = StyleSheet.create({
-  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
+  scrollContentContainer: {
+    flexGrow: 1,
+  },
   headerBorder: {borderWidth: 1, borderColor: colors.accentDark},
   headerContainer: {height: 50, backgroundColor: colors.purePrimary},
   headerText: {
@@ -217,6 +236,7 @@ const tableStyles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.2,
   },
+  dataWrapper: {marginTop: -1, flex: 0},
   rowBorder: {borderWidth: 1, borderColor: '#C1C0B9'},
   rowContainer: {
     flexDirection: 'row',
@@ -230,5 +250,4 @@ const tableStyles = StyleSheet.create({
     fontWeight: '500',
     letterSpacing: 0.2,
   },
-  dataWrapper: {marginTop: -1},
 });

@@ -32,9 +32,11 @@ const Team = ({route}: Props) => {
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
     onSuccess: _bData => {
-      const currentEvent = _bData.events.find(e => e.is_current);
-      setCurrentEventId(currentEvent?.id || 0);
-      setViewingEventId(currentEvent?.id || 0);
+      if (!currentEventId) {
+        const currentEvent = _bData.events.find(e => e.is_current);
+        setCurrentEventId(currentEvent?.id || 0);
+        setViewingEventId(currentEvent?.id || 0);
+      }
     },
   });
 
