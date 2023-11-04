@@ -4,10 +4,11 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 interface Props {
   tabContainer: ViewStyle;
   tabItemContainer: ViewStyle;
-  scrollContentContainer: ViewStyle;
   headerContainer: ViewStyle;
+  tableRowContainer: ViewStyle;
   headerTouchableContainer: ViewStyle;
   headerText: TextStyle;
+  scrollContentContainer: ViewStyle;
   rowContainer: ViewStyle;
   rowText: TextStyle;
 }
@@ -24,14 +25,14 @@ export default StyleSheet.create<Props>({
     borderWidth: 1,
     borderColor: colors.accentDark,
   },
-  scrollContentContainer: {
-    flexGrow: 1,
-    flexDirection: 'row',
-  },
   headerContainer: {
     flexDirection: 'row',
     height: 30,
     backgroundColor: colors.accentLight,
+  },
+  tableRowContainer: {
+    flex: 1,
+    flexDirection: 'row',
   },
   headerTouchableContainer: {
     justifyContent: 'center',
@@ -42,6 +43,9 @@ export default StyleSheet.create<Props>({
     fontSize: sizes.sm,
     fontWeight: 'bold',
     letterSpacing: 0.2,
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
   },
   rowContainer: {
     flexDirection: 'row',

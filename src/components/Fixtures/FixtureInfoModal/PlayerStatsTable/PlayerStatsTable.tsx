@@ -1,4 +1,9 @@
-import {View, ScrollView} from 'react-native';
+import {
+  View,
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import React, {useMemo, useRef, useState} from 'react';
 import styles from './PlayerStatsTable.styles';
 import LoadingView from '@components/common/LoadingView';
@@ -73,6 +78,7 @@ type Props = {
 
 const PlayerStatsTable = ({fixtureId, teamHName, teamAName}: Props) => {
   const [activeFilter, setActiveFilter] = useState(1);
+  const headScrollRef = useRef<ScrollView>(null);
   const messageRef = useRef<FlashMessage>(null);
 
   const {data: bData, isFetching: bFetching} = useQuery(
@@ -87,7 +93,92 @@ const PlayerStatsTable = ({fixtureId, teamHName, teamAName}: Props) => {
     {staleTime: 10000},
   );
 
-  const {data, widthArr} = useMemo(() => {
+  const onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    headScrollRef.current?.scrollTo({
+      x: e.nativeEvent.contentOffset.x,
+    });
+  };
+
+  const renderTableHead = () => (
+    <Table>
+      <TableWrapper style={styles.headerContainer}>
+        <View style={styles.tableRowContainer}>
+          <Touchable
+            style={styles.headerTouchableContainer}
+            onPress={() =>
+              messageRef.current?.showMessage({
+                backgroundColor: colors.accentDark,
+                message: tableHeadTooltips[0],
+              })
+            }>
+            <Cell
+              data={tableHeadLabels[0]}
+              width={webNameWidth}
+              textStyle={styles.headerText}
+            />
+          </Touchable>
+          <ScrollView
+            ref={headScrollRef}
+            horizontal={true}
+            contentContainerStyle={styles.scrollContentContainer}
+            showsHorizontalScrollIndicator={false}>
+            {tableHeadLabels.slice(1).map((label, index) => (
+              <Touchable
+                key={label}
+                style={styles.headerTouchableContainer}
+                onPress={() =>
+                  messageRef.current?.showMessage({
+                    backgroundColor: colors.accentDark,
+                    message: tableHeadTooltips[index],
+                  })
+                }>
+                <Cell
+                  data={label}
+                  textStyle={styles.headerText}
+                  width={widthArr[index]}
+                />
+              </Touchable>
+            ))}
+          </ScrollView>
+        </View>
+      </TableWrapper>
+    </Table>
+  );
+
+  const renderTableWebNames = () => (
+    <Table>
+      <TableWrapper>
+        {webNames.map((webName, index) => (
+          <Cell
+            key={index}
+            data={webName}
+            width={webNameWidth}
+            height={30}
+            textStyle={styles.headerText}
+          />
+        ))}
+      </TableWrapper>
+    </Table>
+  );
+
+  const renderTableData = () => (
+    <Table>
+      {data.map((rowData, rowIndex) => (
+        <TableWrapper key={rowIndex} style={styles.rowContainer}>
+          {rowData.map((cellData, cellIndex) => (
+            <Cell
+              key={cellIndex}
+              data={cellData}
+              width={widthArr[cellIndex]}
+              textStyle={styles.rowText}
+            />
+          ))}
+        </TableWrapper>
+      ))}
+    </Table>
+  );
+
+  const {webNames, data, webNameWidth, widthArr} = useMemo(() => {
     let stats = [];
 
     if (activeFilter === 2) {
@@ -132,8 +223,10 @@ const PlayerStatsTable = ({fixtureId, teamHName, teamAName}: Props) => {
       );
 
     return {
+      webNames: _data.map(d => d.shift()),
       data: _data,
-      widthArr: [90, ...Array(tableHeadLabels.length - 1).fill(40)],
+      webNameWidth: 90,
+      widthArr: Array(tableHeadLabels.length - 1).fill(40),
     };
   }, [bData, fsData, activeFilter]);
 
@@ -160,49 +253,19 @@ const PlayerStatsTable = ({fixtureId, teamHName, teamAName}: Props) => {
         containerStyle={styles.tabContainer}
         itemContainerStyle={styles.tabItemContainer}
       />
+      {renderTableHead()}
       <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContentContainer}>
-        <View>
-          <Table>
-            <TableWrapper style={styles.headerContainer}>
-              {tableHeadLabels.map((label, index) => (
-                <Touchable
-                  key={label}
-                  style={styles.headerTouchableContainer}
-                  onPress={() =>
-                    messageRef.current?.showMessage({
-                      backgroundColor: colors.accentDark,
-                      message: tableHeadTooltips[index],
-                    })
-                  }>
-                  <Cell
-                    data={label}
-                    textStyle={styles.headerText}
-                    width={widthArr[index]}
-                  />
-                </Touchable>
-              ))}
-            </TableWrapper>
-          </Table>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Table>
-              {data.map((rowData, rowIndex) => (
-                <TableWrapper key={rowIndex} style={styles.rowContainer}>
-                  {rowData.map((cellData, cellIndex) => (
-                    <Cell
-                      key={cellIndex}
-                      data={cellData}
-                      width={widthArr[cellIndex]}
-                      textStyle={
-                        cellIndex === 0 ? styles.headerText : styles.rowText
-                      }
-                    />
-                  ))}
-                </TableWrapper>
-              ))}
-            </Table>
+        <View style={styles.tableRowContainer}>
+          {renderTableWebNames()}
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={styles.scrollContentContainer}
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={onScrollHandler}
+            onScrollEndDrag={onScrollHandler}>
+            {renderTableData()}
           </ScrollView>
         </View>
       </ScrollView>
