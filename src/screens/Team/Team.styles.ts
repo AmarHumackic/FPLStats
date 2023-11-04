@@ -11,8 +11,12 @@ interface Props {
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
   pointsContainer: ViewStyle;
+  avgPointsContainer: ViewStyle;
   pointsValue: TextStyle;
   pointsLabel: TextStyle;
+  currentPointsContainer: ViewStyle;
+  currentPointsValue: TextStyle;
+  currentPointsLabel: TextStyle;
   activeChipContainer: ViewStyle;
   activeChipLabel: TextStyle;
 }
@@ -55,10 +59,37 @@ export default StyleSheet.create<Props>({
     color: colors.black,
   },
   pointsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  avgPointsContainer: {
+    flexShrink: 0,
+    flexDirection: 'row',
+    textAlignVertical: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: colors.accentDark1,
+    borderRadius: 8,
+    padding: 6,
+  },
+  pointsValue: {
+    textAlign: 'center',
+    fontSize: sizes.xxl,
+    textAlignVertical: 'center',
+    color: colors.accentDark1,
+  },
+  pointsLabel: {
+    fontSize: sizes.ml,
+    color: colors.accentDark1,
+  },
+  currentPointsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'center',
     padding: 6,
     marginTop: 8,
     backgroundColor: colors.accentDark,
@@ -67,13 +98,13 @@ export default StyleSheet.create<Props>({
     shadowOpacity: 0.2,
     elevation: 2,
   },
-  pointsValue: {
+  currentPointsValue: {
     textAlign: 'center',
     fontSize: sizes.title,
     textAlignVertical: 'center',
     color: colors.purePrimary,
   },
-  pointsLabel: {
+  currentPointsLabel: {
     fontSize: sizes.xl,
     color: colors.purePrimary,
   },

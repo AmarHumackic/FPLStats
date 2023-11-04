@@ -20,10 +20,11 @@ import EventPicksView from '@components/Team/EventPicksView';
 import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
 import {ChipTypes} from 'src/types/api';
+import {colors} from '@constants/colors';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
-const Team = ({route}: Props) => {
+const Team = ({navigation: {push}, route}: Props) => {
   const [currentEventId, setCurrentEventId] = useState(0);
   const [viewingEventId, setViewingEventId] = useState(0);
   const {teamId: sessionTeamId} = useSessionContext();
@@ -82,9 +83,14 @@ const Team = ({route}: Props) => {
     forwardersM,
     bench,
     eventPoints,
-  } = useMemo(
-    () =>
-      filterEventPicks(
+    avgEventScore,
+    highestEventScore,
+    highestEventScoreId,
+  } = useMemo(() => {
+    const currentEventData = bData?.events.find(e => e.id === viewingEventId);
+
+    return {
+      ...filterEventPicks(
         bData?.elements,
         bData?.teams,
         epData?.picks,
@@ -92,15 +98,19 @@ const Team = ({route}: Props) => {
         fxData,
         viewingEventId,
       ),
-    [
-      bData?.elements,
-      bData?.teams,
-      epData?.picks,
-      elData?.elements,
-      fxData,
-      viewingEventId,
-    ],
-  );
+      avgEventScore: currentEventData?.average_entry_score,
+      highestEventScore: currentEventData?.highest_score,
+      highestEventScoreId: currentEventData?.highest_scoring_entry || undefined,
+    };
+  }, [
+    bData?.elements,
+    bData?.events,
+    bData?.teams,
+    epData?.picks,
+    elData?.elements,
+    fxData,
+    viewingEventId,
+  ]);
 
   if (
     managerFetching ||
@@ -139,8 +149,26 @@ const Team = ({route}: Props) => {
           </Touchable>
         </View>
         <View style={styles.pointsContainer}>
-          <Text style={styles.pointsValue}>{eventPoints}</Text>
-          <Text style={styles.pointsLabel}> points</Text>
+          <View style={styles.avgPointsContainer}>
+            <Text style={styles.pointsValue}>{avgEventScore}</Text>
+            <Text style={styles.pointsLabel}> average</Text>
+          </View>
+          <View style={styles.currentPointsContainer}>
+            <Text style={styles.currentPointsValue}>{eventPoints}</Text>
+            <Text style={styles.currentPointsLabel}> points</Text>
+          </View>
+          <Touchable
+            style={styles.avgPointsContainer}
+            disabled={!highestEventScoreId}
+            onPress={() => push('Team', {teamId: highestEventScoreId})}>
+            <Text style={styles.pointsValue}>{highestEventScore}</Text>
+            <Text style={styles.pointsLabel}> highest</Text>
+            <ChevronRightIcon
+              width={18}
+              height={18}
+              color={colors.accentDark1}
+            />
+          </Touchable>
         </View>
 
         <View style={styles.activeChipContainer}>
