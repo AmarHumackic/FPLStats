@@ -1,19 +1,15 @@
-import {View, ScrollView, StyleSheet} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import React, {useMemo, useRef, useState} from 'react';
 import styles from './PlayerStatsTable.styles';
 import LoadingView from '@components/common/LoadingView';
-import {
-  Table,
-  Row,
-  TableWrapper,
-  Cell,
-  Col,
-} from 'react-native-reanimated-table';
+import {Table, TableWrapper, Cell} from 'react-native-reanimated-table';
 import {useQuery} from '@tanstack/react-query';
 import {fetchBootstrapStatic, fetchFixtureStats} from '@services/api';
 import {colors} from '@constants/colors';
-import {ElementStatName} from 'src/types/api';
+import TabsView from '@components/common/TabsView';
 import {sizes} from '@constants/sizes';
+import Touchable from '@components/common/Touchable';
+import FlashMessage from 'react-native-flash-message';
 
 const tableHeadLabels = [
   'Player',
@@ -40,33 +36,6 @@ const tableHeadLabels = [
   'C',
   'T',
   'II',
-];
-
-const tableHeadValues: PlayerStatsHeadProps[] = [
-  'web_name',
-  'total_points',
-  'starts',
-  'minutes',
-  'goals_scored',
-  'assists',
-  'expected_goals',
-  'expected_assists',
-  'expected_goal_involvements',
-  'clean_sheets',
-  'goals_conceded',
-  'expected_goals_conceded',
-  'own_goals',
-  'penalties_saved',
-  'penalties_missed',
-  'yellow_cards',
-  'red_cards',
-  'saves',
-  'bonus',
-  'bps',
-  'influence',
-  'creativity',
-  'threat',
-  'ict_index',
 ];
 
 const tableHeadTooltips = [
@@ -96,16 +65,15 @@ const tableHeadTooltips = [
   'ICT Index',
 ];
 
-type PlayerStatsHeadProps = ElementStatName | 'web_name' | 'total_points';
-
 type Props = {
   fixtureId: number;
+  teamHName: string;
+  teamAName: string;
 };
 
-const PlayerStatsTable = ({fixtureId}: Props) => {
-  const [playerStatsFilter, setPlayerStatsFilter] = useState<'all' | 'h' | 'a'>(
-    'all',
-  );
+const PlayerStatsTable = ({fixtureId, teamHName, teamAName}: Props) => {
+  const [activeFilter, setActiveFilter] = useState(1);
+  const messageRef = useRef<FlashMessage>(null);
 
   const {data: bData, isFetching: bFetching} = useQuery(
     ['bootstrapStatic'],
@@ -122,9 +90,9 @@ const PlayerStatsTable = ({fixtureId}: Props) => {
   const {data, widthArr} = useMemo(() => {
     let stats = [];
 
-    if (playerStatsFilter === 'h') {
+    if (activeFilter === 2) {
       stats = fsData?.h || [];
-    } else if (playerStatsFilter === 'a') {
+    } else if (activeFilter === 3) {
       stats = fsData?.a || [];
     } else {
       stats = [...(fsData?.h || []), ...(fsData?.a || [])];
@@ -165,9 +133,9 @@ const PlayerStatsTable = ({fixtureId}: Props) => {
 
     return {
       data: _data,
-      widthArr: [80, ...Array(tableHeadLabels.length - 1).fill(40)],
+      widthArr: [90, ...Array(tableHeadLabels.length - 1).fill(40)],
     };
-  }, [bData, fsData, playerStatsFilter]);
+  }, [bData, fsData, activeFilter]);
 
   if (bFetching || fsFetching) {
     return (
@@ -180,74 +148,68 @@ const PlayerStatsTable = ({fixtureId}: Props) => {
   }
 
   return (
-    <ScrollView
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      stickyHeaderIndices={[0]}
-      contentContainerStyle={tableStyles.scrollContentContainer}>
-      <View>
-        <Table borderStyle={tableStyles.headerBorder}>
-          <Row
-            data={tableHeadLabels}
-            widthArr={widthArr}
-            style={tableStyles.headerContainer}
-            textStyle={tableStyles.headerText}
-          />
-        </Table>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={tableStyles.dataWrapper}>
-          <Table borderStyle={tableStyles.rowBorder}>
-            {data.map((rowData, rowIndex) => (
-              <TableWrapper key={rowIndex} style={[tableStyles.rowContainer]}>
-                {rowData.map((cellData, cellIndex) => (
+    <>
+      <TabsView
+        activeTab={activeFilter}
+        setActiveTab={setActiveFilter}
+        labels={['All', teamHName, teamAName]}
+        textColor={colors.accentDark}
+        textSize={sizes.sm}
+        activeBgColor={colors.accentDark}
+        activeTextColor={colors.primary}
+        containerStyle={styles.tabContainer}
+        itemContainerStyle={styles.tabItemContainer}
+      />
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContentContainer}>
+        <View>
+          <Table>
+            <TableWrapper style={styles.headerContainer}>
+              {tableHeadLabels.map((label, index) => (
+                <Touchable
+                  key={label}
+                  style={styles.headerTouchableContainer}
+                  onPress={() =>
+                    messageRef.current?.showMessage({
+                      backgroundColor: colors.accentDark,
+                      message: tableHeadTooltips[index],
+                    })
+                  }>
                   <Cell
-                    key={cellIndex}
-                    data={cellData}
-                    width={widthArr[cellIndex]}
-                    textStyle={
-                      cellIndex === 0
-                        ? tableStyles.headerText
-                        : tableStyles.rowText
-                    }
+                    data={label}
+                    textStyle={styles.headerText}
+                    width={widthArr[index]}
                   />
-                ))}
-              </TableWrapper>
-            ))}
+                </Touchable>
+              ))}
+            </TableWrapper>
           </Table>
-        </ScrollView>
-      </View>
-    </ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Table>
+              {data.map((rowData, rowIndex) => (
+                <TableWrapper key={rowIndex} style={styles.rowContainer}>
+                  {rowData.map((cellData, cellIndex) => (
+                    <Cell
+                      key={cellIndex}
+                      data={cellData}
+                      width={widthArr[cellIndex]}
+                      textStyle={
+                        cellIndex === 0 ? styles.headerText : styles.rowText
+                      }
+                    />
+                  ))}
+                </TableWrapper>
+              ))}
+            </Table>
+          </ScrollView>
+        </View>
+      </ScrollView>
+
+      <FlashMessage position="center" ref={messageRef} />
+    </>
   );
 };
 
 export default PlayerStatsTable;
-
-const tableStyles = StyleSheet.create({
-  scrollContentContainer: {
-    flexGrow: 1,
-  },
-  headerBorder: {borderWidth: 1, borderColor: colors.accentDark},
-  headerContainer: {height: 50, backgroundColor: colors.purePrimary},
-  headerText: {
-    textAlign: 'center',
-    color: colors.textDark2,
-    fontSize: sizes.sm,
-    fontWeight: 'bold',
-    letterSpacing: 0.2,
-  },
-  dataWrapper: {marginTop: -1, flex: 0},
-  rowBorder: {borderWidth: 1, borderColor: '#C1C0B9'},
-  rowContainer: {
-    flexDirection: 'row',
-    height: 40,
-    backgroundColor: '#E7E6E1',
-  },
-  rowText: {
-    textAlign: 'center',
-    color: colors.textDark1,
-    fontSize: sizes.sm,
-    fontWeight: '500',
-    letterSpacing: 0.2,
-  },
-});

@@ -17,7 +17,7 @@ type Props = {
 };
 
 const FixtureInfoModal = ({fixture, onClose}: Props) => {
-  const [activeTab, setActiveTab] = useState<1 | 2>(1);
+  const [activeTab, setActiveTab] = useState<number>(1);
 
   const renderElement = (element: CustomAwayHomeStatType) => (
     <Touchable
@@ -80,7 +80,13 @@ const FixtureInfoModal = ({fixture, onClose}: Props) => {
             </ScrollView>
           )}
 
-          {activeTab === 2 && <PlayerStatsTable fixtureId={fixture.id} />}
+          {activeTab === 2 && (
+            <PlayerStatsTable
+              fixtureId={fixture.id}
+              teamHName={fixture.team_h_name}
+              teamAName={fixture.team_a_name}
+            />
+          )}
         </View>
       </Modal>
     </View>

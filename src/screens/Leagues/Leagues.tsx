@@ -17,7 +17,7 @@ type Props = StackScreenProps<LeaguesStackProps, 'Leagues'>;
 
 const Leagues = ({navigation}: Props) => {
   const {teamId} = useSessionContext();
-  const [activeTab, setActiveTab] = useState<1 | 2>(1);
+  const [activeTab, setActiveTab] = useState<number>(1);
 
   const {
     data: manager,
