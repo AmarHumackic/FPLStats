@@ -21,6 +21,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
 import {ChipTypes} from 'src/types/api';
 import {colors} from '@constants/colors';
+import SwapHorizontalIcon from '@assets/svgs/SwapHorizontalIcon';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
@@ -83,6 +84,8 @@ const Team = ({navigation: {push}, route}: Props) => {
     forwardersM,
     bench,
     eventPoints,
+    eventTransfers,
+    eventTransfersCost,
     avgEventScore,
     highestEventScore,
     highestEventScoreId,
@@ -98,6 +101,8 @@ const Team = ({navigation: {push}, route}: Props) => {
         fxData,
         viewingEventId,
       ),
+      eventTransfers: epData?.entry_history?.event_transfers,
+      eventTransfersCost: epData?.entry_history.event_transfers_cost,
       avgEventScore: currentEventData?.average_entry_score,
       highestEventScore: currentEventData?.highest_score,
       highestEventScoreId: currentEventData?.highest_scoring_entry || undefined,
@@ -107,6 +112,7 @@ const Team = ({navigation: {push}, route}: Props) => {
     bData?.events,
     bData?.teams,
     epData?.picks,
+    epData?.entry_history,
     elData?.elements,
     fxData,
     viewingEventId,
@@ -147,6 +153,12 @@ const Team = ({navigation: {push}, route}: Props) => {
             onPress={nextEventHandler}>
             <ChevronRightIcon />
           </Touchable>
+          <View style={styles.eventTransfersContainer}>
+            <SwapHorizontalIcon />
+            <Text style={styles.eventTransfers}>{`${eventTransfers}${
+              eventTransfersCost ? ` (-${eventTransfersCost})` : ''
+            }`}</Text>
+          </View>
         </View>
         <View style={styles.pointsContainer}>
           <View style={styles.avgPointsContainer}>

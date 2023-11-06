@@ -10,6 +10,8 @@ interface Props {
   eventSwitchContainer: ViewStyle;
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
+  eventTransfersContainer: ViewStyle;
+  eventTransfers: TextStyle;
   pointsContainer: ViewStyle;
   avgPointsContainer: ViewStyle;
   pointsValue: TextStyle;
@@ -57,6 +59,16 @@ export default StyleSheet.create<Props>({
   eventNameLabel: {
     fontSize: sizes.xl,
     color: colors.black,
+  },
+  eventTransfersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  eventTransfers: {
+    fontSize: sizes.l,
+    fontWeight: 'bold',
+    color: colors.accentDark1,
+    marginLeft: 2,
   },
   pointsContainer: {
     width: '100%',
