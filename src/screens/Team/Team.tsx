@@ -139,6 +139,7 @@ const Team = ({navigation: {push}, route}: Props) => {
             }>{` (${manager?.player_first_name} ${manager?.player_last_name})`}</Text>
         </Text>
         <View style={styles.eventSwitchContainer}>
+          <View style={{flex: 1}} />
           <Touchable
             disabled={viewingEventId <= 1}
             style={styles.chevronContainer}

@@ -10,6 +10,7 @@ interface Props {
   eventSwitchContainer: ViewStyle;
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
+  flexView: ViewStyle;
   eventTransfersContainer: ViewStyle;
   eventTransfers: TextStyle;
   pointsContainer: ViewStyle;
@@ -60,7 +61,9 @@ export default StyleSheet.create<Props>({
     fontSize: sizes.xl,
     color: colors.black,
   },
+  flexView: {flex: 1},
   eventTransfersContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -77,7 +80,8 @@ export default StyleSheet.create<Props>({
     justifyContent: 'space-evenly',
   },
   avgPointsContainer: {
-    flexShrink: 0,
+    width: 115,
+    maxWidth: '33%',
     flexDirection: 'row',
     textAlignVertical: 'center',
     justifyContent: 'center',
