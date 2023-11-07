@@ -25,6 +25,9 @@ const BottomTab = () => {
         tabBarInactiveBackgroundColor: colors.primary,
         tabBarActiveTintColor: colors.accentDark,
         tabBarInactiveTintColor: colors.text,
+        tabBarStyle: {
+          backgroundColor: colors.primary,
+        },
       }}>
       <Tab.Screen
         name="TeamStack"
