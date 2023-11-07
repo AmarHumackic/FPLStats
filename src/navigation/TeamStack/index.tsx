@@ -16,11 +16,13 @@ const TeamStack = () => (
       options={({navigation}) => {
         const canGoBack = navigation.canGoBack();
         return {
-          headerShown: canGoBack ? true : false,
-          headerTransparent: !canGoBack ? false : true,
-          headerTitle: canGoBack && '',
+          headerShown: true,
+          headerTransparent: true,
+          headerTitle: '',
           headerLeft: props =>
-            renderNavElement(<HeaderBackButton {...props} />),
+            canGoBack
+              ? renderNavElement(<HeaderBackButton {...props} />)
+              : null,
         };
       }}
     />

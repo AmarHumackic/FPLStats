@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useLayoutEffect, useMemo, useState} from 'react';
 import styles from './Team.styles';
 import {useQuery} from '@tanstack/react-query';
 import {
@@ -22,10 +22,14 @@ import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
 import {ChipTypes} from 'src/types/api';
 import {colors} from '@constants/colors';
 import SwapHorizontalIcon from '@assets/svgs/SwapHorizontalIcon';
+import {renderNavElement} from '@navigation/utils/renderNavElement';
+import PopupMenu from '@components/common/PopupMenu';
+import {PopupMenuModel} from 'src/types/common';
+import StarIcon from '@assets/svgs/StarIcon';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
-const Team = ({navigation: {push}, route}: Props) => {
+const Team = ({navigation, route}: Props) => {
   const [currentEventId, setCurrentEventId] = useState(0);
   const [viewingEventId, setViewingEventId] = useState(0);
   const {teamId: sessionTeamId} = useSessionContext();
@@ -69,6 +73,26 @@ const Team = ({navigation: {push}, route}: Props) => {
     ['fixtures'],
     fetchFixtures,
     {cacheTime: Infinity},
+  );
+
+  const dropdownList: PopupMenuModel[] = useMemo(
+    () => [
+      {
+        label: 'View Dream Team',
+        icon: <StarIcon width={20} height={20} />,
+        onPress: () => {}, // navigation.navigate('SubmitDisputeA'),
+      },
+    ],
+    [],
+  );
+
+  useLayoutEffect(() =>
+    navigation.setOptions({
+      headerRight: () =>
+        renderNavElement(
+          <PopupMenu dropdownList={dropdownList || []} fontSize={'small'} />,
+        ),
+    }),
   );
 
   const previousEventHandler = async () =>
@@ -173,7 +197,9 @@ const Team = ({navigation: {push}, route}: Props) => {
           <Touchable
             style={styles.avgPointsContainer}
             disabled={!highestEventScoreId}
-            onPress={() => push('Team', {teamId: highestEventScoreId})}>
+            onPress={() =>
+              navigation.push('Team', {teamId: highestEventScoreId})
+            }>
             <Text style={styles.pointsValue}>{highestEventScore}</Text>
             <Text style={styles.pointsLabel}> highest</Text>
             <ChevronRightIcon
