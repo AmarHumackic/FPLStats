@@ -28,7 +28,6 @@ export default StyleSheet.create<Style>({
   dropdownContainer: {
     position: 'absolute',
     right: 0,
-    top: 24,
     height,
     width: width - 30,
   },

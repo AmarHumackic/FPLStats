@@ -20,4 +20,5 @@ export const colors = {
   redAlertLight: 'rgb(253, 53, 63)',
   transparent: 'transparent',
   highlight: '#71C180',
+  background: '#d9d9d9',
 };
