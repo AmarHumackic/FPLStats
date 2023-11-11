@@ -1,5 +1,6 @@
 import {colors} from '@constants/';
 import {sizes} from '@constants/';
+import {isAndroid} from '@utils/isAndroid';
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Props {
@@ -27,7 +28,7 @@ interface Props {
 export default StyleSheet.create<Props>({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundPrimary,
   },
   upperContainer: {},
   teamNameLabel: {
@@ -49,7 +50,6 @@ export default StyleSheet.create<Props>({
     justifyContent: 'center',
   },
   chevronContainer: {
-    marginHorizontal: 16,
     backgroundColor: colors.primary,
     width: 34,
     height: 34,
@@ -60,18 +60,22 @@ export default StyleSheet.create<Props>({
   eventNameLabel: {
     fontSize: sizes.xl,
     color: colors.black,
+    marginHorizontal: 10,
   },
   flexView: {flex: 1},
   eventTransfersContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 5,
   },
   eventTransfers: {
     fontSize: sizes.l,
     fontWeight: 'bold',
     color: colors.accentDark1,
     marginLeft: 2,
+    flex: 1,
   },
   pointsContainer: {
     width: '100%',
@@ -81,11 +85,12 @@ export default StyleSheet.create<Props>({
   },
   avgPointsContainer: {
     width: 115,
+    height: 36,
     maxWidth: '33%',
     flexDirection: 'row',
     textAlignVertical: 'center',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 8,
     borderWidth: 1,
     borderColor: colors.accentDark1,
@@ -95,11 +100,13 @@ export default StyleSheet.create<Props>({
   pointsValue: {
     textAlign: 'center',
     fontSize: sizes.xxl,
+    lineHeight: 25,
     textAlignVertical: 'center',
     color: colors.accentDark1,
   },
   pointsLabel: {
     fontSize: sizes.ml,
+    lineHeight: isAndroid() ? 22 : 24,
     color: colors.accentDark1,
   },
   currentPointsContainer: {

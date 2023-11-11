@@ -12,7 +12,7 @@ interface Props {
 export default StyleSheet.create<Props>({
   container: {
     flex: 1,
-    backgroundColor: colors.accentLight,
+    backgroundColor: colors.backgroundPrimary,
   },
   headerContainer: {
     flexDirection: 'row',

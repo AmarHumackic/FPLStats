@@ -180,34 +180,41 @@ const Team = ({navigation, route}: Props) => {
           </Touchable>
           <View style={styles.eventTransfersContainer}>
             <SwapHorizontalIcon />
-            <Text style={styles.eventTransfers}>{`${eventTransfers}${
+            <Text
+              style={styles.eventTransfers}
+              adjustsFontSizeToFit
+              numberOfLines={1}>{`${eventTransfers}${
               eventTransfersCost ? ` (-${eventTransfersCost})` : ''
             }`}</Text>
           </View>
         </View>
         <View style={styles.pointsContainer}>
-          <View style={styles.avgPointsContainer}>
-            <Text style={styles.pointsValue}>{avgEventScore}</Text>
-            <Text style={styles.pointsLabel}> average</Text>
-          </View>
+          {avgEventScore ? (
+            <View style={styles.avgPointsContainer}>
+              <Text style={styles.pointsValue}>{avgEventScore}</Text>
+              <Text style={styles.pointsLabel}> average</Text>
+            </View>
+          ) : null}
           <View style={styles.currentPointsContainer}>
             <Text style={styles.currentPointsValue}>{eventPoints}</Text>
             <Text style={styles.currentPointsLabel}> points</Text>
           </View>
-          <Touchable
-            style={styles.avgPointsContainer}
-            disabled={!highestEventScoreId}
-            onPress={() =>
-              navigation.push('Team', {teamId: highestEventScoreId})
-            }>
-            <Text style={styles.pointsValue}>{highestEventScore}</Text>
-            <Text style={styles.pointsLabel}> highest</Text>
-            <ChevronRightIcon
-              width={18}
-              height={18}
-              color={colors.accentDark1}
-            />
-          </Touchable>
+          {avgEventScore ? (
+            <Touchable
+              style={styles.avgPointsContainer}
+              disabled={!highestEventScoreId}
+              onPress={() =>
+                navigation.push('Team', {teamId: highestEventScoreId})
+              }>
+              <Text style={styles.pointsValue}>{highestEventScore || '-'}</Text>
+              <Text style={styles.pointsLabel}> highest</Text>
+              <ChevronRightIcon
+                width={18}
+                height={18}
+                color={colors.accentDark1}
+              />
+            </Touchable>
+          ) : null}
         </View>
 
         <View style={styles.activeChipContainer}>

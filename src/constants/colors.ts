@@ -19,6 +19,6 @@ export const colors = {
   redAlert: 'rgb(192, 2, 13)',
   redAlertLight: 'rgb(253, 53, 63)',
   transparent: 'transparent',
-  highlight: '#71C180',
-  background: '#d9d9d9',
+  tabBarBackground: '#4d4d4d',
+  backgroundPrimary: '#d9d9d9',
 };

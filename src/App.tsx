@@ -22,7 +22,7 @@ const App = () => {
     <NavigationContainer>
       <FocusAwareStatusBar
         barStyle={'dark-content'}
-        backgroundColor={colors.primary}
+        backgroundColor={colors.backgroundPrimary}
       />
       {teamId ? <BottomTab /> : <Auth />}
       <FlashMessage position="top" />
