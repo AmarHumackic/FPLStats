@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
 
 const InformationIcon = ({
   size = 20,
-  backgroundColor = colors.primary,
-  color = colors.textDark2,
+  backgroundColor = colors.accentDark2,
+  color = colors.purePrimary,
   onPress,
 }: Props) => (
   <Touchable

@@ -14,7 +14,7 @@ export default StyleSheet.create<Props>({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: sizes.marginHorizontal,
-    backgroundColor: colors.accentDark,
+    backgroundColor: colors.backgroundPrimary,
   },
   label: {
     marginBottom: 24,
@@ -26,7 +26,8 @@ export default StyleSheet.create<Props>({
     width: '60%',
     height: 40,
     borderRadius: 8,
-    backgroundColor: colors.accentLight,
+    borderWidth: 1,
+    borderColor: colors.textLight2,
     color: colors.textDark1,
     paddingHorizontal: 10,
     fontSize: sizes.ml,

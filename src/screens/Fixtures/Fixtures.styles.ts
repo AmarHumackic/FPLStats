@@ -22,7 +22,7 @@ export default StyleSheet.create<Props>({
   },
   chevronContainer: {
     marginHorizontal: 16,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.text,
     width: 34,
     height: 34,
     alignItems: 'center',

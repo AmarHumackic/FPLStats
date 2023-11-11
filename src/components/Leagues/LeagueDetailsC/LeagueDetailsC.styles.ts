@@ -66,6 +66,8 @@ export default StyleSheet.create<Props>({
   },
   headerContainer: {
     backgroundColor: colors.accentDark,
+    borderBottomWidth: 0.5,
+    borderBottomColor: colors.backgroundPrimary,
   },
   headerText: {
     fontWeight: 'bold',

@@ -26,7 +26,10 @@ export default StyleSheet.create<Style>({
     justifyContent: 'center',
   },
   contentContainer: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.purePrimary,
+    elevation: 2,
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.2,
     maxWidth: '80%',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -37,7 +40,7 @@ export default StyleSheet.create<Style>({
   title: {
     fontSize: sizes.xxl,
     paddingBottom: 16,
-    color: colors.textDark2,
+    color: colors.accentDark,
   },
   loadingDescriptionContainer: {
     flexDirection: 'row',
@@ -47,6 +50,6 @@ export default StyleSheet.create<Style>({
   description: {
     fontSize: sizes.m,
     paddingLeft: 10,
-    color: colors.text,
+    color: colors.accentDark,
   },
 });

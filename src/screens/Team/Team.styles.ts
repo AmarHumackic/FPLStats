@@ -50,7 +50,7 @@ export default StyleSheet.create<Props>({
     justifyContent: 'center',
   },
   chevronContainer: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.text,
     width: 34,
     height: 34,
     alignItems: 'center',

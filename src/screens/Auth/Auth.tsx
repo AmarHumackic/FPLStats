@@ -101,8 +101,8 @@ const Auth = ({}: Props) => {
 
       <Button
         title={isTeamIdSearch ? 'Submit' : 'Search'}
-        backgroundColor={colors.primary}
-        textColor={colors.text}
+        backgroundColor={colors.accentDark}
+        textColor={colors.purePrimary}
         textSize={sizes.ml}
         width={'60%'}
         height={40}

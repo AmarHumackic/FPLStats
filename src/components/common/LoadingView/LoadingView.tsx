@@ -43,7 +43,7 @@ const LoadingView = ({
     {withoutTitle ? (
       <ActivityIndicator
         size={size || 'large'}
-        color={indicatorColor || colors.primary}
+        color={indicatorColor || colors.accentDark}
       />
     ) : (
       <View style={styles.contentContainer}>
