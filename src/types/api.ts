@@ -119,6 +119,7 @@ export interface TeamPlayerDelegate {
   threat: GWElementLiveDelegate['stats']['threat'];
   bps: GWElementLiveDelegate['stats']['bps'];
   in_lineup: boolean; // if the player is eligible to score points (has any minutes) - default: true for the first 11; false for bench
+  check_lineups: boolean; // if this is true, it will include the player from the bench if the current player is not playing. 5 minutes after the start of the match, this will become true, because the players' minutes are not calculated immediately after the start of the match, but a few minutes later.
   total_points: number;
   total_points_live: number;
   fixture_started: boolean;

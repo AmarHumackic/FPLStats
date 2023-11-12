@@ -9,6 +9,7 @@ import {
 } from 'src/types/api';
 import {getElementsBonus} from './getElementsBonus';
 import {MIN_ELEMENT_TYPES_LINEUP} from '@constants/index';
+import dayjs from 'dayjs';
 
 export const filterEventPicks = (
   elements?: PlayerDelegate[],
@@ -59,6 +60,9 @@ export const filterEventPicks = (
     const elementFixture = eventFixtures.find(
       ef => ef.id === _elementLive.explain?.[0]?.fixture,
     );
+    const shouldCheckLineups = dayjs().isAfter(
+      dayjs(elementFixture?.kickoff_time).add(5, 'minutes'),
+    );
     const rivalTeamId =
       elementFixture?.team_a === _element.team
         ? elementFixture.team_h
@@ -88,14 +92,19 @@ export const filterEventPicks = (
       threat: _elementLive.stats.threat,
       bps: _elementLive.stats.bps,
       in_lineup: true, // set all to true temporarily
+      check_lineups: shouldCheckLineups, // if this is true, it will include the player from the bench if the current player is not playing. 5 minutes after the start of the match, this will become true, because the players' minutes are not calculated immediately after the start of the match, but a few minutes later.
       total_points: _elementLive.stats.total_points,
       total_points_live: getEventPlayerPoints(
         p,
         _elementLive,
         isCaptainActive,
         elementsBonus,
+        shouldCheckLineups,
       ),
-      fixture_started: elementFixture?.started || false,
+      fixture_started:
+        elementFixture?.started ||
+        dayjs().isAfter(dayjs(elementFixture?.kickoff_time)) ||
+        false,
       fixture_finished:
         elementFixture?.finished ||
         elementFixture?.finished_provisional ||
@@ -148,11 +157,12 @@ const getEventPlayerPoints = (
   elementLive: GWLiveDelegate['elements'][0],
   isCaptainActive: boolean,
   elementsBonus: PlayerIdBonus[],
+  shouldCheckLineups: boolean, // bonus points will be included 5 minutes after the match has started as `shouldCheckLineups` will become true on that time
 ) => {
   let totalPoints = elementLive.stats.total_points;
   const bonus = elementsBonus.find(eb => eb.id === elementLive.id)?.bonus || 0;
 
-  if (!elementLive.stats.bonus && elementLive.stats.bps) {
+  if (!elementLive.stats.bonus && elementLive.stats.bps && shouldCheckLineups) {
     totalPoints += bonus;
   }
 
@@ -182,7 +192,7 @@ export const getPlayersLinedUp = (players: TeamPlayerDelegate[]) => {
       // is not in first 11 - check if benchLineups contains the player, if yes, set lineup to true
       inLineup = benchLineups.some(bl => bl.id === p.id);
     } else {
-      if (p.fixture_started && !p.minutes) {
+      if (p.fixture_started && p.check_lineups && !p.minutes) {
         // match started, player is not playing - count points from bench replacement
         for (let index = 0; index < initialBench.length; index++) {
           const initialBenchP = initialBench[index];
