@@ -1,4 +1,3 @@
-import {View, Text} from 'react-native';
 import React, {useLayoutEffect, useMemo, useState} from 'react';
 import styles from './Team.styles';
 import {useQuery} from '@tanstack/react-query';
@@ -10,22 +9,17 @@ import {
   fetchManagerEventPicks,
 } from '@services/api';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Touchable from '@components/common/Touchable';
-import ChevronLeftIcon from '@assets/svgs/ChevronLeftIcon';
-import ChevronRightIcon from '@assets/svgs/ChevronRightIcon';
 import {useSessionContext} from '@services/sessionContext';
 import LoadingView from '@components/common/LoadingView';
 import {filterEventPicks} from '@utils/filterEventPicks';
 import EventPicksView from '@components/Team/EventPicksView';
 import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
-import {ChipTypes} from 'src/types/api';
-import {colors} from '@constants/colors';
-import SwapHorizontalIcon from '@assets/svgs/SwapHorizontalIcon';
 import {renderNavElement} from '@navigation/utils/renderNavElement';
 import PopupMenu from '@components/common/PopupMenu';
 import {PopupMenuModel} from 'src/types/common';
 import StarIcon from '@assets/svgs/StarIcon';
+import TeamInfo from '@components/Team/TeamInfo';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
@@ -80,10 +74,10 @@ const Team = ({navigation, route}: Props) => {
       {
         label: 'View Dream Team',
         icon: <StarIcon width={20} height={20} />,
-        onPress: () => {}, // navigation.navigate('SubmitDisputeA'),
+        onPress: () => navigation.navigate('DreamTeam'),
       },
     ],
-    [],
+    [navigation],
   );
 
   useLayoutEffect(() =>
@@ -128,7 +122,7 @@ const Team = ({navigation, route}: Props) => {
       eventTransfers: epData?.entry_history?.event_transfers,
       eventTransfersCost: epData?.entry_history.event_transfers_cost,
       avgEventScore: currentEventData?.average_entry_score,
-      highestEventScore: currentEventData?.highest_score,
+      highestEventScore: currentEventData?.highest_score || undefined,
       highestEventScoreId: currentEventData?.highest_scoring_entry || undefined,
     };
   }, [
@@ -154,77 +148,21 @@ const Team = ({navigation, route}: Props) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <View style={styles.upperContainer}>
-        <Text style={styles.teamNameLabel}>
-          {manager?.name}
-          <Text
-            style={
-              styles.playerNameLabel
-            }>{` (${manager?.player_first_name} ${manager?.player_last_name})`}</Text>
-        </Text>
-        <View style={styles.eventSwitchContainer}>
-          <View style={styles.flexView} />
-          <Touchable
-            disabled={viewingEventId <= 1}
-            style={styles.chevronContainer}
-            onPress={previousEventHandler}>
-            <ChevronLeftIcon />
-          </Touchable>
-          <Text
-            style={styles.eventNameLabel}>{`Gameweek ${viewingEventId}`}</Text>
-          <Touchable
-            disabled={viewingEventId >= currentEventId}
-            style={styles.chevronContainer}
-            onPress={nextEventHandler}>
-            <ChevronRightIcon />
-          </Touchable>
-          <View style={styles.eventTransfersContainer}>
-            <SwapHorizontalIcon />
-            <Text
-              style={styles.eventTransfers}
-              adjustsFontSizeToFit
-              numberOfLines={1}>{`${eventTransfers}${
-              eventTransfersCost ? ` (-${eventTransfersCost})` : ''
-            }`}</Text>
-          </View>
-        </View>
-        <View style={styles.pointsContainer}>
-          {avgEventScore ? (
-            <View style={styles.avgPointsContainer}>
-              <Text style={styles.pointsValue}>{avgEventScore}</Text>
-              <Text style={styles.pointsLabel}> average</Text>
-            </View>
-          ) : null}
-          <View style={styles.currentPointsContainer}>
-            <Text style={styles.currentPointsValue}>{eventPoints}</Text>
-            <Text style={styles.currentPointsLabel}> points</Text>
-          </View>
-          {avgEventScore ? (
-            <Touchable
-              style={styles.avgPointsContainer}
-              disabled={!highestEventScoreId}
-              onPress={() =>
-                navigation.push('Team', {teamId: highestEventScoreId})
-              }>
-              <Text style={styles.pointsValue}>{highestEventScore || '-'}</Text>
-              <Text style={styles.pointsLabel}> highest</Text>
-              <ChevronRightIcon
-                width={18}
-                height={18}
-                color={colors.accentDark1}
-              />
-            </Touchable>
-          ) : null}
-        </View>
-
-        <View style={styles.activeChipContainer}>
-          {epData?.active_chip && (
-            <Text style={styles.activeChipLabel}>
-              {ChipTypes?.[epData.active_chip] || ''}
-            </Text>
-          )}
-        </View>
-      </View>
+      <TeamInfo
+        teamName={manager?.name}
+        managerName={`${manager?.player_first_name} ${manager?.player_last_name}`}
+        viewingEventId={viewingEventId}
+        currentEventId={currentEventId}
+        onPreviousEvent={previousEventHandler}
+        onNextEvent={nextEventHandler}
+        eventTransfers={eventTransfers}
+        eventTransfersCost={eventTransfersCost}
+        avgEventScore={avgEventScore}
+        eventPoints={eventPoints}
+        highestEventScoreId={highestEventScoreId}
+        highestEventScore={highestEventScore}
+        activeChip={epData?.active_chip}
+      />
 
       <EventPicksView
         goalKeepersM={goalKeepersM}

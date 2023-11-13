@@ -1,16 +1,16 @@
 import {ImageBackground, View} from 'react-native';
 import React from 'react';
 import styles from './EventPicksView.styles';
-import {TeamPlayerDelegate} from 'src/types/api';
+import {DreamTeamPlayer, TeamPlayerDelegate} from 'src/types/api';
 import PlayerPickView from '../PlayerPickView';
 import SoccerFieldBackground from '@assets/images/SoccerFieldBackground.png';
 
 type Props = {
-  goalKeepersM: TeamPlayerDelegate[];
-  defendersM: TeamPlayerDelegate[];
-  midfieldersM: TeamPlayerDelegate[];
-  forwardersM: TeamPlayerDelegate[];
-  bench: TeamPlayerDelegate[];
+  goalKeepersM: TeamPlayerDelegate[] | DreamTeamPlayer[];
+  defendersM: TeamPlayerDelegate[] | DreamTeamPlayer[];
+  midfieldersM: TeamPlayerDelegate[] | DreamTeamPlayer[];
+  forwardersM: TeamPlayerDelegate[] | DreamTeamPlayer[];
+  bench?: TeamPlayerDelegate[] | DreamTeamPlayer[];
 };
 
 const EventPicksView = ({
@@ -46,11 +46,18 @@ const EventPicksView = ({
       </View>
     </ImageBackground>
 
-    <View style={styles.benchContainer}>
-      {bench.map(el => (
-        <PlayerPickView key={el.id} player={el} showPosition showLineup />
-      ))}
-    </View>
+    {bench && (
+      <View style={styles.benchContainer}>
+        {bench.map(el => (
+          <PlayerPickView
+            key={el.id}
+            player={el}
+            showPosition
+            showLineup={bench ? true : false}
+          />
+        ))}
+      </View>
+    )}
   </View>
 );
 

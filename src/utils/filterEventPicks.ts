@@ -71,6 +71,7 @@ export const filterEventPicks = (
         : 0;
 
     return {
+      tsType: 'TeamPlayer',
       id: _element.id,
       element_type: _element.element_type,
       team: _element.team,
@@ -117,19 +118,12 @@ export const filterEventPicks = (
 
   const eventPicksLinedUp = getPlayersLinedUp(eventPicks); // this will include bench points in case some of the first 11 do not play
 
-  const goalKeepersM = eventPicksLinedUp.filter(
-    p => p.element_type === 1 && p.multiplier,
-  );
-  const defendersM = eventPicksLinedUp.filter(
-    p => p.element_type === 2 && p.multiplier,
-  );
-  const midfieldersM = eventPicksLinedUp.filter(
-    p => p.element_type === 3 && p.multiplier,
-  );
-  const forwardersM = eventPicksLinedUp.filter(
-    p => p.element_type === 4 && p.multiplier,
-  );
-  const bench = eventPicksLinedUp.filter(p => !p.multiplier);
+  const bench = eventPicksLinedUp.splice(11, 15);
+  const goalKeepersM = eventPicksLinedUp.filter(p => p.element_type === 1);
+  const defendersM = eventPicksLinedUp.filter(p => p.element_type === 2);
+  const midfieldersM = eventPicksLinedUp.filter(p => p.element_type === 3);
+  const forwardersM = eventPicksLinedUp.filter(p => p.element_type === 4);
+
   const eventPoints = [
     ...goalKeepersM,
     ...defendersM,

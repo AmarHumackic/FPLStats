@@ -8,6 +8,7 @@ export type BottomTabProps = {
 
 export type TeamStackProps = {
   Team: undefined;
+  DreamTeam: undefined;
 };
 
 export type FixturesStackProps = {
@@ -28,6 +29,7 @@ export type LeaguesStackProps = {
   Team: {
     teamId?: number;
   };
+  DreamTeam: undefined;
 };
 
 export type ProfileStackProps = {

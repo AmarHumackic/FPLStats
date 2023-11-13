@@ -98,6 +98,7 @@ export type PickDelegate = {
 };
 
 export interface TeamPlayerDelegate {
+  tsType: 'TeamPlayer';
   id: PlayerDelegate['id'];
   element_type: PlayerDelegate['element_type'];
   team: PlayerDelegate['team'];
@@ -984,4 +985,15 @@ export type DateFixture = {
 
 export interface DateFixtures {
   [key: string]: DateFixture[];
+}
+
+export interface DreamTeamPlayer {
+  tsType: 'DreamTeamPlayer';
+  id: PlayerDelegate['id'];
+  web_name: PlayerDelegate['web_name'];
+  points: PlayerDelegate['event_points'];
+  element_type: PlayerDelegate['element_type'];
+  news: PlayerDelegate['news'];
+  team: PlayerDelegate['team'];
+  code: PlayerDelegate['code'];
 }

@@ -26,7 +26,7 @@ export const filterEventFixtures = (
 
   for (let index = 0; index < kickOffTimes.length; index++) {
     const item = kickOffTimes[index];
-    console.log('\n\n\n');
+
     if (item) {
       dateFixtures[item] = eventFixtures
         .filter(ef => dayjs(ef.kickoff_time).format('YYYY-MM-DD') === item)

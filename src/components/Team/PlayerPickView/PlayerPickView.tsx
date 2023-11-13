@@ -1,7 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React, {useState} from 'react';
 import styles from './PlayerPickView.styles';
-import {TeamPlayerDelegate, PosNameArr} from 'src/types/api';
+import {TeamPlayerDelegate, PosNameArr, DreamTeamPlayer} from 'src/types/api';
 import {playerImageUri} from '@services/api';
 import StarIcon from '@assets/svgs/StarIcon';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
@@ -11,7 +11,7 @@ import Captain from '@components/common/Captain';
 import ChevronIcon from '@assets/svgs/ChevronIcon';
 
 type Props = {
-  player: TeamPlayerDelegate;
+  player: TeamPlayerDelegate | DreamTeamPlayer;
   showPosition?: boolean;
   showLineup?: boolean;
 };
@@ -23,11 +23,11 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
     let lineUpIconRotation: 'up' | 'down' | null = null;
     if (showLineup) {
       // for bench players
-      if (player.in_lineup) {
+      if (player.tsType === 'TeamPlayer' && player.in_lineup) {
         lineUpIconRotation = 'up';
       }
     } else {
-      if (!player.in_lineup) {
+      if (player.tsType === 'TeamPlayer' && !player.in_lineup) {
         // for first 11 players
         lineUpIconRotation = 'down';
       }
@@ -40,13 +40,15 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
             <ChevronIcon rotation={lineUpIconRotation} />
           </View>
         )}
-        {player.fixture_started ? (
+        {player.tsType === 'DreamTeamPlayer' || player.fixture_started ? (
           <Text
             style={[
               styles.eventPoints,
-              player.fixture_started && styles.eventPointsStarted,
+              player.tsType === 'TeamPlayer' &&
+                player.fixture_started &&
+                styles.eventPointsStarted,
             ]}>
-            {player.total_points_live}
+            {player.tsType === 'TeamPlayer' && player.total_points_live}
           </Text>
         ) : (
           <Text
@@ -73,8 +75,10 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
         </Text>
       )}
       <View style={styles.topRightContainer}>
-        {player.is_captain && <Captain />}
-        {player.is_vice_captain && <Captain type="V" />}
+        {player.tsType === 'TeamPlayer' && player.is_captain && <Captain />}
+        {player.tsType === 'TeamPlayer' && player.is_vice_captain && (
+          <Captain type="V" />
+        )}
         {!isNullOrEmpty(player.news) && (
           <View style={styles.alertIconContainer}>
             <AlertIcon
@@ -82,7 +86,7 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
             />
           </View>
         )}
-        {player.in_dreamteam && (
+        {(player.tsType === 'DreamTeamPlayer' || player.in_dreamteam) && (
           <View style={styles.iconContainer}>
             <StarIcon />
           </View>

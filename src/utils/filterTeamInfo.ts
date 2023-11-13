@@ -39,7 +39,8 @@ export const filterTeamInfo = (
     ...defendersM,
     ...midfieldersM,
     ...forwardersM,
-  ];
+    ...bench,
+  ].filter(el => el.in_lineup);
 
   const captainId = eventPicks?.picks.find(ep => ep.is_captain)?.element;
   const captain =
