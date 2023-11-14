@@ -1,17 +1,28 @@
 import {
   DreamTeamPlayer,
+  DreamTeamTopPlayer,
   GWDreamTeamDelegate,
+  GWLiveDelegate,
   PlayerDelegate,
+  TeamDelegate,
 } from 'src/types/api';
 
 export const filterDreamTeam = (
   elements?: PlayerDelegate[],
+  teams?: TeamDelegate[],
+  elementsLive?: GWLiveDelegate['elements'],
   dtData?: GWDreamTeamDelegate | undefined,
   event?: number,
 ) => {
-  if (!elements?.length || !dtData || !event) {
+  if (
+    !elements?.length ||
+    !teams?.length ||
+    !elementsLive?.length ||
+    !dtData ||
+    !event
+  ) {
     return {
-      topPlayer: {},
+      topPlayer: null,
       goalKeepersM: [],
       defendersM: [],
       midfieldersM: [],
@@ -21,8 +32,10 @@ export const filterDreamTeam = (
   }
 
   const topPlayerElement = elements.find(el => el.id === dtData.top_player.id)!;
-  const topPlayer: DreamTeamPlayer = {
-    tsType: 'DreamTeamPlayer',
+  const topPlayerElementLive = elementsLive.find(
+    el => el.id === dtData.top_player.id,
+  )!;
+  const topPlayer: DreamTeamTopPlayer = {
     id: topPlayerElement?.id,
     web_name: topPlayerElement?.web_name,
     points: topPlayerElement?.event_points,
@@ -30,6 +43,9 @@ export const filterDreamTeam = (
     news: topPlayerElement.news,
     team: topPlayerElement.team,
     code: topPlayerElement.code,
+    team_name: teams.find(t => t.id === topPlayerElement.team)?.name || '',
+    goals_scored: topPlayerElementLive?.stats.goals_scored,
+    assists: topPlayerElementLive.stats.assists,
   };
 
   const players: DreamTeamPlayer[] = dtData.team.map(el => {
@@ -43,6 +59,7 @@ export const filterDreamTeam = (
       news: playerElement?.news,
       team: playerElement.team,
       code: playerElement.code,
+      total_points: playerElement.event_points,
     };
   });
 

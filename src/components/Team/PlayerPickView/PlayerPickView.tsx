@@ -44,11 +44,13 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
           <Text
             style={[
               styles.eventPoints,
-              player.tsType === 'TeamPlayer' &&
-                player.fixture_started &&
+              ((player.tsType === 'TeamPlayer' && player.fixture_started) ||
+                player.tsType === 'DreamTeamPlayer') &&
                 styles.eventPointsStarted,
             ]}>
-            {player.tsType === 'TeamPlayer' && player.total_points_live}
+            {player.tsType === 'TeamPlayer'
+              ? player.total_points_live
+              : player.total_points}
           </Text>
         ) : (
           <Text

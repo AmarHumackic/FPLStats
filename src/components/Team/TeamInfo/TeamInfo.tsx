@@ -52,7 +52,9 @@ const TeamInfo = ({
       {teamName && (
         <Text style={styles.teamNameLabel}>
           {teamName}
-          <Text style={styles.playerNameLabel}>{` (${managerName})`}</Text>
+          {managerName && (
+            <Text style={styles.playerNameLabel}>{` (${managerName})`}</Text>
+          )}
         </Text>
       )}
       <View style={styles.eventSwitchContainer}>

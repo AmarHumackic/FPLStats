@@ -671,12 +671,14 @@ const PosPluralName = createStrEnum([
 
 type PositionPluralName = keyof typeof PosPluralName | null;
 
-const PosShortName = createStrEnum([
+export const PosShortNameArr = [
   'Goalkeeper',
   'Defender',
   'Midfielder',
   'Forward',
-]);
+];
+
+const PosShortName = createStrEnum(PosShortNameArr);
 
 type PositionShortName = keyof typeof PosShortName | null;
 
@@ -996,4 +998,18 @@ export interface DreamTeamPlayer {
   news: PlayerDelegate['news'];
   team: PlayerDelegate['team'];
   code: PlayerDelegate['code'];
+  total_points: PlayerDelegate['total_points'];
+}
+
+export interface DreamTeamTopPlayer {
+  id: PlayerDelegate['id'];
+  web_name: PlayerDelegate['web_name'];
+  points: PlayerDelegate['event_points'];
+  element_type: PlayerDelegate['element_type'];
+  news: PlayerDelegate['news'];
+  team: PlayerDelegate['team'];
+  code: PlayerDelegate['code'];
+  team_name: TeamDelegate['name'];
+  goals_scored: PlayerEventLiveDelegate['goals_scored'];
+  assists: PlayerEventLiveDelegate['assists'];
 }
