@@ -14,6 +14,9 @@ interface Props {
   eventTransfersContainer: ViewStyle;
   eventTransfers: TextStyle;
   pointsContainer: ViewStyle;
+  oneThirdView: ViewStyle;
+  overallViewContainer: ViewStyle;
+  overallViewText: TextStyle;
   avgPointsContainer: ViewStyle;
   pointsValue: TextStyle;
   pointsLabel: TextStyle;
@@ -43,6 +46,7 @@ export default StyleSheet.create<Props>({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 34,
   },
   chevronContainer: {
     backgroundColor: colors.text,
@@ -78,10 +82,27 @@ export default StyleSheet.create<Props>({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  avgPointsContainer: {
+  oneThirdView: {
     width: 115,
     height: 36,
     maxWidth: '33%',
+  },
+  overallViewContainer: {
+    flexDirection: 'row',
+    textAlignVertical: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  overallViewText: {
+    fontSize: sizes.ml,
+    lineHeight: 18.8,
+    letterSpacing: 0.3,
+    fontWeight: '500',
+    marginRight: -2,
+    color: colors.accentDark2,
+  },
+  avgPointsContainer: {
     flexDirection: 'row',
     textAlignVertical: 'center',
     alignItems: 'center',

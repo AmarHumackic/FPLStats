@@ -17,6 +17,9 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
 import {getTeamShirt} from '@utils/getTeamShirt';
 import {PosShortNameArr} from 'src/types/api';
+import {isNullOrEmpty} from '@utils/isNullOrEmpty';
+import AlertIcon from '@assets/svgs/AlertIcon';
+import StarIcon from '@assets/svgs/StarIcon';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'DreamTeam'>;
 
@@ -24,6 +27,7 @@ const DreamTeam = ({}: Props) => {
   const [currentEventId, setCurrentEventId] = useState(0);
   const [viewingEventId, setViewingEventId] = useState(0);
   const [imgError, setImgError] = useState(false);
+  const [isOverallView, setIsOverallView] = useState(false);
 
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
@@ -41,14 +45,17 @@ const DreamTeam = ({}: Props) => {
     () => fetchEventLive(viewingEventId),
     {
       enabled: currentEventId ? true : false,
-      cacheTime: Infinity,
+      staleTime: 20000,
     },
   );
 
   const {data: dtData, isFetching: dtFetching} = useQuery(
-    ['dreamTeam', viewingEventId],
-    () => fetchEventDreamTeam(viewingEventId),
-    {enabled: currentEventId ? true : false},
+    ['dreamTeam', isOverallView ? undefined : viewingEventId],
+    () => fetchEventDreamTeam(isOverallView ? undefined : viewingEventId),
+    {
+      enabled: currentEventId ? true : false,
+      staleTime: 20000,
+    },
   );
 
   const previousEventHandler = async () =>
@@ -71,9 +78,9 @@ const DreamTeam = ({}: Props) => {
         bData?.teams,
         elData?.elements,
         dtData,
-        viewingEventId,
+        isOverallView,
       ),
-    [bData?.elements, bData?.teams, elData?.elements, dtData, viewingEventId],
+    [bData?.elements, bData?.teams, elData?.elements, dtData, isOverallView],
   );
 
   if (elFetching || dtFetching || !currentEventId) {
@@ -83,12 +90,15 @@ const DreamTeam = ({}: Props) => {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <TeamInfo
-        teamName={'Team of the Week'}
+        teamName={`Team of the ${isOverallView ? 'Season' : 'Week'}`}
         viewingEventId={viewingEventId}
         currentEventId={currentEventId}
         onPreviousEvent={previousEventHandler}
         onNextEvent={nextEventHandler}
         eventPoints={eventPoints}
+        hasOverallView
+        isOverallView={isOverallView}
+        onOverallView={() => setIsOverallView(prevState => !prevState)}
       />
 
       <EventPicksView
@@ -102,6 +112,18 @@ const DreamTeam = ({}: Props) => {
         <Text style={styles.topPlayerText}>Top player</Text>
         <View style={styles.topPlayerRowContainer}>
           <View style={styles.topPlayerLeftContainer}>
+            <View style={styles.topPlayerIconsContainer}>
+              {!isNullOrEmpty(topPlayer!.news) && (
+                <View style={styles.alertIconContainer}>
+                  <AlertIcon
+                    type={topPlayer!.news?.includes('%') ? 'warning' : 'danger'}
+                  />
+                </View>
+              )}
+              <View style={styles.iconContainer}>
+                <StarIcon />
+              </View>
+            </View>
             <Image
               source={
                 imgError
@@ -126,7 +148,7 @@ const DreamTeam = ({}: Props) => {
             } assist${topPlayer?.assists === 1 ? '' : 's'}`}</Text>
           </View>
           <View style={styles.topPlayerRightContainer}>
-            <Text style={styles.topPlayerPointsValue}>59</Text>
+            <Text style={styles.topPlayerPointsValue}>{topPlayer?.points}</Text>
             <Text style={styles.topPlayerPointsLabel}>points</Text>
           </View>
         </View>

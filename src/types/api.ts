@@ -998,7 +998,6 @@ export interface DreamTeamPlayer {
   news: PlayerDelegate['news'];
   team: PlayerDelegate['team'];
   code: PlayerDelegate['code'];
-  total_points: PlayerDelegate['total_points'];
 }
 
 export interface DreamTeamTopPlayer {

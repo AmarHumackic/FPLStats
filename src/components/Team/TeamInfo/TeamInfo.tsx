@@ -25,6 +25,9 @@ type Props = {
   highestEventScoreId?: number;
   highestEventScore?: number;
   activeChip?: 'wildcard' | '3xc' | 'freehit' | 'bboost';
+  hasOverallView?: boolean;
+  isOverallView?: boolean; // dream team property
+  onOverallView?: () => void; // dream team property
 };
 
 const TeamInfo = ({
@@ -41,6 +44,9 @@ const TeamInfo = ({
   highestEventScoreId,
   highestEventScore,
   activeChip,
+  hasOverallView,
+  isOverallView,
+  onOverallView,
 }: Props) => {
   const navigation =
     useNavigation<
@@ -61,20 +67,25 @@ const TeamInfo = ({
         {(eventTransfers || eventTransfers === 0) && (
           <View style={styles.flexView} />
         )}
-        <Touchable
-          disabled={viewingEventId <= 1}
-          style={styles.chevronContainer}
-          onPress={onPreviousEvent}>
-          <ChevronLeftIcon />
-        </Touchable>
-        <Text
-          style={styles.eventNameLabel}>{`Gameweek ${viewingEventId}`}</Text>
-        <Touchable
-          disabled={viewingEventId >= currentEventId}
-          style={styles.chevronContainer}
-          onPress={onNextEvent}>
-          <ChevronRightIcon />
-        </Touchable>
+        {(!isOverallView || (hasOverallView && !isOverallView)) && (
+          <Touchable
+            disabled={viewingEventId <= 1}
+            style={styles.chevronContainer}
+            onPress={onPreviousEvent}>
+            <ChevronLeftIcon />
+          </Touchable>
+        )}
+        <Text style={styles.eventNameLabel}>
+          {isOverallView ? 'Overall' : `Gameweek ${viewingEventId}`}
+        </Text>
+        {(!isOverallView || (hasOverallView && !isOverallView)) && (
+          <Touchable
+            disabled={viewingEventId >= currentEventId}
+            style={styles.chevronContainer}
+            onPress={onNextEvent}>
+            <ChevronRightIcon />
+          </Touchable>
+        )}
         {(eventTransfers || eventTransfers === 0) && (
           <View style={styles.eventTransfersContainer}>
             <SwapHorizontalIcon />
@@ -88,8 +99,9 @@ const TeamInfo = ({
         )}
       </View>
       <View style={styles.pointsContainer}>
+        {hasOverallView && <View style={styles.oneThirdView} />}
         {avgEventScore ? (
-          <View style={styles.avgPointsContainer}>
+          <View style={[styles.oneThirdView, styles.avgPointsContainer]}>
             <Text style={styles.pointsValue}>{avgEventScore}</Text>
             <Text style={styles.pointsLabel}> average</Text>
           </View>
@@ -100,7 +112,7 @@ const TeamInfo = ({
         </View>
         {avgEventScore ? (
           <Touchable
-            style={styles.avgPointsContainer}
+            style={[styles.oneThirdView, styles.avgPointsContainer]}
             disabled={!highestEventScoreId}
             onPress={() =>
               navigation.push('Team', {teamId: highestEventScoreId})
@@ -114,6 +126,16 @@ const TeamInfo = ({
             />
           </Touchable>
         ) : null}
+        {hasOverallView && (
+          <Touchable
+            style={[styles.oneThirdView, styles.overallViewContainer]}
+            onPress={() => onOverallView && onOverallView()}>
+            <Text style={styles.overallViewText}>
+              {isOverallView ? 'Gameweek' : 'Overall'}
+            </Text>
+            <ChevronRightIcon color={colors.accentDark2} />
+          </Touchable>
+        )}
       </View>
 
       <View style={styles.activeChipContainer}>

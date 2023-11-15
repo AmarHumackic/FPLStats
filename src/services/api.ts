@@ -75,8 +75,8 @@ export const fetchLeagueMatchesH = async (leagueId: number) =>
   (await axiosInstance.get(`/leagues-h2h-matches/league/${leagueId}`))
     .data as H2HStandingDelegate;
 
-export const fetchEventDreamTeam = async (eventId: number) =>
-  (await axiosInstance.get(`/dream-team/${eventId}/`))
+export const fetchEventDreamTeam = async (eventId?: number) =>
+  (await axiosInstance.get(`/dream-team/${eventId ? `${eventId}/` : ''}`))
     .data as GWDreamTeamDelegate;
 
 export const fetchPieceNotes = async () =>

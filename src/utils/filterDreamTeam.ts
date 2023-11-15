@@ -12,15 +12,9 @@ export const filterDreamTeam = (
   teams?: TeamDelegate[],
   elementsLive?: GWLiveDelegate['elements'],
   dtData?: GWDreamTeamDelegate | undefined,
-  event?: number,
+  isOverallView?: boolean,
 ) => {
-  if (
-    !elements?.length ||
-    !teams?.length ||
-    !elementsLive?.length ||
-    !dtData ||
-    !event
-  ) {
+  if (!elements?.length || !teams?.length || !elementsLive?.length || !dtData) {
     return {
       topPlayer: null,
       goalKeepersM: [],
@@ -38,14 +32,18 @@ export const filterDreamTeam = (
   const topPlayer: DreamTeamTopPlayer = {
     id: topPlayerElement?.id,
     web_name: topPlayerElement?.web_name,
-    points: topPlayerElement?.event_points,
+    points: dtData.top_player.points,
     element_type: topPlayerElement?.element_type,
     news: topPlayerElement.news,
     team: topPlayerElement.team,
     code: topPlayerElement.code,
     team_name: teams.find(t => t.id === topPlayerElement.team)?.name || '',
-    goals_scored: topPlayerElementLive?.stats.goals_scored,
-    assists: topPlayerElementLive.stats.assists,
+    goals_scored: isOverallView
+      ? topPlayerElement.goals_scored
+      : topPlayerElementLive?.stats.goals_scored,
+    assists: isOverallView
+      ? topPlayerElement.assists
+      : topPlayerElementLive.stats.assists,
   };
 
   const players: DreamTeamPlayer[] = dtData.team.map(el => {
@@ -59,7 +57,6 @@ export const filterDreamTeam = (
       news: playerElement?.news,
       team: playerElement.team,
       code: playerElement.code,
-      total_points: playerElement.event_points,
     };
   });
 

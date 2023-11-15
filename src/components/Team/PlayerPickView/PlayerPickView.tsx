@@ -50,7 +50,7 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
             ]}>
             {player.tsType === 'TeamPlayer'
               ? player.total_points_live
-              : player.total_points}
+              : player.points}
           </Text>
         ) : (
           <Text

@@ -8,6 +8,9 @@ interface Props {
   topPlayerText: TextStyle;
   topPlayerRowContainer: ViewStyle;
   topPlayerLeftContainer: ViewStyle;
+  topPlayerIconsContainer: ViewStyle;
+  iconContainer: ViewStyle;
+  alertIconContainer: ViewStyle;
   topPlayerImg: ImageStyle;
   topPlayerName: TextStyle;
   topPlayerCenterContainer: ViewStyle;
@@ -43,6 +46,25 @@ export default StyleSheet.create<Props>({
     height: '100%',
     alignItems: 'center',
   },
+  topPlayerIconsContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 24,
+  },
+  iconContainer: {
+    width: 16,
+    height: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    backgroundColor: colors.black,
+    marginBottom: 4,
+    zIndex: 1,
+  },
+  alertIconContainer: {
+    zIndex: 1,
+    marginBottom: 4,
+  },
   topPlayerImg: {
     width: 50.05,
     height: 64.06,
@@ -61,7 +83,7 @@ export default StyleSheet.create<Props>({
   },
   topPlayerInfoText: {
     fontSize: sizes.m,
-    paddingLeft: 15,
+    paddingLeft: 28,
     marginTop: 1,
     color: colors.textDark3,
     fontWeight: '500',
