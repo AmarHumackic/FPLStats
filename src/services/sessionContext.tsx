@@ -63,6 +63,7 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
   const removeSessionHandler = async () => {
     setTeamId(0); // remove session from the context
     await removeSessionStorage(); // remove session from async storage
+    queryClient.clear();
   };
 
   return (

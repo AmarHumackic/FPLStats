@@ -30,7 +30,7 @@ const Team = ({navigation, route}: Props) => {
   const teamId = route.params?.teamId || sessionTeamId;
 
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
-    staleTime: Infinity,
+    cacheTime: Infinity,
     onSuccess: _bData => {
       if (!currentEventId) {
         const currentEvent = _bData.events.find(e => e.is_current);
@@ -43,6 +43,7 @@ const Team = ({navigation, route}: Props) => {
   const {data: manager, isFetching: managerFetching} = useQuery(
     ['managerInfo', teamId],
     () => fetchManager(teamId),
+    {staleTime: 20000},
   );
 
   const {data: epData, isFetching: epFetching} = useQuery(
@@ -59,14 +60,14 @@ const Team = ({navigation, route}: Props) => {
     () => fetchEventLive(viewingEventId),
     {
       enabled: currentEventId ? true : false,
-      staleTime: 20000,
+      staleTime: Infinity,
     },
   );
 
   const {data: fxData, isFetching: fxFetching} = useQuery(
     ['fixtures'],
     fetchFixtures,
-    {staleTime: 20000},
+    {staleTime: Infinity},
   );
 
   const dropdownList: PopupMenuModel[] = useMemo(
