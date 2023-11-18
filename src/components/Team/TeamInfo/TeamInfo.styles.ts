@@ -63,7 +63,6 @@ export default StyleSheet.create<Props>({
   },
   flexView: {flex: 1},
   eventTransfersContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 10,
@@ -74,7 +73,6 @@ export default StyleSheet.create<Props>({
     fontWeight: 'bold',
     color: colors.accentDark1,
     marginLeft: 2,
-    flex: 1,
   },
   pointsContainer: {
     width: '100%',

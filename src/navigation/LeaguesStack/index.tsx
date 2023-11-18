@@ -9,6 +9,7 @@ import {renderNavElement} from '@navigation/utils/renderNavElement';
 import {defaultStackOptions} from '@navigation/utils/defaultStackOptions';
 import DreamTeam from '@screens/DreamTeam';
 import Transfers from '@screens/Transfers';
+import History from '@screens/History';
 
 const Stack = createStackNavigator<LeaguesStackProps>();
 
@@ -48,6 +49,7 @@ const LeaguesStack = () => {
         }}
       />
       <Stack.Screen name="Transfers" component={Transfers} />
+      <Stack.Screen name="History" component={History} />
     </Stack.Navigator>
   );
 };

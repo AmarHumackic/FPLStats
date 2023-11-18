@@ -49,7 +49,15 @@ const Leagues = ({navigation}: Props) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <TabsView activeTab={activeTab} setActiveTab={setActiveTab} />
+      <TabsView
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        labels={['Leagues', 'Cups']}
+        textColor={colors.accentLight}
+        bgColor={colors.accentDark}
+        activeTextColor={colors.purePrimary}
+        activeBgColor={colors.accentDark}
+      />
 
       <ScrollView
         contentContainerStyle={styles.scrollContentContainer}

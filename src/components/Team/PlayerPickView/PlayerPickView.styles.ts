@@ -39,7 +39,7 @@ export default StyleSheet.create<Props>({
   },
   topRightContainer: {
     position: 'absolute',
-    top: 0,
+    top: -5,
     right: 0,
   },
   iconContainer: {

@@ -13,6 +13,10 @@ export type TeamStackProps = {
     teamId: number;
     teamName?: string;
   };
+  History: {
+    teamId: number;
+    teamName?: string;
+  };
 };
 
 export type FixturesStackProps = {
@@ -35,6 +39,10 @@ export type LeaguesStackProps = {
   };
   DreamTeam: undefined;
   Transfers: {
+    teamId: number;
+    teamName?: string;
+  };
+  History: {
     teamId: number;
     teamName?: string;
   };

@@ -7,6 +7,7 @@ import {HeaderBackButton} from '@react-navigation/elements';
 import {defaultStackOptions} from '@navigation/utils/defaultStackOptions';
 import DreamTeam from '@screens/DreamTeam';
 import Transfers from '@screens/Transfers';
+import History from '@screens/History';
 
 const Stack = createStackNavigator<TeamStackProps>();
 
@@ -45,6 +46,7 @@ const TeamStack = () => (
       }}
     />
     <Stack.Screen name="Transfers" component={Transfers} />
+    <Stack.Screen name="History" component={History} />
   </Stack.Navigator>
 );
 

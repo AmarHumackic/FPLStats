@@ -21,6 +21,7 @@ import {PopupMenuModel} from 'src/types/common';
 import StarIcon from '@assets/svgs/StarIcon';
 import TeamInfo from '@components/Team/TeamInfo';
 import SwapHorizontalIcon from '@assets/svgs/SwapHorizontalIcon';
+import HistoryIcon from '@assets/svgs/HistoryIcon';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
@@ -82,10 +83,13 @@ const Team = ({navigation, route}: Props) => {
         label: 'View Transfers',
         icon: <SwapHorizontalIcon width={20} height={20} />,
         onPress: () =>
-          navigation.navigate('Transfers', {
-            teamId,
-            teamName: manager?.name,
-          }),
+          navigation.navigate('Transfers', {teamId, teamName: manager?.name}),
+      },
+      {
+        label: 'View History',
+        icon: <HistoryIcon />,
+        onPress: () =>
+          navigation.navigate('History', {teamId, teamName: manager?.name}),
       },
     ],
     [navigation, teamId, manager?.name],

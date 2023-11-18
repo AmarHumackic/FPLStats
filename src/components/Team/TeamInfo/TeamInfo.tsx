@@ -87,14 +87,16 @@ const TeamInfo = ({
           </Touchable>
         )}
         {(eventTransfers || eventTransfers === 0) && (
-          <View style={styles.eventTransfersContainer}>
-            <SwapHorizontalIcon />
-            <Text
-              style={styles.eventTransfers}
-              adjustsFontSizeToFit
-              numberOfLines={1}>{`${eventTransfers}${
-              eventTransfersCost ? ` (-${eventTransfersCost})` : ''
-            }`}</Text>
+          <View style={styles.flexView}>
+            <View style={styles.eventTransfersContainer}>
+              <SwapHorizontalIcon />
+              <Text
+                style={styles.eventTransfers}
+                adjustsFontSizeToFit
+                numberOfLines={1}>{`${eventTransfers}${
+                eventTransfersCost ? ` (-${eventTransfersCost})` : ''
+              }`}</Text>
+            </View>
           </View>
         )}
       </View>
