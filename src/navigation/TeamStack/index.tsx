@@ -6,6 +6,7 @@ import {renderNavElement} from '@navigation/utils/renderNavElement';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {defaultStackOptions} from '@navigation/utils/defaultStackOptions';
 import DreamTeam from '@screens/DreamTeam';
+import Transfers from '@screens/Transfers';
 
 const Stack = createStackNavigator<TeamStackProps>();
 
@@ -43,6 +44,7 @@ const TeamStack = () => (
         };
       }}
     />
+    <Stack.Screen name="Transfers" component={Transfers} />
   </Stack.Navigator>
 );
 

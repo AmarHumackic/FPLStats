@@ -8,6 +8,7 @@ import {HeaderBackButton} from '@react-navigation/elements';
 import {renderNavElement} from '@navigation/utils/renderNavElement';
 import {defaultStackOptions} from '@navigation/utils/defaultStackOptions';
 import DreamTeam from '@screens/DreamTeam';
+import Transfers from '@screens/Transfers';
 
 const Stack = createStackNavigator<LeaguesStackProps>();
 
@@ -46,6 +47,7 @@ const LeaguesStack = () => {
           };
         }}
       />
+      <Stack.Screen name="Transfers" component={Transfers} />
     </Stack.Navigator>
   );
 };

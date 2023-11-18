@@ -97,9 +97,9 @@ const Fixtures = ({}: Props) => {
             refreshing={isRefetching}
             onRefresh={refetch}
             title="Pull to refresh"
-            titleColor={colors.text}
-            colors={[colors.text]}
-            tintColor={colors.text}
+            titleColor={colors.accentDark}
+            colors={[colors.accentDark]}
+            tintColor={colors.accentDark}
           />
         }>
         {Object.keys(dateFixtures).map(df => (

@@ -1012,3 +1012,8 @@ export interface DreamTeamTopPlayer {
   goals_scored: PlayerEventLiveDelegate['goals_scored'];
   assists: PlayerEventLiveDelegate['assists'];
 }
+
+export interface CustomTransferDelegate extends TransferDelegate {
+  element_in_web_name: string;
+  element_out_web_name: string;
+}

@@ -20,6 +20,7 @@ import PopupMenu from '@components/common/PopupMenu';
 import {PopupMenuModel} from 'src/types/common';
 import StarIcon from '@assets/svgs/StarIcon';
 import TeamInfo from '@components/Team/TeamInfo';
+import SwapHorizontalIcon from '@assets/svgs/SwapHorizontalIcon';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
@@ -77,8 +78,17 @@ const Team = ({navigation, route}: Props) => {
         icon: <StarIcon width={20} height={20} />,
         onPress: () => navigation.navigate('DreamTeam'),
       },
+      {
+        label: 'View Transfers',
+        icon: <SwapHorizontalIcon width={20} height={20} />,
+        onPress: () =>
+          navigation.navigate('Transfers', {
+            teamId,
+            teamName: manager?.name,
+          }),
+      },
     ],
-    [navigation],
+    [navigation, teamId, manager?.name],
   );
 
   useLayoutEffect(() =>
