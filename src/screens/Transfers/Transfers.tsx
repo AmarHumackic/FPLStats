@@ -89,20 +89,16 @@ const Transfers = ({navigation, route}: Props) => {
         </Text>
       </View>
       <Touchable style={styles.column2Container} onPress={() => {}}>
-        <Text
-          style={[styles.text, styles.textBold]}
-          numberOfLines={1}
-          adjustsFontSizeToFit>{`${item.element_in_web_name} (${formatPrice(
-          item.element_in_cost,
-        )})`}</Text>
+        <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
+          <Text style={styles.textBold}>{item.element_in_web_name}</Text>
+          {` (${formatPrice(item.element_in_cost)})`}
+        </Text>
       </Touchable>
       <Touchable style={styles.column3Container} onPress={() => {}}>
-        <Text
-          style={[styles.text, styles.textBold]}
-          numberOfLines={1}
-          adjustsFontSizeToFit>{`${item.element_out_web_name} (${formatPrice(
-          item.element_out_cost,
-        )})`}</Text>
+        <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
+          <Text style={styles.textBold}>{item.element_out_web_name}</Text>
+          {` (${formatPrice(item.element_out_cost)})`}
+        </Text>
       </Touchable>
       <View style={styles.column4Container}>
         <Text style={styles.text}>{item.event}</Text>
