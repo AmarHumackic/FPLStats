@@ -22,7 +22,6 @@ export default StyleSheet.create<Style>({
   container: {},
   childrenContainer: {
     padding: 6,
-    marginTop: -10,
     marginHorizontal: 2,
   },
   dropdownContainer: {

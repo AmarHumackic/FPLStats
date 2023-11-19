@@ -57,8 +57,9 @@ export default StyleSheet.create<Props>({
     borderRadius: 18,
   },
   eventNameLabel: {
-    fontSize: sizes.xl,
-    color: colors.black,
+    fontSize: sizes.l,
+    letterSpacing: 0.3,
+    color: colors.textDark3,
     marginHorizontal: 10,
   },
   flexView: {flex: 1},
