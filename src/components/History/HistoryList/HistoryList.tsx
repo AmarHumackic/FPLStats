@@ -1,7 +1,11 @@
-import {View, Text, FlatList} from 'react-native';
+import {Text, FlatList} from 'react-native';
 import React, {useMemo, useRef, useState} from 'react';
 import styles from './HistoryList.styles';
-import {GWHistoryDelegate} from 'src/types/api';
+import {
+  ChipTypes,
+  ChipsHistoryDelegate,
+  GWHistoryDelegate,
+} from 'src/types/api';
 import {formatPrice} from '@utils/formatPrice';
 import Collapsible from 'react-native-collapsible';
 import Touchable from '@components/common/Touchable';
@@ -10,9 +14,10 @@ import {colors} from '@constants/colors';
 
 type Props = {
   data: GWHistoryDelegate[];
+  chips: ChipsHistoryDelegate;
 };
 
-const HistoryList = ({data}: Props) => {
+const HistoryList = ({data, chips}: Props) => {
   const [expandedIndex, setExpandedIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
@@ -23,14 +28,17 @@ const HistoryList = ({data}: Props) => {
     item,
     index,
   }: {
-    item: GWHistoryDelegate;
+    item: (typeof sortedData)[0];
     index: number;
   }) => (
-    <View>
+    <>
       <Touchable
         style={styles.itemHeaderContainer}
         onPress={() => expandItemHandler(index)}>
         <Text style={styles.headerText}>{`Gameweek ${item.event}`}</Text>
+        {item?.chip && (
+          <Text style={styles.textChip}>{ChipTypes?.[item.chip] || ''}</Text>
+        )}
         <ChevronIcon
           rotation={index === expandedIndex ? 'up' : 'down'}
           width={24}
@@ -76,12 +84,18 @@ const HistoryList = ({data}: Props) => {
           <Text style={styles.textBold}>{item.points_on_bench}</Text>
         </Text>
       </Collapsible>
-    </View>
+    </>
   );
 
   const sortedData = useMemo(
-    () => data.sort((a, b) => b.event - a.event),
-    [data],
+    () =>
+      data
+        .map(el => ({
+          ...el,
+          chip: chips.find(c => c.event === el.event)?.name || null,
+        }))
+        .sort((a, b) => b.event - a.event),
+    [data, chips],
   );
 
   return (

@@ -7,6 +7,7 @@ interface Props {
   contentContainer: ViewStyle;
   itemHeaderContainer: ViewStyle;
   headerText: TextStyle;
+  textChip: TextStyle;
   itemCollapsibleContainer: ViewStyle;
   text: TextStyle;
   textBold: TextStyle;
@@ -27,12 +28,19 @@ export default StyleSheet.create<Props>({
     paddingHorizontal: 16,
   },
   headerText: {
-    flex: 1,
     fontSize: sizes.l,
     fontWeight: '600',
     color: colors.accentDark,
     letterSpacing: 0.2,
     paddingVertical: 2.5,
+  },
+  textChip: {
+    flex: 1,
+    color: colors.textLight2,
+    fontSize: sizes.sm,
+    textTransform: 'uppercase',
+    marginLeft: 10,
+    fontWeight: '600',
   },
   itemCollapsibleContainer: {
     paddingHorizontal: 16,
