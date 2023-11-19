@@ -65,12 +65,13 @@ export default StyleSheet.create<Props>({
   flexView: {flex: 1},
   eventTransfersContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    alignSelf: 'flex-start',
     marginLeft: 10,
     marginRight: 5,
   },
   eventTransfers: {
-    fontSize: sizes.l,
+    fontSize: sizes.m,
     fontWeight: 'bold',
     color: colors.accentDark1,
     marginLeft: 2,

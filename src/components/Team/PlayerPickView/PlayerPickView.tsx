@@ -76,7 +76,11 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
           {PosNameArr[player.element_type - 1]}
         </Text>
       )}
-      <View style={styles.topRightContainer}>
+      <View
+        style={[
+          styles.topRightContainer,
+          showPosition && styles.topRightPosContainer,
+        ]}>
         {player.tsType === 'TeamPlayer' && player.is_captain && <Captain />}
         {player.tsType === 'TeamPlayer' && player.is_vice_captain && (
           <Captain type="V" />

@@ -12,6 +12,7 @@ import {colors} from '@constants/colors';
 import {ChipTypes} from 'src/types/api';
 
 type Props = {
+  teamId?: number;
   teamName?: string;
   managerName?: string;
   viewingEventId: number;
@@ -31,6 +32,7 @@ type Props = {
 };
 
 const TeamInfo = ({
+  teamId,
   teamName,
   managerName,
   viewingEventId,
@@ -88,15 +90,19 @@ const TeamInfo = ({
         )}
         {(eventTransfers || eventTransfers === 0) && (
           <View style={styles.flexView}>
-            <View style={styles.eventTransfersContainer}>
-              <SwapHorizontalIcon />
+            <Touchable
+              style={styles.eventTransfersContainer}
+              onPress={() =>
+                teamId && navigation.navigate('Transfers', {teamId, teamName})
+              }>
+              <SwapHorizontalIcon width={18} height={18} />
               <Text
                 style={styles.eventTransfers}
                 adjustsFontSizeToFit
                 numberOfLines={1}>{`${eventTransfers}${
                 eventTransfersCost ? ` (-${eventTransfersCost})` : ''
               }`}</Text>
-            </View>
+            </Touchable>
           </View>
         )}
       </View>

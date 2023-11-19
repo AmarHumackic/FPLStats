@@ -164,6 +164,7 @@ const Team = ({navigation, route}: Props) => {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <TeamInfo
+        teamId={teamId}
         teamName={manager?.name}
         managerName={`${manager?.player_first_name} ${manager?.player_last_name}`}
         viewingEventId={viewingEventId}

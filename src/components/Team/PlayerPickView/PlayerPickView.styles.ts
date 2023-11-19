@@ -7,6 +7,7 @@ interface Props {
   containerPosHeight: ViewStyle;
   elementType: TextStyle;
   topRightContainer: ViewStyle;
+  topRightPosContainer: ViewStyle;
   iconContainer: ViewStyle;
   alertIconContainer: ViewStyle;
   playerImg: ImageStyle;
@@ -41,6 +42,9 @@ export default StyleSheet.create<Props>({
     position: 'absolute',
     top: -5,
     right: 0,
+  },
+  topRightPosContainer: {
+    top: -5 + ELEMENT_TYPE_HEIGHT,
   },
   iconContainer: {
     width: 16,
