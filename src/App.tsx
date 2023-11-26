@@ -6,6 +6,7 @@ import FlashMessage from 'react-native-flash-message';
 import {useSessionContext} from '@services/sessionContext';
 import FocusAwareStatusBar from '@components/common/FocusAwareStatusBar';
 import {colors} from './constants';
+import BootSplash from 'react-native-bootsplash';
 
 const App = () => {
   const {teamId, loadingSession, checkSessionHandler} = useSessionContext();
@@ -14,9 +15,11 @@ const App = () => {
     checkSessionHandler();
   }, [checkSessionHandler]);
 
-  if (loadingSession) {
-    return null;
-  }
+  useEffect(() => {
+    if (!loadingSession) {
+      BootSplash.hide({fade: true});
+    }
+  }, [loadingSession]);
 
   return (
     <NavigationContainer>
