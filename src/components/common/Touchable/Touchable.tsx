@@ -7,6 +7,7 @@ import {colors} from '@constants/';
 const PRESSED_OPACITY_IOS = 0.6;
 
 interface Props {
+  testID?: string;
   children: ReactNode;
   rippleColor?: string;
   style?: ViewStyle | {};
@@ -22,7 +23,8 @@ interface Props {
   props?: Object;
 }
 
-const CTouchable = ({
+const Touchable = ({
+  testID,
   children,
   rippleColor,
   style,
@@ -41,6 +43,7 @@ const CTouchable = ({
     {!rippleInBorders ? (
       <Pressable
         {...props}
+        testID={testID}
         android_ripple={{
           color: rippleColor || colors.defaultRipple,
           borderless: false,
@@ -68,6 +71,7 @@ const CTouchable = ({
         ]}>
         <Pressable
           {...props}
+          testID={testID}
           android_ripple={{
             color: rippleColor || colors.defaultRipple,
             borderless: false,
@@ -89,4 +93,4 @@ const CTouchable = ({
   </>
 );
 
-export default CTouchable;
+export default Touchable;

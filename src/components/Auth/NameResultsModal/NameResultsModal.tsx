@@ -33,6 +33,7 @@ const NameResultsModal = ({nameResults, onSelect, onClose}: Props) => {
   return (
     <View>
       <Modal
+        testID="authNameResultsModal"
         isVisible={nameResults.length ? true : false}
         onBackButtonPress={closeHandler}
         onBackdropPress={closeHandler}>

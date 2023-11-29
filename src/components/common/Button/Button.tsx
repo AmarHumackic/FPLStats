@@ -13,6 +13,7 @@ import {colors} from '@constants/';
 const PRESSED_OPACITY_IOS = 0.6;
 
 interface Props {
+  testID?: string;
   backgroundColor?: string;
   backgroundColorDisabled?: string;
   textColor?: string;
@@ -29,6 +30,7 @@ interface Props {
 }
 
 const Button = ({
+  testID,
   backgroundColor,
   backgroundColorDisabled,
   textColor,
@@ -57,6 +59,7 @@ const Button = ({
       marginTop ? {marginTop} : {},
     ]}>
     <Touchable
+      testID={testID}
       style={icon ? styles.rowContainer : styles.container}
       disabled={disabled}
       onPress={onPress}>

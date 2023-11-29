@@ -100,6 +100,7 @@ const Auth = ({}: Props) => {
       />
 
       <Button
+        testID="authSubmitBtn"
         title={isTeamIdSearch ? 'Submit' : 'Search'}
         backgroundColor={colors.accentDark}
         textColor={colors.purePrimary}
