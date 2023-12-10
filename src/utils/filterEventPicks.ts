@@ -48,7 +48,9 @@ export const filterEventPicks = (
     ef => ef.id === captainLive?.explain[0].fixture,
   );
   const isCaptainActive =
-    captainFixture?.finished_provisional && !captainLive?.stats.minutes
+    (captainFixture?.started ||
+      dayjs().isAfter(dayjs(captainFixture?.kickoff_time))) &&
+    !captainLive?.stats.minutes
       ? false
       : true;
 
