@@ -4,12 +4,6 @@ import Auth from './Auth';
 import {SessionProvider} from '@services/sessionContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-jest.mock('react-native-modal', () => 'react-native-modal');
-jest.mock('react-native-modal', () => 'react-native-modal');
-jest.mock('@react-native-async-storage/async-storage', () =>
-  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

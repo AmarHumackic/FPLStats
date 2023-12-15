@@ -70,7 +70,9 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
   };
 
   return (
-    <View style={[styles.container, showPosition && styles.containerPosHeight]}>
+    <View
+      testID="playerPickViewContainer"
+      style={[styles.container, showPosition && styles.containerPosHeight]}>
       {showPosition && (
         <Text style={styles.elementType}>
           {PosNameArr[player.element_type - 1]}

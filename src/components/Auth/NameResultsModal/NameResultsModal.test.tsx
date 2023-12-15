@@ -2,16 +2,12 @@ import React, {useState as useStateMock} from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
 import NameResultsModal from './NameResultsModal';
 
-jest.mock('react-native-modal', () => 'react-native-modal');
-jest.mock('react-native-modal', () => 'react-native-modal');
-jest.mock('@react-native-async-storage/async-storage', () =>
-  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
 // Mocking useState
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useState: jest.fn(),
 }));
+
 const nameResultsData = [
   {
     EntryId: -1,
