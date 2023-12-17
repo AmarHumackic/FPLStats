@@ -7,7 +7,7 @@ import LoadingView from '@components/common/LoadingView';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {filterLeagues} from '@utils/filterLeagues';
 import TabsView from '@components/common/TabsView';
-import LeagueTypeView from '@components/Leagues/LeagueTypeView';
+import LeagueCupView from '@components/Leagues/LeagueCupView';
 import {RefreshControl, ScrollView} from 'react-native';
 import {colors} from '@constants/colors';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -41,7 +41,10 @@ const Leagues = ({navigation}: Props) => {
     publicHeadL,
     generalL,
     broadcasterL,
-  } = useMemo(() => filterLeagues(manager?.leagues), [manager?.leagues]);
+  } = useMemo(
+    () => filterLeagues(manager?.leagues, teamId),
+    [manager?.leagues, teamId],
+  );
 
   if (managerFetching && !isRefetching) {
     return <LoadingView />;
@@ -72,43 +75,52 @@ const Leagues = ({navigation}: Props) => {
             tintColor={colors.accentDark}
           />
         }>
-        <LeagueTypeView
-          title="Invitational Classic"
+        <LeagueCupView
+          isLeagueView={activeTab === 1}
+          title={activeTab === 1 ? 'Invitational Classic' : 'League Cups'}
           data={invClassicL}
           onPress={(leagueId, leagueName) =>
             onLeagueDetails(leagueId, leagueName, 'classic')
           }
         />
-        <LeagueTypeView
-          title="Invitational Head-to-Head"
-          data={invHeadL}
-          onPress={(leagueId, leagueName) =>
-            onLeagueDetails(leagueId, leagueName, 'h2h')
-          }
-        />
-        <LeagueTypeView
-          title="Public Classic"
-          data={publicClassicL}
-          onPress={(leagueId, leagueName) =>
-            onLeagueDetails(leagueId, leagueName, 'classic')
-          }
-        />
-        <LeagueTypeView
-          title="Public Head-to-Head"
-          data={publicHeadL}
-          onPress={(leagueId, leagueName) =>
-            onLeagueDetails(leagueId, leagueName, 'h2h')
-          }
-        />
-        <LeagueTypeView
-          title="General"
+        {activeTab === 1 && (
+          <LeagueCupView
+            title="Invitational Head-to-Head"
+            data={invHeadL}
+            onPress={(leagueId, leagueName) =>
+              onLeagueDetails(leagueId, leagueName, 'h2h')
+            }
+          />
+        )}
+        {activeTab === 1 && (
+          <LeagueCupView
+            title="Public Classic"
+            data={publicClassicL}
+            onPress={(leagueId, leagueName) =>
+              onLeagueDetails(leagueId, leagueName, 'classic')
+            }
+          />
+        )}
+        {activeTab === 1 && (
+          <LeagueCupView
+            title="Public Head-to-Head"
+            data={publicHeadL}
+            onPress={(leagueId, leagueName) =>
+              onLeagueDetails(leagueId, leagueName, 'h2h')
+            }
+          />
+        )}
+        <LeagueCupView
+          isLeagueView={activeTab === 1}
+          title={`General${activeTab === 2 ? ' Cups' : ''}`}
           data={generalL}
           onPress={(leagueId, leagueName) =>
             onLeagueDetails(leagueId, leagueName, 'classic')
           }
         />
-        <LeagueTypeView
-          title="Broadcaster"
+        <LeagueCupView
+          isLeagueView={activeTab === 1}
+          title={`Broadcaster${activeTab === 2 ? ' Cups' : ''}`}
           data={broadcasterL}
           onPress={(leagueId, leagueName) =>
             onLeagueDetails(leagueId, leagueName, 'classic')

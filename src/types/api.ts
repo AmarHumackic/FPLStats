@@ -43,7 +43,7 @@ export interface UserDelegate {
       cup_status: CupStatusDelegate;
       cup_league: any | null;
     };
-    cup_matches: CupMatchesDelegate[];
+    cup_matches: CupMatchesDelegate;
   };
   name: string;
   name_change_blocked: string;
@@ -203,15 +203,15 @@ export type CupMatchDelegate = {
   entry_2_loss: number;
   entry_2_total: number;
   is_knockout: boolean | null;
+  is_bye: boolean | null;
+  league: number;
   winner: string | null;
   seed_value: string | null;
   event: number;
   tiebreak: string | null;
 };
 
-export type CupMatchesDelegate = {
-  [key: number]: CupMatchDelegate;
-};
+export type CupMatchesDelegate = CupMatchDelegate[];
 
 export type CupRespDelegate = {
   cup_matches: CupMatchDelegate[];
@@ -1016,4 +1016,18 @@ export interface DreamTeamTopPlayer {
 export interface CustomTransferDelegate extends TransferDelegate {
   element_in_web_name: string;
   element_out_web_name: string;
+}
+
+export interface CustomLeagueCup {
+  id: number;
+  name: string;
+  entry_rank?: number;
+  entry_last_rank?: number;
+  has_cup: boolean;
+  event: number | null;
+  entry_1_points: number | null;
+  entry_2_points: number | null;
+  isWinning: boolean | null;
+  is_bye: boolean | null;
+  is_knockout: boolean | null;
 }

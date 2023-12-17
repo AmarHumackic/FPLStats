@@ -11,6 +11,10 @@ interface Props {
   name: TextStyle;
   rankContainer: ViewStyle;
   rank: TextStyle;
+  cupMatchContainer: ViewStyle;
+  eventContainer: ViewStyle;
+  event: TextStyle;
+  eventPoints: TextStyle;
 }
 
 export default StyleSheet.create<Props>({
@@ -34,6 +38,7 @@ export default StyleSheet.create<Props>({
     justifyContent: 'space-between',
     paddingHorizontal: sizes.marginHorizontal,
     paddingVertical: 6,
+    minHeight: 32,
   },
   itemContainerSeparator: {
     borderBottomWidth: 0.25,
@@ -43,6 +48,7 @@ export default StyleSheet.create<Props>({
     fontWeight: 'bold',
     color: colors.textDark2,
     letterSpacing: 0.2,
+    flex: 1,
   },
   rankContainer: {
     flexDirection: 'row',
@@ -54,5 +60,24 @@ export default StyleSheet.create<Props>({
     color: colors.textDark2,
     letterSpacing: 0.2,
     marginLeft: 8,
+  },
+  cupMatchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  eventContainer: {
+    marginLeft: 8,
+    paddingHorizontal: 4,
+    borderRadius: 4,
+  },
+  event: {
+    color: colors.textDark2,
+    letterSpacing: 0.2,
+  },
+  eventPoints: {
+    color: colors.textDark2,
+    letterSpacing: 0.2,
+    fontWeight: 'bold',
   },
 });
