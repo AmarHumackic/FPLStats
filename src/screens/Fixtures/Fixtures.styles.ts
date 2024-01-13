@@ -7,6 +7,7 @@ interface Props {
   headerContainer: ViewStyle;
   chevronContainer: ViewStyle;
   eventNameLabel: TextStyle;
+  scrollContentContainer: ViewStyle;
 }
 
 export default StyleSheet.create<Props>({
@@ -33,5 +34,8 @@ export default StyleSheet.create<Props>({
     fontSize: sizes.l,
     letterSpacing: 0.3,
     color: colors.textDark3,
+  },
+  scrollContentContainer: {
+    paddingBottom: 16,
   },
 });

@@ -91,6 +91,7 @@ const Fixtures = ({}: Props) => {
       </View>
 
       <ScrollView
+        contentContainerStyle={styles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
