@@ -11,6 +11,7 @@ type Props = {
   midfieldersM: TeamPlayerDelegate[] | DreamTeamPlayer[];
   forwardersM: TeamPlayerDelegate[] | DreamTeamPlayer[];
   bench?: TeamPlayerDelegate[] | DreamTeamPlayer[];
+  onDetailsHandler: (player: TeamPlayerDelegate | DreamTeamPlayer) => void;
 };
 
 const EventPicksView = ({
@@ -19,6 +20,7 @@ const EventPicksView = ({
   midfieldersM,
   forwardersM,
   bench,
+  onDetailsHandler,
 }: Props) => (
   <View style={styles.container}>
     <ImageBackground
@@ -26,22 +28,38 @@ const EventPicksView = ({
       style={styles.soccerFieldContainer}>
       <View style={styles.rowContainer}>
         {goalKeepersM.map(el => (
-          <PlayerPickView key={el.id} player={el} />
+          <PlayerPickView
+            key={el.id}
+            player={el}
+            onDetailsHandler={onDetailsHandler}
+          />
         ))}
       </View>
       <View style={styles.rowContainer}>
         {defendersM.map(el => (
-          <PlayerPickView key={el.id} player={el} />
+          <PlayerPickView
+            key={el.id}
+            player={el}
+            onDetailsHandler={onDetailsHandler}
+          />
         ))}
       </View>
       <View style={styles.rowContainer}>
         {midfieldersM.map(el => (
-          <PlayerPickView key={el.id} player={el} />
+          <PlayerPickView
+            key={el.id}
+            player={el}
+            onDetailsHandler={onDetailsHandler}
+          />
         ))}
       </View>
       <View style={styles.rowContainer}>
         {forwardersM.map(el => (
-          <PlayerPickView key={el.id} player={el} />
+          <PlayerPickView
+            key={el.id}
+            player={el}
+            onDetailsHandler={onDetailsHandler}
+          />
         ))}
       </View>
     </ImageBackground>
@@ -54,6 +72,7 @@ const EventPicksView = ({
             player={el}
             showPosition
             showLineup={bench ? true : false}
+            onDetailsHandler={onDetailsHandler}
           />
         ))}
       </View>

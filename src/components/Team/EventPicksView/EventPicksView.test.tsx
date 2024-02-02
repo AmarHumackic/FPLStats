@@ -57,6 +57,7 @@ test('verify 15 players are rendered on the screen (11 + 4)', () => {
       midfieldersM={midfieldersM}
       forwardersM={forwardersM}
       bench={bench}
+      onDetailsHandler={jest.fn}
     />,
   );
 

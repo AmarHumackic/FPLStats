@@ -111,10 +111,16 @@ export interface TeamPlayerDelegate {
   multiplier: PickDelegate['multiplier'];
   in_dreamteam: GWElementLiveDelegate['stats']['in_dreamteam'];
   minutes: GWElementLiveDelegate['stats']['minutes'];
+  goals_scored: GWElementLiveDelegate['stats']['goals_scored'];
+  assists: GWElementLiveDelegate['stats']['assists'];
+  clean_sheets: GWElementLiveDelegate['stats']['clean_sheets'];
+  goals_conceded: GWElementLiveDelegate['stats']['goals_conceded'];
+  own_goals: GWElementLiveDelegate['stats']['own_goals'];
+  penalties_saved: GWElementLiveDelegate['stats']['penalties_saved'];
+  penalties_missed: GWElementLiveDelegate['stats']['penalties_missed'];
   yellow_cards: GWElementLiveDelegate['stats']['yellow_cards'];
   red_cards: GWElementLiveDelegate['stats']['red_cards'];
-  assists: GWElementLiveDelegate['stats']['assists'];
-  goals_scored: GWElementLiveDelegate['stats']['goals_scored'];
+  saves: GWElementLiveDelegate['stats']['saves'];
   creativity: GWElementLiveDelegate['stats']['creativity'];
   influence: GWElementLiveDelegate['stats']['influence'];
   threat: GWElementLiveDelegate['stats']['threat'];
@@ -998,6 +1004,17 @@ export interface DreamTeamPlayer {
   news: PlayerDelegate['news'];
   team: PlayerDelegate['team'];
   code: PlayerDelegate['code'];
+  minutes: GWElementLiveDelegate['stats']['minutes'];
+  goals_scored: GWElementLiveDelegate['stats']['goals_scored'];
+  assists: GWElementLiveDelegate['stats']['assists'];
+  clean_sheets: GWElementLiveDelegate['stats']['clean_sheets'];
+  goals_conceded: GWElementLiveDelegate['stats']['goals_conceded'];
+  own_goals: GWElementLiveDelegate['stats']['own_goals'];
+  penalties_saved: GWElementLiveDelegate['stats']['penalties_saved'];
+  penalties_missed: GWElementLiveDelegate['stats']['penalties_missed'];
+  yellow_cards: GWElementLiveDelegate['stats']['yellow_cards'];
+  red_cards: GWElementLiveDelegate['stats']['red_cards'];
+  saves: GWElementLiveDelegate['stats']['saves'];
 }
 
 export interface DreamTeamTopPlayer {
@@ -1009,8 +1026,17 @@ export interface DreamTeamTopPlayer {
   team: PlayerDelegate['team'];
   code: PlayerDelegate['code'];
   team_name: TeamDelegate['name'];
-  goals_scored: PlayerEventLiveDelegate['goals_scored'];
-  assists: PlayerEventLiveDelegate['assists'];
+  minutes: GWElementLiveDelegate['stats']['minutes'];
+  goals_scored: GWElementLiveDelegate['stats']['goals_scored'];
+  assists: GWElementLiveDelegate['stats']['assists'];
+  clean_sheets: GWElementLiveDelegate['stats']['clean_sheets'];
+  goals_conceded: GWElementLiveDelegate['stats']['goals_conceded'];
+  own_goals: GWElementLiveDelegate['stats']['own_goals'];
+  penalties_saved: GWElementLiveDelegate['stats']['penalties_saved'];
+  penalties_missed: GWElementLiveDelegate['stats']['penalties_missed'];
+  yellow_cards: GWElementLiveDelegate['stats']['yellow_cards'];
+  red_cards: GWElementLiveDelegate['stats']['red_cards'];
+  saves: GWElementLiveDelegate['stats']['saves'];
 }
 
 export interface CustomTransferDelegate extends TransferDelegate {

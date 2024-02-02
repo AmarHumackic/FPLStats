@@ -9,14 +9,21 @@ import AlertIcon from '@assets/svgs/AlertIcon';
 import {getTeamShirt} from '@utils/getTeamShirt';
 import Captain from '@components/common/Captain';
 import ChevronIcon from '@assets/svgs/ChevronIcon';
+import Touchable from '@components/common/Touchable';
 
 type Props = {
   player: TeamPlayerDelegate | DreamTeamPlayer;
   showPosition?: boolean;
   showLineup?: boolean;
+  onDetailsHandler: (player: TeamPlayerDelegate | DreamTeamPlayer) => void;
 };
 
-const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
+const PlayerPickView = ({
+  player,
+  showPosition,
+  showLineup,
+  onDetailsHandler,
+}: Props) => {
   const [imgError, setImgError] = useState(false);
 
   const renderPointsView = () => {
@@ -70,9 +77,10 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
   };
 
   return (
-    <View
+    <Touchable
       testID="playerPickViewContainer"
-      style={[styles.container, showPosition && styles.containerPosHeight]}>
+      style={[styles.container, showPosition && styles.containerPosHeight]}
+      onPress={() => onDetailsHandler(player)}>
       {showPosition && (
         <Text style={styles.elementType}>
           {PosNameArr[player.element_type - 1]}
@@ -115,7 +123,7 @@ const PlayerPickView = ({player, showPosition, showLineup}: Props) => {
         </Text>
         {renderPointsView()}
       </View>
-    </View>
+    </Touchable>
   );
 };
 

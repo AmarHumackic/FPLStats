@@ -16,10 +16,15 @@ import {filterDreamTeam} from '@utils/filterDreamTeam';
 import {StackScreenProps} from '@react-navigation/stack';
 import {LeaguesStackProps, TeamStackProps} from 'src/types/navigation';
 import {getTeamShirt} from '@utils/getTeamShirt';
-import {PosShortNameArr} from 'src/types/api';
+import {
+  DreamTeamPlayer,
+  PosShortNameArr,
+  TeamPlayerDelegate,
+} from 'src/types/api';
 import {isNullOrEmpty} from '@utils/isNullOrEmpty';
 import AlertIcon from '@assets/svgs/AlertIcon';
 import StarIcon from '@assets/svgs/StarIcon';
+import PlayerEventModal from '@components/Team/PlayerEventModal';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'DreamTeam'>;
 
@@ -28,6 +33,9 @@ const DreamTeam = ({}: Props) => {
   const [viewingEventId, setViewingEventId] = useState(0);
   const [imgError, setImgError] = useState(false);
   const [isOverallView, setIsOverallView] = useState(false);
+  const [playerDetailsModal, setPlayerDetailsModal] = useState<
+    TeamPlayerDelegate | DreamTeamPlayer | null
+  >(null);
 
   const {data: bData} = useQuery(['bootstrapStatic'], fetchBootstrapStatic, {
     cacheTime: Infinity,
@@ -106,6 +114,7 @@ const DreamTeam = ({}: Props) => {
         defendersM={defendersM}
         midfieldersM={midfieldersM}
         forwardersM={forwardersM}
+        onDetailsHandler={setPlayerDetailsModal}
       />
 
       <View style={styles.topPlayerContainer}>
@@ -153,6 +162,11 @@ const DreamTeam = ({}: Props) => {
           </View>
         </View>
       </View>
+
+      <PlayerEventModal
+        player={playerDetailsModal}
+        onClose={() => setPlayerDetailsModal(null)}
+      />
     </SafeAreaView>
   );
 };

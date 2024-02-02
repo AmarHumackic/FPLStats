@@ -22,12 +22,17 @@ import StarIcon from '@assets/svgs/StarIcon';
 import TeamInfo from '@components/Team/TeamInfo';
 import SwapHorizontalIcon from '@assets/svgs/SwapHorizontalIcon';
 import HistoryIcon from '@assets/svgs/HistoryIcon';
+import {DreamTeamPlayer, TeamPlayerDelegate} from 'src/types/api';
+import PlayerEventModal from '@components/Team/PlayerEventModal';
 
 type Props = StackScreenProps<TeamStackProps | LeaguesStackProps, 'Team'>;
 
 const Team = ({navigation, route}: Props) => {
   const [currentEventId, setCurrentEventId] = useState(0);
   const [viewingEventId, setViewingEventId] = useState(0);
+  const [playerDetailsModal, setPlayerDetailsModal] = useState<
+    TeamPlayerDelegate | DreamTeamPlayer | null
+  >(null);
   const {teamId: sessionTeamId} = useSessionContext();
   const teamId = route.params?.teamId || sessionTeamId;
 
@@ -186,6 +191,12 @@ const Team = ({navigation, route}: Props) => {
         midfieldersM={midfieldersM}
         forwardersM={forwardersM}
         bench={bench}
+        onDetailsHandler={setPlayerDetailsModal}
+      />
+
+      <PlayerEventModal
+        player={playerDetailsModal}
+        onClose={() => setPlayerDetailsModal(null)}
       />
     </SafeAreaView>
   );
